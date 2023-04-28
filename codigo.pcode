@@ -1,0 +1,77 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Funcion suma (label: L1)
+L1:
+; --Asignación de parametros
+; --Val(b)
+  SRF  0  4
+  ASGI
+; --Val(a)
+  SRF  0  3
+  ASGI
+; --@(ka)
+  SRF  0  5
+; --Val(a)
+  SRF  0  3
+  DRF
+  ASG
+; --@(a)
+  SRF  0  3
+; --Constante entera igual a 3
+  STC  3
+  ASG
+; --Val(ka)
+  SRF  0  5
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  PLUS
+  CSF
+  CSF
+MAIN:
+; --@(j)
+  SRF  0  3
+; --Constante entera igual a 1
+  STC  1
+  ASG
+; --@(k)
+  SRF  0  4
+; --Constante entera igual a 2
+  STC  2
+  ASG
+; --@(z)
+  SRF  0  5
+; --Val(j)
+  SRF  0  3
+  DRF
+; --Val(k)
+  SRF  0  4
+  DRF
+  OSF  6  0 L1
+  ASG
+; --Val(z)
+  SRF  0  5
+  DRF
+  WRT  1
+; --Val(j)
+  SRF  0  3
+  DRF
+  WRT  1
+FIN:
+  LVP
+
