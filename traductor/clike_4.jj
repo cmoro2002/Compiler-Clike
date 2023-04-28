@@ -15,14 +15,11 @@ options {
 PARSER_BEGIN(clike_4)
 
 // TODO:
-// 	* Preguntar que tienen que hacer int2char y char2int por que creemos que nada
 //	* Crear diferentes bloques e ir juntandolos a medida que subimos el arbol
 // 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
 // 	* Arreglar paso de constantes por referencia
 //	* Codigo: Variables globales
 //  * 		  - hay un error al pasar por refernecia una variable no tendría que poner el DRF y lo pone
-//  * 		  - En una funcion si tienes un parametro por ref y quieres acceder a su valor hay que hacer dos DRF seguidos
-//  * 		  - referencias
 //  * 		  - profundidad en llamadas a funciones recursivas (tener un entero que diga en que profundidad estas e ir sumando / restando)
 
 
@@ -961,13 +958,30 @@ void Asig(CodeBlock block) : {
 
 }
 {
-	LOOKAHEAD(2) t=<tID> {simbolo = tabla.getSymbol(t.image); block.addComment("@(" + simbolo.name + ")"); block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);} <tIGUAL> a=Expresion(block) <tPCOMA> 
+	LOOKAHEAD(2) t=<tID> 
+	{
+		simbolo = tabla.getSymbol(t.image); 
+		block.addComment("@(" + simbolo.name + ")"); 
+		block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);
+		if (simbolo.parClass == Symbol.ParameterClass.REF) {
+			block.addInst(OpCode.DRF);
+		}
+	} 
+	<tIGUAL> a=Expresion(block) <tPCOMA> 
 	{
 		comprobarTiposAsignacion(simbolo,a);
 		block.addInst(OpCode.ASG);
 	}
 	|
-	LOOKAHEAD(2) t = <tID> 	{ simbolo = tabla.getSymbol(t.image); block.addComment("@(" + simbolo.name + ")"); block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);} 
+	LOOKAHEAD(2) t = <tID> 	
+	{ 
+		simbolo = tabla.getSymbol(t.image); 
+		block.addComment("@(" + simbolo.name + ")"); 
+		block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);
+		if (simbolo.parClass == Symbol.ParameterClass.REF) {
+			block.addInst(OpCode.DRF);
+		}
+	} 
 	vector(block) 
 	{
 		simbolo = tabla.getSymbol(t.image);
@@ -1558,6 +1572,9 @@ Attributes Primario(CodeBlock block): {
 		block.addComment("Val(" + simbolo.name + ")");
 		block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);
 		block.addInst(OpCode.DRF);
+		if (simbolo.parClass == Symbol.ParameterClass.REF) {
+			block.addInst(OpCode.DRF);
+		}
 		atributo = new Attributes(simbolo.type,Symbol.ParameterClass.NONE,t.image); 
 		return atributo;
 	}

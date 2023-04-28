@@ -6,6 +6,8 @@
 // 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
 // 	* Arreglar paso de constantes por referencia
 //	* Codigo: Variables globales
+//  * 		  - hay un error al pasar por refernecia una variable no tendría que poner el DRF y lo pone
+//  * 		  - En una funcion si tienes un parametro por ref y quieres acceder a su valor hay que hacer dos DRF seguidos
 //  * 		  - referencias
 //  * 		  - profundidad en llamadas a funciones recursivas (tener un entero que diga en que profundidad estas e ir sumando / restando)
 

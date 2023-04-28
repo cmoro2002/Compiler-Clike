@@ -28,9 +28,11 @@ L1:
 ; --Val(a)
   SRF  0  3
   DRF
+  DRF
   ASG
 ; --@(a)
   SRF  0  3
+  DRF
 ; --Constante entera igual a 3
   STC  3
   ASG
