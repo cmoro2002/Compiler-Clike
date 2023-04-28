@@ -17,35 +17,59 @@ ERROR:
 ; --Funcion suma (label: L1)
 L1:
 ; --Asignación de parametros
+; --Val(d)
+  SRF  0  6
+  ASGI
+; --Val(c)
+  SRF  0  5
+  ASGI
 ; --Val(b)
   SRF  0  4
   ASGI
 ; --Val(a)
   SRF  0  3
   ASGI
-; --@(ka)
+; --@(c)
   SRF  0  5
+  DRF
+; --Constante entera igual a 5
+  STC  5
+; --Constante entera igual a 15
+  STC 15
+  TMS
+  ASG
+; --@(ka)
+  SRF  0  7
 ; --Val(a)
   SRF  0  3
-  DRF
   DRF
   ASG
 ; --@(a)
   SRF  0  3
-  DRF
 ; --Constante entera igual a 3
   STC  3
   ASG
 ; --Val(ka)
-  SRF  0  5
+  SRF  0  7
   DRF
 ; --Val(b)
   SRF  0  4
+  DRF
   DRF
   PLUS
   CSF
   CSF
 MAIN:
+; --@(hola)
+  SRF  0  6
+; --Constante entera igual a 3
+  STC  3
+  ASG
+; --@(adios)
+  SRF  0  7
+; --Constante entera igual a 10
+  STC 10
+  ASG
 ; --@(j)
   SRF  0  3
 ; --Constante entera igual a 1
@@ -63,8 +87,14 @@ MAIN:
   DRF
 ; --Val(k)
   SRF  0  4
+; --Parametro por referencia
+; --Val(hola)
+  SRF  0  6
+; --Parametro por referencia
+; --Val(adios)
+  SRF  0  7
   DRF
-  OSF  6  0 L1
+  OSF  8  0 L1
   ASG
 ; --Val(z)
   SRF  0  5
@@ -74,6 +104,18 @@ MAIN:
   SRF  0  3
   DRF
   WRT  1
+  STC 10
+  WRT  0
+; --Val(k)
+  SRF  0  4
+  DRF
+  WRT  1
+; --Val(hola)
+  SRF  0  6
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
 FIN:
   LVP
 

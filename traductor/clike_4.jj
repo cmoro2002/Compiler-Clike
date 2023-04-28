@@ -19,7 +19,6 @@ PARSER_BEGIN(clike_4)
 // 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
 // 	* Arreglar paso de constantes por referencia
 //	* Codigo: Variables globales
-//  * 		  - hay un error al pasar por refernecia una variable no tendría que poner el DRF y lo pone
 //  * 		  - profundidad en llamadas a funciones recursivas (tener un entero que diga en que profundidad estas e ir sumando / restando)
 
 
@@ -763,7 +762,7 @@ Attributes LlamaFunc(CodeBlock block) : {
 			throw new ProcedureReturn(t.image);
 		}
 	}
-	<tLPARENTESIS> parametrosLlamada = PasoPar(block) <tRPARENTESIS> 
+	<tLPARENTESIS> parametrosLlamada = PasoPar(block, parametros) <tRPARENTESIS> 
 	{
 		comprobarParametros(parametros,parametrosLlamada);
 		int tamanyoOcupado = tabla.getFunctionSize();
@@ -794,7 +793,7 @@ void LlamaFuncYProced(CodeBlock block) : {
 			parametros = ((SymbolProcedure)simbolo).parList;
 		}
 	}
-	<tLPARENTESIS> parametrosLlamada = PasoPar(block) <tRPARENTESIS> 
+	<tLPARENTESIS> parametrosLlamada = PasoPar(block, parametros) <tRPARENTESIS> 
 	{
 		comprobarParametros(parametros,parametrosLlamada);
 		int tamanyoOcupado = tabla.getFunctionSize();
@@ -809,28 +808,37 @@ void LlamaFuncYProced(CodeBlock block) : {
 }
 
 
-ArrayList<Attributes> PasoPar(CodeBlock block) : {
+ArrayList<Attributes> PasoPar(CodeBlock block, ArrayList<Symbol> parametros) : {
 	Attributes a = null;
 	ArrayList<Attributes> parametrosLlamada = new ArrayList<Attributes>();
+	int cuenta = 0;
 }
 {
 	(a = Expresion(block)
 	{		
 		parametrosLlamada.add(a);
-		if (a.parClass == Symbol.ParameterClass.VAL) {
-			block.addInst(OpCode.DRF);
-		}
+		if (parametros.get(0).parClass == Symbol.ParameterClass.REF) {
+			block.removeLastInst();
+			block.addComment("Parametro por referencia");
+		} 
 	}
-	(PosiblesPar(parametrosLlamada, block)))?
+	(PosiblesPar(parametrosLlamada, block, parametros, cuenta)))?
 	{return parametrosLlamada;}
 }
 
 // Lista de posibles parametros separados por comas
-void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block) : {
+void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block, ArrayList<Symbol> parametros, int cuenta) : {
 	Attributes a = null;
 }
 {
-	(<tCOMA> a = Expresion(block) {parametrosLlamada.add(a);})*
+	(<tCOMA> a = Expresion(block) 
+	{
+		parametrosLlamada.add(a);
+		if (parametros.get(++cuenta).parClass == Symbol.ParameterClass.REF) {
+			block.removeLastInst();
+			block.addComment("Parametro por referencia");
+		} 
+	})*
 }
 
 //----------------------   DEFINICION    ----------------------
@@ -1562,7 +1570,7 @@ Attributes Primario(CodeBlock block): {
 		if (simbolo instanceof SymbolArray) {
 			a = ((SymbolArray)simbolo).baseType; 
 		}
-		return new Attributes(a,Symbol.ParameterClass.NONE,atributo.valInt); 
+		return new Attributes(a,simbolo.parClass,atributo.valInt); 
 	}
 	|	LOOKAHEAD(2) atributo = LlamaFunc(block) {return atributo;}
 	|	t = < tID > 
@@ -1575,7 +1583,7 @@ Attributes Primario(CodeBlock block): {
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
 			block.addInst(OpCode.DRF);
 		}
-		atributo = new Attributes(simbolo.type,Symbol.ParameterClass.NONE,t.image); 
+		atributo = new Attributes(simbolo.type,simbolo.parClass,t.image); 
 		return atributo;
 	}
 	| 	t = < tDIGITO > 
