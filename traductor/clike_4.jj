@@ -20,7 +20,7 @@ PARSER_BEGIN(clike_4)
 // 	* Arreglar paso de constantes por referencia
 //	* Codigo: Variables globales
 //  * 		  - profundidad en llamadas a funciones recursivas (tener un entero que diga en que profundidad estas e ir sumando / restando)
-
+//  * Añadir niveles
 
 package traductor;
 
@@ -47,6 +47,8 @@ public class clike_4 {
 			"main","int","bool","void","char","if","while","else","return","true","false"};
 	private static SymbolTable tabla = new SymbolTable(pals);
 	private static ErrorSemantico errSem = new ErrorSemantico();
+
+	public static int functionCounter = 1;
 	
 	public static int labelCounter = 1;
 
@@ -500,6 +502,7 @@ void Func(CodeBlock bloqueGeneral) : {
 		block.addLabel(label);
 		// Añadir la definición de la función a la tabla e insertar nuevo bloque
 		sFunc = new SymbolFunction(t.image,parametros,tipo, label);
+		sFunc.nivel = functionCounter++;
 		System.out.println(tabla.toString());
 		try {
 			tabla.insertSymbol(sFunc);
@@ -552,6 +555,7 @@ void Proced(CodeBlock bloqueGeneral) : {
 		block.addLabel(label);
 		// Añadir la definición de la función a la tabla e insertar nuevo bloque
 		sProc = new SymbolProcedure(t.image,parametros, label);
+		sProc.nivel = functionCounter++;
 		System.out.println(tabla.toString());
 		try {
 			tabla.insertSymbol(sProc);
@@ -771,7 +775,8 @@ Attributes LlamaFunc(CodeBlock block) : {
 		} else if (simbolo instanceof SymbolProcedure) {
 			etiqueta = ((SymbolProcedure)simbolo).label;
 		}
-		block.addOSFInst(tamanyoOcupado,simbolo.nivel, etiqueta);
+		// TODO: Asignar el nivel, que es nivel de la funcion menos nivel actual
+		block.addOSFInst(tamanyoOcupado,simbolo.nivel - , etiqueta);
 		return new Attributes(tipo,Symbol.ParameterClass.NONE,null);
 	}
 }
