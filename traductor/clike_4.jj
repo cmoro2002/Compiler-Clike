@@ -532,7 +532,6 @@ void Func(CodeBlock bloqueGeneral) : {
 	<tRLLAVE>
 	{ tabla.removeBlock(); 
 		block.addInst(OpCode.CSF);
-		block.addInst(OpCode.CSF);
 		bloqueGeneral.addBlock(block);
 		escribirBloque(block);
 	}
@@ -586,6 +585,7 @@ void ReturnValor(Symbol.Types tipo, CodeBlock block) : {
 	<tRETURN> a = Expresion(block) <tPCOMA>
 	{
 		comprobarTipoReturn(a,tipo);
+		block.addInst(OpCode.CSF);
 	}
 }
 
