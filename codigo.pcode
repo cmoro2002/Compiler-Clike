@@ -14,60 +14,88 @@ ERROR:
   STC 10
   WRT  0
   JMP FIN
-; --Procedimiento vaBien (label: L1)
+; --Funcion aMay (label: L1)
 L1:
-  STC 72
-  WRT  0
-  STC 111
-  WRT  0
-  STC 108
-  WRT  0
-  STC 97
-  WRT  0
-  CSF
-; --Funcion suma (label: L2)
-L2:
 ; --Asignación de parametros
-; --Val(a)
+; --Val(c)
   SRF  0  3
   ASGI
-; --@(saludos)
-  SRF  1  3
-; --Constante entera igual a 2
-  STC  2
+; --@(difAsciis)
+  SRF  0  5
+; --Constante char
+  STC 97
+; --Constante char
+  STC 65
+  SBT
   ASG
-; --@(a)
+; --@(ascii)
+  SRF  0  4
+; --Val(c)
   SRF  0  3
-; --Constante entera igual a 4
-  STC  4
-  ASG
-  OSF  3  1 L1
-; --Val(saludos)
-  SRF  1  3
   DRF
-; --Constante entera igual a 5
-  STC  5
-  PLUS
+  ASG
+; --Estructura IF
+; --Constante char
+  STC 97
+; --Val(ascii)
+  SRF  0  4
+  DRF
+  LTE
+; --Val(ascii)
+  SRF  0  4
+  DRF
+; --Constante char
+  STC 122
+  LTE
+  AND
+  STC  1
+  EQ
+  JMF L2
+; --Caso True
+; --Val(ascii)
+  SRF  0  4
+  DRF
+; --Val(difAsciis)
+  SRF  0  5
+  DRF
+  SBT
   CSF
+; --Salto al final del if
+  JMP L3
+L2:
+; --Caso False
+; --Val(c)
+  SRF  0  3
+  DRF
+  CSF
+L3:
   CSF
 MAIN:
-; --@(saludos)
-  SRF  0  3
-; --Constante entera igual a 3
-  STC  3
-  ASG
-; --@(j)
-  SRF  0  6
-; --Constante entera igual a 1
-  STC  1
-  ASG
-; --@(z)
-  SRF  0  7
-; --Val(j)
-  SRF  0  6
+  SRF  0  4
+; --Estructura WHILE
+L5:
+; --Val(c)
+  SRF  0  4
   DRF
-  OSF  8  0 L2
-  ASG
+; --Constante entera igual a 0
+  STC  0
+  GTE
+  STC  1
+  EQ
+  JMF L4
+; --Bucle True
+; --Val(c)
+  SRF  0  4
+  DRF
+  OSF  5  0 L1
+  WRT  0
+  SRF  0  4
+; --Salto al inicio del while
+  JMP L5
+; --Final del while
+L4:
+  STC 10
+  WRT  0
 FIN:
   LVP
 

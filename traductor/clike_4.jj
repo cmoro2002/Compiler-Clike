@@ -51,9 +51,16 @@ public class clike_4 {
 	public static int functionCounter = 1;
 	
 	public static int labelCounter = 1;
+	public static String nombreFichero = "";
 
     public static void main(String[] args) {
     	clike_4 parser = null;
+		// El nombre del fichero será el primer parametro
+		nombreFichero = args[0];
+		// Quitarle los dos ultimos caracteres
+		nombreFichero = nombreFichero.substring(0, nombreFichero.length() - 2);
+		// Añadir al final del fichero ".pcode"
+		nombreFichero = nombreFichero + "pcode";
     	
     	try {
 	    	if(args.length == 0) {
@@ -236,7 +243,7 @@ public class clike_4 {
 	// funcion para escribir el bloque de codigo en el fichero codigo.p
 	public static void escribirBloque(CodeBlock bloque) {
 		try {
-			FileWriter fichero = new FileWriter("codigo.pcode");
+			FileWriter fichero = new FileWriter(nombreFichero);
 			PrintWriter pw = new PrintWriter(fichero);
 			pw.println(bloque.toString());
 			fichero.close();
