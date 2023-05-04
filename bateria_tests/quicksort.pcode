@@ -77,6 +77,44 @@ L2:
 L4:
 ; --Asignación de parametros
 ; --Val(t)
+  SRF  0 22
+  ASGI
+  SRF  0 21
+  ASGI
+  SRF  0 20
+  ASGI
+  SRF  0 19
+  ASGI
+  SRF  0 18
+  ASGI
+  SRF  0 17
+  ASGI
+  SRF  0 16
+  ASGI
+  SRF  0 15
+  ASGI
+  SRF  0 14
+  ASGI
+  SRF  0 13
+  ASGI
+  SRF  0 12
+  ASGI
+  SRF  0 11
+  ASGI
+  SRF  0 10
+  ASGI
+  SRF  0  9
+  ASGI
+  SRF  0  8
+  ASGI
+  SRF  0  7
+  ASGI
+  SRF  0  6
+  ASGI
+  SRF  0  5
+  ASGI
+  SRF  0  4
+  ASGI
   SRF  0  3
   ASGI
 ; --@(i)

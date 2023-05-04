@@ -156,6 +156,206 @@ L5:
 L9:
 ; --Asignación de parametros
 ; --Val(r)
+  SRF  0 104
+  ASGI
+  SRF  0 103
+  ASGI
+  SRF  0 102
+  ASGI
+  SRF  0 101
+  ASGI
+  SRF  0 100
+  ASGI
+  SRF  0 99
+  ASGI
+  SRF  0 98
+  ASGI
+  SRF  0 97
+  ASGI
+  SRF  0 96
+  ASGI
+  SRF  0 95
+  ASGI
+  SRF  0 94
+  ASGI
+  SRF  0 93
+  ASGI
+  SRF  0 92
+  ASGI
+  SRF  0 91
+  ASGI
+  SRF  0 90
+  ASGI
+  SRF  0 89
+  ASGI
+  SRF  0 88
+  ASGI
+  SRF  0 87
+  ASGI
+  SRF  0 86
+  ASGI
+  SRF  0 85
+  ASGI
+  SRF  0 84
+  ASGI
+  SRF  0 83
+  ASGI
+  SRF  0 82
+  ASGI
+  SRF  0 81
+  ASGI
+  SRF  0 80
+  ASGI
+  SRF  0 79
+  ASGI
+  SRF  0 78
+  ASGI
+  SRF  0 77
+  ASGI
+  SRF  0 76
+  ASGI
+  SRF  0 75
+  ASGI
+  SRF  0 74
+  ASGI
+  SRF  0 73
+  ASGI
+  SRF  0 72
+  ASGI
+  SRF  0 71
+  ASGI
+  SRF  0 70
+  ASGI
+  SRF  0 69
+  ASGI
+  SRF  0 68
+  ASGI
+  SRF  0 67
+  ASGI
+  SRF  0 66
+  ASGI
+  SRF  0 65
+  ASGI
+  SRF  0 64
+  ASGI
+  SRF  0 63
+  ASGI
+  SRF  0 62
+  ASGI
+  SRF  0 61
+  ASGI
+  SRF  0 60
+  ASGI
+  SRF  0 59
+  ASGI
+  SRF  0 58
+  ASGI
+  SRF  0 57
+  ASGI
+  SRF  0 56
+  ASGI
+  SRF  0 55
+  ASGI
+  SRF  0 54
+  ASGI
+  SRF  0 53
+  ASGI
+  SRF  0 52
+  ASGI
+  SRF  0 51
+  ASGI
+  SRF  0 50
+  ASGI
+  SRF  0 49
+  ASGI
+  SRF  0 48
+  ASGI
+  SRF  0 47
+  ASGI
+  SRF  0 46
+  ASGI
+  SRF  0 45
+  ASGI
+  SRF  0 44
+  ASGI
+  SRF  0 43
+  ASGI
+  SRF  0 42
+  ASGI
+  SRF  0 41
+  ASGI
+  SRF  0 40
+  ASGI
+  SRF  0 39
+  ASGI
+  SRF  0 38
+  ASGI
+  SRF  0 37
+  ASGI
+  SRF  0 36
+  ASGI
+  SRF  0 35
+  ASGI
+  SRF  0 34
+  ASGI
+  SRF  0 33
+  ASGI
+  SRF  0 32
+  ASGI
+  SRF  0 31
+  ASGI
+  SRF  0 30
+  ASGI
+  SRF  0 29
+  ASGI
+  SRF  0 28
+  ASGI
+  SRF  0 27
+  ASGI
+  SRF  0 26
+  ASGI
+  SRF  0 25
+  ASGI
+  SRF  0 24
+  ASGI
+  SRF  0 23
+  ASGI
+  SRF  0 22
+  ASGI
+  SRF  0 21
+  ASGI
+  SRF  0 20
+  ASGI
+  SRF  0 19
+  ASGI
+  SRF  0 18
+  ASGI
+  SRF  0 17
+  ASGI
+  SRF  0 16
+  ASGI
+  SRF  0 15
+  ASGI
+  SRF  0 14
+  ASGI
+  SRF  0 13
+  ASGI
+  SRF  0 12
+  ASGI
+  SRF  0 11
+  ASGI
+  SRF  0 10
+  ASGI
+  SRF  0  9
+  ASGI
+  SRF  0  8
+  ASGI
+  SRF  0  7
+  ASGI
+  SRF  0  6
+  ASGI
+  SRF  0  5
+  ASGI
   SRF  0  4
   ASGI
 ; --Val(s)
@@ -312,6 +512,206 @@ L10:
 L16:
 ; --Asignación de parametros
 ; --Val(r)
+  SRF  0 104
+  ASGI
+  SRF  0 103
+  ASGI
+  SRF  0 102
+  ASGI
+  SRF  0 101
+  ASGI
+  SRF  0 100
+  ASGI
+  SRF  0 99
+  ASGI
+  SRF  0 98
+  ASGI
+  SRF  0 97
+  ASGI
+  SRF  0 96
+  ASGI
+  SRF  0 95
+  ASGI
+  SRF  0 94
+  ASGI
+  SRF  0 93
+  ASGI
+  SRF  0 92
+  ASGI
+  SRF  0 91
+  ASGI
+  SRF  0 90
+  ASGI
+  SRF  0 89
+  ASGI
+  SRF  0 88
+  ASGI
+  SRF  0 87
+  ASGI
+  SRF  0 86
+  ASGI
+  SRF  0 85
+  ASGI
+  SRF  0 84
+  ASGI
+  SRF  0 83
+  ASGI
+  SRF  0 82
+  ASGI
+  SRF  0 81
+  ASGI
+  SRF  0 80
+  ASGI
+  SRF  0 79
+  ASGI
+  SRF  0 78
+  ASGI
+  SRF  0 77
+  ASGI
+  SRF  0 76
+  ASGI
+  SRF  0 75
+  ASGI
+  SRF  0 74
+  ASGI
+  SRF  0 73
+  ASGI
+  SRF  0 72
+  ASGI
+  SRF  0 71
+  ASGI
+  SRF  0 70
+  ASGI
+  SRF  0 69
+  ASGI
+  SRF  0 68
+  ASGI
+  SRF  0 67
+  ASGI
+  SRF  0 66
+  ASGI
+  SRF  0 65
+  ASGI
+  SRF  0 64
+  ASGI
+  SRF  0 63
+  ASGI
+  SRF  0 62
+  ASGI
+  SRF  0 61
+  ASGI
+  SRF  0 60
+  ASGI
+  SRF  0 59
+  ASGI
+  SRF  0 58
+  ASGI
+  SRF  0 57
+  ASGI
+  SRF  0 56
+  ASGI
+  SRF  0 55
+  ASGI
+  SRF  0 54
+  ASGI
+  SRF  0 53
+  ASGI
+  SRF  0 52
+  ASGI
+  SRF  0 51
+  ASGI
+  SRF  0 50
+  ASGI
+  SRF  0 49
+  ASGI
+  SRF  0 48
+  ASGI
+  SRF  0 47
+  ASGI
+  SRF  0 46
+  ASGI
+  SRF  0 45
+  ASGI
+  SRF  0 44
+  ASGI
+  SRF  0 43
+  ASGI
+  SRF  0 42
+  ASGI
+  SRF  0 41
+  ASGI
+  SRF  0 40
+  ASGI
+  SRF  0 39
+  ASGI
+  SRF  0 38
+  ASGI
+  SRF  0 37
+  ASGI
+  SRF  0 36
+  ASGI
+  SRF  0 35
+  ASGI
+  SRF  0 34
+  ASGI
+  SRF  0 33
+  ASGI
+  SRF  0 32
+  ASGI
+  SRF  0 31
+  ASGI
+  SRF  0 30
+  ASGI
+  SRF  0 29
+  ASGI
+  SRF  0 28
+  ASGI
+  SRF  0 27
+  ASGI
+  SRF  0 26
+  ASGI
+  SRF  0 25
+  ASGI
+  SRF  0 24
+  ASGI
+  SRF  0 23
+  ASGI
+  SRF  0 22
+  ASGI
+  SRF  0 21
+  ASGI
+  SRF  0 20
+  ASGI
+  SRF  0 19
+  ASGI
+  SRF  0 18
+  ASGI
+  SRF  0 17
+  ASGI
+  SRF  0 16
+  ASGI
+  SRF  0 15
+  ASGI
+  SRF  0 14
+  ASGI
+  SRF  0 13
+  ASGI
+  SRF  0 12
+  ASGI
+  SRF  0 11
+  ASGI
+  SRF  0 10
+  ASGI
+  SRF  0  9
+  ASGI
+  SRF  0  8
+  ASGI
+  SRF  0  7
+  ASGI
+  SRF  0  6
+  ASGI
+  SRF  0  5
+  ASGI
   SRF  0  4
   ASGI
 ; --Val(s)
@@ -475,6 +875,206 @@ L23:
   SRF  0  4
   ASGI
 ; --Val(s)
+  SRF  0 103
+  ASGI
+  SRF  0 102
+  ASGI
+  SRF  0 101
+  ASGI
+  SRF  0 100
+  ASGI
+  SRF  0 99
+  ASGI
+  SRF  0 98
+  ASGI
+  SRF  0 97
+  ASGI
+  SRF  0 96
+  ASGI
+  SRF  0 95
+  ASGI
+  SRF  0 94
+  ASGI
+  SRF  0 93
+  ASGI
+  SRF  0 92
+  ASGI
+  SRF  0 91
+  ASGI
+  SRF  0 90
+  ASGI
+  SRF  0 89
+  ASGI
+  SRF  0 88
+  ASGI
+  SRF  0 87
+  ASGI
+  SRF  0 86
+  ASGI
+  SRF  0 85
+  ASGI
+  SRF  0 84
+  ASGI
+  SRF  0 83
+  ASGI
+  SRF  0 82
+  ASGI
+  SRF  0 81
+  ASGI
+  SRF  0 80
+  ASGI
+  SRF  0 79
+  ASGI
+  SRF  0 78
+  ASGI
+  SRF  0 77
+  ASGI
+  SRF  0 76
+  ASGI
+  SRF  0 75
+  ASGI
+  SRF  0 74
+  ASGI
+  SRF  0 73
+  ASGI
+  SRF  0 72
+  ASGI
+  SRF  0 71
+  ASGI
+  SRF  0 70
+  ASGI
+  SRF  0 69
+  ASGI
+  SRF  0 68
+  ASGI
+  SRF  0 67
+  ASGI
+  SRF  0 66
+  ASGI
+  SRF  0 65
+  ASGI
+  SRF  0 64
+  ASGI
+  SRF  0 63
+  ASGI
+  SRF  0 62
+  ASGI
+  SRF  0 61
+  ASGI
+  SRF  0 60
+  ASGI
+  SRF  0 59
+  ASGI
+  SRF  0 58
+  ASGI
+  SRF  0 57
+  ASGI
+  SRF  0 56
+  ASGI
+  SRF  0 55
+  ASGI
+  SRF  0 54
+  ASGI
+  SRF  0 53
+  ASGI
+  SRF  0 52
+  ASGI
+  SRF  0 51
+  ASGI
+  SRF  0 50
+  ASGI
+  SRF  0 49
+  ASGI
+  SRF  0 48
+  ASGI
+  SRF  0 47
+  ASGI
+  SRF  0 46
+  ASGI
+  SRF  0 45
+  ASGI
+  SRF  0 44
+  ASGI
+  SRF  0 43
+  ASGI
+  SRF  0 42
+  ASGI
+  SRF  0 41
+  ASGI
+  SRF  0 40
+  ASGI
+  SRF  0 39
+  ASGI
+  SRF  0 38
+  ASGI
+  SRF  0 37
+  ASGI
+  SRF  0 36
+  ASGI
+  SRF  0 35
+  ASGI
+  SRF  0 34
+  ASGI
+  SRF  0 33
+  ASGI
+  SRF  0 32
+  ASGI
+  SRF  0 31
+  ASGI
+  SRF  0 30
+  ASGI
+  SRF  0 29
+  ASGI
+  SRF  0 28
+  ASGI
+  SRF  0 27
+  ASGI
+  SRF  0 26
+  ASGI
+  SRF  0 25
+  ASGI
+  SRF  0 24
+  ASGI
+  SRF  0 23
+  ASGI
+  SRF  0 22
+  ASGI
+  SRF  0 21
+  ASGI
+  SRF  0 20
+  ASGI
+  SRF  0 19
+  ASGI
+  SRF  0 18
+  ASGI
+  SRF  0 17
+  ASGI
+  SRF  0 16
+  ASGI
+  SRF  0 15
+  ASGI
+  SRF  0 14
+  ASGI
+  SRF  0 13
+  ASGI
+  SRF  0 12
+  ASGI
+  SRF  0 11
+  ASGI
+  SRF  0 10
+  ASGI
+  SRF  0  9
+  ASGI
+  SRF  0  8
+  ASGI
+  SRF  0  7
+  ASGI
+  SRF  0  6
+  ASGI
+  SRF  0  5
+  ASGI
+  SRF  0  4
+  ASGI
   SRF  0  3
   ASGI
 ; --@(i)

@@ -530,6 +530,17 @@ void Func(CodeBlock bloqueGeneral) : {
 			// Obtener el simbolo del parametro
 			Symbol parametro = parametros.get(i);
 			block.addComment("Val(" + parametro.name + ")");
+			if (parametro instanceof SymbolArray) {
+				SymbolArray array = (SymbolArray) parametro;
+				if (parametro.parClass == Symbol.ParameterClass.VAL) {
+					// Para cada uno de los componentes leer su valor
+					for (int j = array.maxInd; j > 0; j--) {
+						block.addInst(OpCode.SRF, 0, j + i + 3);
+						block.addInst(OpCode.ASGI);
+					}
+				}
+			}
+			
 			block.addInst(OpCode.SRF, 0, i + 3);
 			block.addInst(OpCode.ASGI);
 		}
@@ -583,6 +594,16 @@ void Proced(CodeBlock bloqueGeneral) : {
 			// Obtener el simbolo del parametro
 			Symbol parametro = parametros.get(i);
 			block.addComment("Val(" + parametro.name + ")");
+			if (parametro instanceof SymbolArray) {
+				SymbolArray array = (SymbolArray) parametro;
+				if (parametro.parClass == Symbol.ParameterClass.VAL) {
+					// Para cada uno de los componentes leer su valor
+					for (int j = array.maxInd; j > 0; j--) {
+						block.addInst(OpCode.SRF, 0, j + i + 3);
+						block.addInst(OpCode.ASGI);
+					}
+				}
+			}
 			block.addInst(OpCode.SRF, 0, i + 3);
 			block.addInst(OpCode.ASGI);
 		}
