@@ -1,6 +1,9 @@
+int saludos;
+
 int suma(int a, int &b, int &c, int d) {
     int ka;
     c = 5*15;
+    
     ka = a;
     a = 3;
     a = suma(a,b,c,d);

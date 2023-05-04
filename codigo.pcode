@@ -14,306 +14,60 @@ ERROR:
   STC 10
   WRT  0
   JMP FIN
-; --Funcion fact (label: L1)
+; --Procedimiento vaBien (label: L1)
 L1:
+  STC 72
+  WRT  0
+  STC 111
+  WRT  0
+  STC 108
+  WRT  0
+  STC 97
+  WRT  0
+  CSF
+; --Funcion suma (label: L2)
+L2:
 ; --Asignación de parametros
-; --Val(m)
+; --Val(a)
   SRF  0  3
   ASGI
-; --Estructura IF
-; --Val(m)
+; --@(saludos)
+  SRF  1  3
+; --Constante entera igual a 2
+  STC  2
+  ASG
+; --@(a)
   SRF  0  3
+; --Constante entera igual a 4
+  STC  4
+  ASG
+  OSF  3  1 L1
+; --Val(saludos)
+  SRF  1  3
   DRF
-; --Constante entera igual a 1
-  STC  1
-  EQ
-  STC  1
-  EQ
-  JMF L2
-; --Caso True
-; --Constante entera igual a 1
-  STC  1
+; --Constante entera igual a 5
+  STC  5
+  PLUS
   CSF
-; --Salto al final del if
-  JMP L3
-L2:
-; --Caso False
-; --Val(m)
-  SRF  0  3
-  DRF
-; --Val(m)
-  SRF  0  3
-  DRF
-; --Constante entera igual a 1
-  STC  1
-  SBT
-  OSF  4  0 L1
-  TMS
-  CSF
-L3:
   CSF
 MAIN:
-  STC 10
-  WRT  0
-  STC 67
-  WRT  0
-  STC 97
-  WRT  0
-  STC 108
-  WRT  0
-  STC 99
-  WRT  0
-  STC 117
-  WRT  0
-  STC 108
-  WRT  0
-  STC 97
-  WRT  0
-  STC 32
-  WRT  0
-  STC 107
-  WRT  0
-  STC 33
-  WRT  0
-  STC 32
-  WRT  0
-  STC 112
-  WRT  0
-  STC 97
-  WRT  0
-  STC 114
-  WRT  0
-  STC 97
-  WRT  0
-  STC 32
-  WRT  0
-  STC 107
-  WRT  0
-  STC 61
-  WRT  0
-  STC 49
-  WRT  0
-  STC 46
-  WRT  0
-  STC 46
-  WRT  0
-  STC 50
-  WRT  0
-  STC 48
-  WRT  0
-  STC 46
-  WRT  0
-  STC 10
-  WRT  0
-  STC 10
-  WRT  0
-  STC 72
-  WRT  0
-  STC 97
-  WRT  0
-  STC 98
-  WRT  0
-  STC 114
-  WRT  0
-  STC 225
-  WRT  0
-  STC 32
-  WRT  0
-  STC 77
-  WRT  0
-  STC 65
-  WRT  0
-  STC 84
-  WRT  0
-  STC 72
-  WRT  0
-  STC 32
-  WRT  0
-  STC 111
-  WRT  0
-  STC 118
-  WRT  0
-  STC 101
-  WRT  0
-  STC 114
-  WRT  0
-  STC 102
-  WRT  0
-  STC 108
-  WRT  0
-  STC 111
-  WRT  0
-  STC 119
-  WRT  0
-  STC 32
-  WRT  0
-  STC 101
-  WRT  0
-  STC 110
-  WRT  0
-  STC 32
-  WRT  0
-  STC 49
-  WRT  0
-  STC 51
-  WRT  0
-  STC 33
-  WRT  0
-  STC 32
-  WRT  0
-  STC 112
-  WRT  0
-  STC 111
-  WRT  0
-  STC 114
-  WRT  0
-  STC 113
-  WRT  0
-  STC 117
-  WRT  0
-  STC 101
-  WRT  0
-  STC 32
-  WRT  0
-  STC 108
-  WRT  0
-  STC 111
-  WRT  0
-  STC 115
-  WRT  0
-  STC 32
-  WRT  0
-  STC 101
-  WRT  0
-  STC 110
-  WRT  0
-  STC 116
-  WRT  0
-  STC 101
-  WRT  0
-  STC 114
-  WRT  0
-  STC 111
-  WRT  0
-  STC 115
-  WRT  0
-  STC 32
-  WRT  0
-  STC 101
-  WRT  0
-  STC 110
-  WRT  0
-  STC 32
-  WRT  0
-  STC 108
-  WRT  0
-  STC 97
-  WRT  0
-  STC 32
-  WRT  0
-  STC 109
-  WRT  0
-  STC 225
-  WRT  0
-  STC 113
-  WRT  0
-  STC 117
-  WRT  0
-  STC 105
-  WRT  0
-  STC 110
-  WRT  0
-  STC 97
-  WRT  0
-  STC 32
-  WRT  0
-  STC 112
-  WRT  0
-  STC 32
-  WRT  0
-  STC 115
-  WRT  0
-  STC 111
-  WRT  0
-  STC 110
-  WRT  0
-  STC 32
-  WRT  0
-  STC 100
-  WRT  0
-  STC 101
-  WRT  0
-  STC 32
-  WRT  0
-  STC 52
-  WRT  0
-  STC 32
-  WRT  0
-  STC 98
-  WRT  0
-  STC 121
-  WRT  0
-  STC 116
-  WRT  0
-  STC 101
-  WRT  0
-  STC 115
-  WRT  0
-  STC 46
-  WRT  0
-  STC 10
-  WRT  0
-  STC 10
-  WRT  0
-; --@(n)
-  SRF -1  4
+; --@(saludos)
+  SRF  0  3
+; --Constante entera igual a 3
+  STC  3
+  ASG
+; --@(j)
+  SRF  0  6
 ; --Constante entera igual a 1
   STC  1
   ASG
-; --Estructura WHILE
-L5:
-; --Val(n)
-  SRF -1  4
+; --@(z)
+  SRF  0  7
+; --Val(j)
+  SRF  0  6
   DRF
-; --Constante entera igual a 20
-  STC 20
-  LTE
-  STC  1
-  EQ
-  JMF L4
-; --Bucle True
-; --Val(n)
-  SRF -1  4
-  DRF
-  WRT  1
-  STC 33
-  WRT  0
-  STC 32
-  WRT  0
-  STC 61
-  WRT  0
-  STC 32
-  WRT  0
-; --Val(n)
-  SRF -1  4
-  DRF
-  OSF  3  0 L1
-  WRT  1
-  STC 10
-  WRT  0
-; --@(n)
-  SRF -1  4
-; --Val(n)
-  SRF -1  4
-  DRF
-; --Constante entera igual a 1
-  STC  1
-  PLUS
+  OSF  8  0 L2
   ASG
-; --Salto al inicio del while
-  JMP L5
-; --Final del while
-L4:
 FIN:
   LVP
 

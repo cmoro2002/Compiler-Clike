@@ -436,8 +436,11 @@ void Programa() : {
 	CodeBlock block = new CodeBlock();
 }
 {
-	{block.addInst(OpCode.ENP, "MAIN");
-	escribirError(block);}
+	{
+		//tabla.insertBlock();
+		block.addInst(OpCode.ENP, "MAIN");
+		escribirError(block);
+	}
 	(LOOKAHEAD(3) FuncYDeclaracion(block))*
 	Main(block)
 	<EOF>
@@ -445,6 +448,7 @@ void Programa() : {
 		block.addLabel("FIN");
 		block.addInst(OpCode.LVP);
 		escribirBloque(block);
+		//tabla.removeBlock();
 	}
 }
 
@@ -465,12 +469,12 @@ void Funcs(CodeBlock block) : {}
 void Main(CodeBlock block) : {}
 {
 	{block.addLabel("MAIN");}
-	{ tabla.insertBlock(); }
+	
 	<tVOID> <tMAIN> <tLPARENTESIS> <tRPARENTESIS> <tLLLAVE> 
 	(Def(block))*
 	(CodigoSinDSinRet(block))*
 	<tRLLAVE>
-	{ tabla.removeBlock(); }
+	
 }
 
 // Tipos validos para devolver en funciones * no void *
@@ -776,7 +780,7 @@ Attributes LlamaFunc(CodeBlock block) : {
 			etiqueta = ((SymbolProcedure)simbolo).label;
 		}
 		// TODO: Asignar el nivel, que es nivel de la funcion menos nivel actual
-		block.addOSFInst(tamanyoOcupado,simbolo.nivel - , etiqueta);
+		block.addOSFInst(tamanyoOcupado,tabla.level - simbolo.nivel, etiqueta);
 		return new Attributes(tipo,Symbol.ParameterClass.NONE,null);
 	}
 }
@@ -807,7 +811,7 @@ void LlamaFuncYProced(CodeBlock block) : {
 		} else if (simbolo instanceof SymbolProcedure) {
 			etiqueta = ((SymbolProcedure)simbolo).label;
 		}
-		block.addOSFInst(tamanyoOcupado - 1,simbolo.nivel, etiqueta);
+		block.addOSFInst(tamanyoOcupado - 1,tabla.level - simbolo.nivel, etiqueta);
 	}
 
 }
@@ -975,7 +979,7 @@ void Asig(CodeBlock block) : {
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		block.addComment("@(" + simbolo.name + ")"); 
-		block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);
+		block.addInst(OpCode.SRF,tabla.level - simbolo.nivel,simbolo.posicionPila);
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
 			block.addInst(OpCode.DRF);
 		}
@@ -990,7 +994,7 @@ void Asig(CodeBlock block) : {
 	{ 
 		simbolo = tabla.getSymbol(t.image); 
 		block.addComment("@(" + simbolo.name + ")"); 
-		block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);
+		block.addInst(OpCode.SRF,tabla.level - simbolo.nivel,simbolo.posicionPila);
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
 			block.addInst(OpCode.DRF);
 		}
@@ -1278,7 +1282,7 @@ void ReadN(CodeBlock block) : {
 	<tREAD> <tLPARENTESIS> t=<tID> (vector(block) {esVector = true;})? 
 	{
 		simbolo = tabla.getSymbol(t.image); 
-		block.addInst(OpCode.SRF, simbolo.nivel - 1, simbolo.posicionPila);
+		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
 		if (esVector) {
 			if (simbolo instanceof SymbolArray) {
 				// Ver de que tipo es el vector
@@ -1313,7 +1317,7 @@ void ListaRead(CodeBlock block) : {
 	(<tCOMA> t=<tID> (vector(block) {esVector = true;})? ListaRead(block) {simbolo = tabla.getSymbol(t.image); comprobarTipoValido(simbolo);}
 	{
 		simbolo = tabla.getSymbol(t.image); 
-		block.addInst(OpCode.SRF, simbolo.nivel - 1, simbolo.posicionPila);
+		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
 		if (esVector) {
 			if (simbolo instanceof SymbolArray) {
 				// Ver de que tipo es el vector
@@ -1564,7 +1568,7 @@ Attributes Primario(CodeBlock block): {
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		block.addComment("Val(" + simbolo.name + ")");
-		block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);
+		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel,simbolo.posicionPila);
 	}
 	 < tLCORCHETE > atributo = Expresion(block) < tRCORCHETE >
 	{
@@ -1583,7 +1587,7 @@ Attributes Primario(CodeBlock block): {
 		// Caso de una variable
 		simbolo = tabla.getSymbol(t.image); 
 		block.addComment("Val(" + simbolo.name + ")");
-		block.addInst(OpCode.SRF,simbolo.nivel - 1,simbolo.posicionPila);
+		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel,simbolo.posicionPila);
 		block.addInst(OpCode.DRF);
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
 			block.addInst(OpCode.DRF);

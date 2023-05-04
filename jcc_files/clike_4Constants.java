@@ -4,9 +4,8 @@
 // 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
 // 	* Arreglar paso de constantes por referencia
 //	* Codigo: Variables globales
-//  * 		  - hay un error al pasar por refernecia una variable no tendría que poner el DRF y lo pone
 //  * 		  - profundidad en llamadas a funciones recursivas (tener un entero que diga en que profundidad estas e ir sumando / restando)
-
+//  * Añadir niveles
 
 package traductor;
 
