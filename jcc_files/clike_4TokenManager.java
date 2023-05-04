@@ -5,7 +5,7 @@
 // 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
 // 	* Arreglar paso de constantes por referencia
 //	* Codigo: Variables globales
-//  * 		  - profundidad en llamadas a funciones recursivas (tener un entero que diga en que profundidad estas e ir sumando / restando)
+// 		- Hay un STC en medio de la nada en criba_eratostenes
 //  * Añadir niveles
 
 package traductor;

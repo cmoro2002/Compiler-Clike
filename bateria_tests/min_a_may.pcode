@@ -1,0 +1,99 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Funcion aMay (label: L1)
+L1:
+; --Asignación de parametros
+; --Val(c)
+  SRF  0  3
+  ASGI
+; --@(difAsciis)
+  SRF  0  5
+; --Constante char
+  STC 97
+; --Constante char
+  STC 65
+  SBT
+  ASG
+; --@(ascii)
+  SRF  0  4
+; --Val(c)
+  SRF  0  3
+  DRF
+  ASG
+; --Estructura IF
+; --Constante char
+  STC 97
+; --Val(ascii)
+  SRF  0  4
+  DRF
+  LTE
+; --Val(ascii)
+  SRF  0  4
+  DRF
+; --Constante char
+  STC 122
+  LTE
+  AND
+  JMF L2
+; --Caso True
+; --Val(ascii)
+  SRF  0  4
+  DRF
+; --Val(difAsciis)
+  SRF  0  5
+  DRF
+  SBT
+  CSF
+; --Salto al final del if
+  JMP L3
+L2:
+; --Caso False
+; --Val(c)
+  SRF  0  3
+  DRF
+  CSF
+L3:
+  CSF
+MAIN:
+  SRF  0  3
+  RD  0
+; --Estructura WHILE
+L5:
+; --Val(c)
+  SRF  0  3
+  DRF
+; --Constante entera igual a 0
+  STC  0
+  GTE
+  JMF L4
+; --Bucle True
+; --Val(c)
+  SRF  0  3
+  DRF
+  OSF  4  0 L1
+  WRT  0
+  SRF  0  3
+  RD  0
+; --Salto al inicio del while
+  JMP L5
+; --Final del while
+L4:
+  STC 10
+  WRT  0
+FIN:
+  LVP
+

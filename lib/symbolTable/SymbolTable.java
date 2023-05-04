@@ -87,8 +87,15 @@ public class SymbolTable {
                     // Obtener el simbolo como instancia de Array
                     SymbolArray array = (SymbolArray) symbol;
                     // Obtener el tamaño del array
-                    int arraySize = array.maxInd + 1;
+                    int arraySize;
+                    if (symbol.parClass == Symbol.ParameterClass.REF) {
+                        arraySize = 1;
+                    } else {
+                        arraySize = array.maxInd + 1;
+                    }
                     offset += arraySize;
+                } else if (symbol instanceof SymbolFunction || symbol instanceof SymbolProcedure) {
+                    // NO SUMAR
                 } else {
                     offset++;
                 }
@@ -105,7 +112,7 @@ public class SymbolTable {
         HashMap<String, Symbol> currentBlock = st.get(st.size() - 1);
         // Leer cuantos símbolos hay en el bloque actual, calcular su offset y
         // asignárselo al nuevo símbolo
-        int offset = 3;
+        int offset = 2;
         for (Map.Entry entry : currentBlock.entrySet()) {
             // Obtener el simbolo de la entrada
             Symbol symbol = (Symbol) entry.getValue();
@@ -114,8 +121,15 @@ public class SymbolTable {
                 // Obtener el simbolo como instancia de Array
                 SymbolArray array = (SymbolArray) symbol;
                 // Obtener el tamaño del array
-                int arraySize = array.maxInd + 1;
+                int arraySize;
+                if (symbol.parClass == Symbol.ParameterClass.REF) {
+                    arraySize = 1;
+                } else {
+                    arraySize = array.maxInd + 1;
+                }
                 offset += arraySize;
+            } else if (symbol instanceof SymbolFunction || symbol instanceof SymbolProcedure) {
+                // NO SUMAR
             } else {
                 offset++;
             }

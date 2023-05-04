@@ -19,7 +19,7 @@ PARSER_BEGIN(clike_4)
 // 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
 // 	* Arreglar paso de constantes por referencia
 //	* Codigo: Variables globales
-//  * 		  - profundidad en llamadas a funciones recursivas (tener un entero que diga en que profundidad estas e ir sumando / restando)
+// 		- Hay un STC en medio de la nada en criba_eratostenes
 //  * Añadir niveles
 
 package traductor;
@@ -57,9 +57,7 @@ public class clike_4 {
     	clike_4 parser = null;
 		// El nombre del fichero será el primer parametro
 		nombreFichero = args[0];
-		// Quitarle los dos ultimos caracteres
 		nombreFichero = nombreFichero.substring(0, nombreFichero.length() - 2);
-		// Añadir al final del fichero ".pcode"
 		nombreFichero = nombreFichero + "pcode";
     	
     	try {
@@ -256,8 +254,6 @@ public class clike_4 {
 	// del valor que hubiese en la pila
 	public static void escribirBool(CodeBlock block) {
 		block.addComment("Escribir booleano");
-		block.addInst(OpCode.STC, 1);
-		block.addInst(OpCode.EQ);
 		String etiquetaElse = generarLabel();
 		String etiquetaFin = generarLabel();
 		block.addComment("Si era false, entonces saltar a " + etiquetaElse);
@@ -513,7 +509,7 @@ void Func(CodeBlock bloqueGeneral) : {
 		block.addLabel(label);
 		// Añadir la definición de la función a la tabla e insertar nuevo bloque
 		sFunc = new SymbolFunction(t.image,parametros,tipo, label);
-		sFunc.nivel = functionCounter++;
+		// sFunc.nivel = functionCounter++;
 		System.out.println(tabla.toString());
 		try {
 			tabla.insertSymbol(sFunc);
@@ -580,6 +576,15 @@ void Proced(CodeBlock bloqueGeneral) : {
 			} catch (AlreadyDefinedSymbolException e) {
 				errSem.deteccion(e, t);
 			}
+		}
+		// Asignar los parametros a sus valores reales
+		block.addComment("Asignación de parametros");
+		for (int i = parametros.size() - 1; i >= 0; i--) {
+			// Obtener el simbolo del parametro
+			Symbol parametro = parametros.get(i);
+			block.addComment("Val(" + parametro.name + ")");
+			block.addInst(OpCode.SRF, 0, i + 3);
+			block.addInst(OpCode.ASGI);
 		}
 	} 
 	<tRPARENTESIS> <tLLLAVE> 
@@ -786,8 +791,7 @@ Attributes LlamaFunc(CodeBlock block) : {
 		} else if (simbolo instanceof SymbolProcedure) {
 			etiqueta = ((SymbolProcedure)simbolo).label;
 		}
-		// TODO: Asignar el nivel, que es nivel de la funcion menos nivel actual
-		block.addOSFInst(tamanyoOcupado,tabla.level - simbolo.nivel, etiqueta);
+		block.addOSFInst(tamanyoOcupado + 1,tabla.level - simbolo.nivel, etiqueta);
 		return new Attributes(tipo,Symbol.ParameterClass.NONE,null);
 	}
 }
@@ -818,7 +822,7 @@ void LlamaFuncYProced(CodeBlock block) : {
 		} else if (simbolo instanceof SymbolProcedure) {
 			etiqueta = ((SymbolProcedure)simbolo).label;
 		}
-		block.addOSFInst(tamanyoOcupado - 1,tabla.level - simbolo.nivel, etiqueta);
+		block.addOSFInst(tamanyoOcupado + 1,tabla.level - simbolo.nivel, etiqueta);
 	}
 
 }
@@ -837,6 +841,13 @@ ArrayList<Attributes> PasoPar(CodeBlock block, ArrayList<Symbol> parametros) : {
 			block.removeLastInst();
 			block.addComment("Parametro por referencia");
 		} 
+		if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(0) instanceof SymbolArray) {
+			SymbolArray array = (SymbolArray) parametros.get(0);
+			for (int i = 1; i <= array.maxInd; i++) {
+				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, array.posicionPila + i);
+				block.addInst(OpCode.DRF);
+			}
+		}
 	}
 	(PosiblesPar(parametrosLlamada, block, parametros, cuenta)))?
 	{return parametrosLlamada;}
@@ -854,6 +865,13 @@ void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block, Array
 			block.removeLastInst();
 			block.addComment("Parametro por referencia");
 		} 
+		if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
+			SymbolArray array = (SymbolArray) parametros.get(cuenta);
+			for (int i = 1; i <= array.maxInd; i++) {
+				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, array.posicionPila + i);
+				block.addInst(OpCode.DRF);
+			}
+		}
 	})*
 }
 
@@ -1040,8 +1058,6 @@ void If(Symbol.Types tipo, CodeBlock block) : {
 	{ block.addComment("Estructura IF");}
 	<tIF> <tLPARENTESIS> a = Expresion(block)
 	{
-		block.addInst(OpCode.STC, 1);
-		block.addInst(OpCode.EQ);
 		String labelElse = generarLabel();
 		block.addInst(OpCode.JMF, labelElse);
 		block.addComment("Caso True");
@@ -1077,8 +1093,6 @@ void IfSinRet(CodeBlock block) : {
 	{ block.addComment("Estructura IF");}
 	<tIF> <tLPARENTESIS> a=Expresion(block) 
 	{
-		block.addInst(OpCode.STC, 1);
-		block.addInst(OpCode.EQ);
 		String labelElse = generarLabel();
 		block.addInst(OpCode.JMF, labelElse);
 		block.addComment("Caso True");
@@ -1134,8 +1148,6 @@ void While(Symbol.Types tipo, CodeBlock block) : {
 	}
 		a = Expresion(block)
 	{
-		block.addInst(OpCode.STC, 1);
-		block.addInst(OpCode.EQ);
 		block.addInst(OpCode.JMF, labelFin);
 		block.addComment("Bucle True");
 	}  
@@ -1162,8 +1174,6 @@ void WhileSinRet(CodeBlock block) : {
 	}
 	a = Expresion(block) 
 	{
-		block.addInst(OpCode.STC, 1);
-		block.addInst(OpCode.EQ);
 		block.addInst(OpCode.JMF, labelFin);
 		block.addComment("Bucle True");
 	}  
@@ -1290,6 +1300,10 @@ void ReadN(CodeBlock block) : {
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
+		// Si es por referencia, hacer un DRF
+		if (simbolo.parClass == Symbol.ParameterClass.REF) {
+			block.addInst(OpCode.DRF);
+		}
 		if (esVector) {
 			if (simbolo instanceof SymbolArray) {
 				// Ver de que tipo es el vector
@@ -1299,6 +1313,7 @@ void ReadN(CodeBlock block) : {
 			}
 		} else {
 			comprobarTipoValido(simbolo);
+			a = simbolo.type;
 		}
 		if (a == Symbol.Types.INT) {
 			block.addInst(OpCode.RD, 1);
@@ -1325,6 +1340,10 @@ void ListaRead(CodeBlock block) : {
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
+		// Si es por referencia, hacer un DRF
+		if (simbolo.parClass == Symbol.ParameterClass.REF) {
+			block.addInst(OpCode.DRF);
+		}
 		if (esVector) {
 			if (simbolo instanceof SymbolArray) {
 				// Ver de que tipo es el vector
@@ -1333,6 +1352,7 @@ void ListaRead(CodeBlock block) : {
 			}
 		} else {
 			comprobarTipoValido(simbolo);
+			a = simbolo.type;
 		}
 		if (a == Symbol.Types.INT) {
 			block.addInst(OpCode.RD, 1);
@@ -1359,19 +1379,35 @@ void ListaReadLn(CodeBlock block) : {
 	Symbol.Types a = null;
 }
 {
-	(t = <tID> (vector(block) {esVector = true;})? ListaRead(block) {simbolo = tabla.getSymbol(t.image); comprobarTipoValido(simbolo);}
+	(t = <tID> (vector(block) {esVector = true;})? 
 	{
 		simbolo = tabla.getSymbol(t.image); 
+		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
+		// Si es por referencia, hacer un DRF
+		if (simbolo.parClass == Symbol.ParameterClass.REF) {
+			block.addInst(OpCode.DRF);
+		}
 		if (esVector) {
 			if (simbolo instanceof SymbolArray) {
 				// Ver de que tipo es el vector
 				a = ((SymbolArray)simbolo).baseType; 
 				comprobarTipoValido(a);
+				block.addInst(OpCode.PLUS);
 			}
 		} else {
-			comprobarTipoValido(simbolo);}
+			comprobarTipoValido(simbolo);
+			a = simbolo.type;
+		}
+		if (a == Symbol.Types.INT) {
+			block.addInst(OpCode.RD, 1);
+		} else if (a == Symbol.Types.BOOL) {
+			block.addInst(OpCode.RD, 0);
+		} else if (a == Symbol.Types.CHAR) {
+			block.addInst(OpCode.RD, 0);
+		}
+		
 	}
-	)?
+	ListaRead(block))?
 }
 
 //----------------------   EXPRESION    ----------------------
@@ -1576,6 +1612,9 @@ Attributes Primario(CodeBlock block): {
 		simbolo = tabla.getSymbol(t.image); 
 		block.addComment("Val(" + simbolo.name + ")");
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel,simbolo.posicionPila);
+		if (simbolo.parClass == Symbol.ParameterClass.REF) {
+			block.addInst(OpCode.DRF);
+		}
 	}
 	 < tLCORCHETE > atributo = Expresion(block) < tRCORCHETE >
 	{
