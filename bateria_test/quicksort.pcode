@@ -509,43 +509,43 @@ L22:
   SRF  0  3
   DRF
   DRF
-  SRF  1  4
+  SRF  0  4
   DRF
-  SRF  1  5
+  SRF  0  5
   DRF
-  SRF  1  6
+  SRF  0  6
   DRF
-  SRF  1  7
+  SRF  0  7
   DRF
-  SRF  1  8
+  SRF  0  8
   DRF
-  SRF  1  9
+  SRF  0  9
   DRF
-  SRF  1 10
+  SRF  0 10
   DRF
-  SRF  1 11
+  SRF  0 11
   DRF
-  SRF  1 12
+  SRF  0 12
   DRF
-  SRF  1 13
+  SRF  0 13
   DRF
-  SRF  1 14
+  SRF  0 14
   DRF
-  SRF  1 15
+  SRF  0 15
   DRF
-  SRF  1 16
+  SRF  0 16
   DRF
-  SRF  1 17
+  SRF  0 17
   DRF
-  SRF  1 18
+  SRF  0 18
   DRF
-  SRF  1 19
+  SRF  0 19
   DRF
-  SRF  1 20
+  SRF  0 20
   DRF
-  SRF  1 21
+  SRF  0 21
   DRF
-  SRF  1 22
+  SRF  0 22
   DRF
   OSF  7  1 L4
 ; --Estructura IF
