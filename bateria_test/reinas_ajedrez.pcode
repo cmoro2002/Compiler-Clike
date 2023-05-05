@@ -17,7 +17,6 @@ ERROR:
 ; --Funcion min (label: L1)
 L1:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -49,7 +48,6 @@ L3:
 ; --Funcion max (label: L4)
 L4:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -81,14 +79,12 @@ L6:
 ; --Procedimiento linea (label: L7)
 L7:
 ; --Asignación de parametros
-; --El tamaño de parametros es 2
   STC 10
   WRT  0
   CSF
 ; --Funcion sitio (label: L8)
 L8:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -117,7 +113,6 @@ L8:
 ; --Funcion componente (label: L9)
 L9:
 ; --Asignación de parametros
-; --El tamaño de parametros es 5
   SRF  0  5
   ASGI
   SRF  0  4
@@ -143,7 +138,6 @@ L9:
 ; --Funcion ocupada (label: L10)
 L10:
 ; --Asignación de parametros
-; --El tamaño de parametros es 5
   SRF  0  5
   ASGI
   SRF  0  4
@@ -172,7 +166,6 @@ L10:
 ; --Procedimiento asignar_componente (label: L11)
 L11:
 ; --Asignación de parametros
-; --El tamaño de parametros es 6
   SRF  0  6
   ASGI
   SRF  0  5
@@ -206,7 +199,6 @@ L11:
 ; --Procedimiento marcar_componente (label: L12)
 L12:
 ; --Asignación de parametros
-; --El tamaño de parametros es 5
   SRF  0  5
   ASGI
   SRF  0  4
@@ -250,7 +242,6 @@ L12:
 ; --Procedimiento desmarcar_componente (label: L13)
 L13:
 ; --Asignación de parametros
-; --El tamaño de parametros es 5
   SRF  0  5
   ASGI
   SRF  0  4
@@ -292,7 +283,6 @@ L13:
 ; --Procedimiento colocar_reina (label: L14)
 L14:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -593,7 +583,6 @@ L25:
 ; --Procedimiento iniciar_tablero (label: L27)
 L27:
 ; --Asignación de parametros
-; --El tamaño de parametros es 2
 ; --@(f)
   SRF  0  3
 ; --Constante entera igual a 1
@@ -682,7 +671,6 @@ L28:
 ; --Procedimiento mostrar_tablero (label: L32)
 L32:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
   OSF  6  1 L7
@@ -824,7 +812,6 @@ L33:
 ; --Funcion libre (label: L39)
 L39:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3

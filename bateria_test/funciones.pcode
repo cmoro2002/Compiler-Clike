@@ -17,7 +17,6 @@ ERROR:
 ; --Procedimiento sub_test (label: L1)
 L1:
 ; --Asignación de parametros
-; --El tamaño de parametros es 2
   STC 72
   WRT  0
   STC 101
@@ -46,7 +45,6 @@ L1:
 ; --Procedimiento test (label: L2)
 L2:
 ; --Asignación de parametros
-; --El tamaño de parametros es 2
   STC 72
   WRT  0
   STC 101
@@ -64,7 +62,6 @@ L2:
 ; --Funcion sum (label: L3)
 L3:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -81,7 +78,6 @@ L3:
 ; --Procedimiento swap (label: L4)
 L4:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -112,7 +108,6 @@ L4:
 ; --Procedimiento swap_by_swap (label: L5)
 L5:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -130,7 +125,6 @@ L5:
 ; --Procedimiento swap_char (label: L6)
 L6:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -163,7 +157,6 @@ L6:
 ; --Procedimiento set_all_ref (label: L7)
 L7:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(arr)
@@ -242,7 +235,6 @@ L7:
 ; --Procedimiento show_all_ref (label: L8)
 L8:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -290,7 +282,6 @@ L9:
 ; --Funcion sum_all (label: L11)
 L11:
 ; --Asignación de parametros
-; --El tamaño de parametros es 7
   SRF  0  7
   ASGI
   SRF  0  6

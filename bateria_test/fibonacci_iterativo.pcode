@@ -17,7 +17,6 @@ ERROR:
 ; --Procedimiento cambiar_de_linea (label: L1)
 L1:
 ; --Asignación de parametros
-; --El tamaño de parametros es 2
 ; --Constante entera igual a 13
   STC 13
   WRT  0
@@ -28,7 +27,6 @@ L1:
 ; --Procedimiento pedir_dato (label: L2)
 L2:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(dato)
@@ -115,7 +113,6 @@ L3:
 ; --Procedimiento dato (label: L5)
 L5:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(dato)

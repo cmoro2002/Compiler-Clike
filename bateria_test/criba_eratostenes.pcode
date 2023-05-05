@@ -17,7 +17,6 @@ ERROR:
 ; --Funcion pedir_entero (label: L1)
 L1:
 ; --Asignación de parametros
-; --El tamaño de parametros es 2
 ; --@(n)
   SRF  0  3
 ; --Constante entera igual a 0
@@ -116,7 +115,6 @@ L2:
 ; --Procedimiento escrib_vect (label: L4)
 L4:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -354,7 +352,6 @@ L5:
 ; --Procedimiento inicializar (label: L11)
 L11:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -406,7 +403,6 @@ L12:
 ; --Procedimiento eliminar_no_primos (label: L14)
 L14:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -511,7 +507,6 @@ L15:
 ; --Procedimiento procesar (label: L21)
 L21:
 ; --Asignación de parametros
-; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --Val(v)

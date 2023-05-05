@@ -868,7 +868,7 @@ ArrayList<Attributes> PasoPar(CodeBlock block, ArrayList<Symbol> parametros) : {
 		if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(0) instanceof SymbolArray) {
 			SymbolArray array = (SymbolArray) parametros.get(0);
 			for (int i = 1; i <= array.maxInd; i++) {
-				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, a.posicionPila + i);
+				block.addInst(OpCode.SRF, tabla.level - array.nivel, a.posicionPila + i);
 				block.addInst(OpCode.DRF);
 			}
 		}
@@ -893,7 +893,7 @@ void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block, Array
 		if (parametros.get(cuenta).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
 			SymbolArray array = (SymbolArray) parametros.get(cuenta);
 			for (int i = 1; i <= array.maxInd; i++) {
-				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, a.posicionPila + i);
+				block.addInst(OpCode.SRF, tabla.level - array.nivel, a.posicionPila + i);
 				block.addInst(OpCode.DRF);
 			}
 		}

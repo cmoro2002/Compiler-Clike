@@ -17,7 +17,6 @@ ERROR:
 ; --Procedimiento hanoi (label: L1)
 L1:
 ; --Asignación de parametros
-; --El tamaño de parametros es 6
   SRF  0  6
   ASGI
   SRF  0  5

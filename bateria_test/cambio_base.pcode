@@ -17,7 +17,6 @@ ERROR:
 ; --Funcion b_dec (label: L1)
 L1:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3
@@ -77,7 +76,6 @@ L3:
 ; --Funcion dec_b (label: L4)
 L4:
 ; --Asignación de parametros
-; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
   SRF  0  3

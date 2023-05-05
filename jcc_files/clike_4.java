@@ -523,7 +523,7 @@ label = generarLabel();
                 // Asignar los parametros a sus valores reales
                 block.addComment("Asignaci\u00f3n de parametros");
                 int tam = tabla.getFunctionSize();
-                block.addComment("El tama\u00f1o de parametros es " + tam);
+                //block.addComment("El tamaño de parametros es " + tam);
                 for (int i = tam; i >= 3; i--) {
                         // Obtener el simbolo del parametro
                         // Symbol parametro = parametros.get(i);
@@ -627,7 +627,7 @@ label = generarLabel();
                 // Asignar los parametros a sus valores reales
                 block.addComment("Asignaci\u00f3n de parametros");
                 int tam = tabla.getFunctionSize();
-                block.addComment("El tama\u00f1o de parametros es " + tam);
+                //block.addComment("El tamaño de parametros es " + tam);
                 for (int i = tam; i >= 3; i--) {
                         // Obtener el simbolo del parametro
                         // Symbol parametro = parametros.get(i);
@@ -1012,7 +1012,7 @@ parametrosLlamada.add(a);
                 if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(0) instanceof SymbolArray) {
                         SymbolArray array = (SymbolArray) parametros.get(0);
                         for (int i = 1; i <= array.maxInd; i++) {
-                                block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, a.posicionPila + i);
+                                block.addInst(OpCode.SRF, tabla.level - array.nivel, a.posicionPila + i);
                                 block.addInst(OpCode.DRF);
                         }
                 }
@@ -1051,7 +1051,7 @@ cuenta++;
                 if (parametros.get(cuenta).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
                         SymbolArray array = (SymbolArray) parametros.get(cuenta);
                         for (int i = 1; i <= array.maxInd; i++) {
-                                block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, a.posicionPila + i);
+                                block.addInst(OpCode.SRF, tabla.level - array.nivel, a.posicionPila + i);
                                 block.addInst(OpCode.DRF);
                         }
                 }
