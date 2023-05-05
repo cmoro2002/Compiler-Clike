@@ -202,6 +202,13 @@ public class clike_4 {
 		}
 	}
 
+	// Comprobar si el atributo dado es constante
+	public static void comprobarNoConstante(Attributes a) {
+		if (a.constante) {
+			throw new ConstantePorReferencia();
+		}
+	}
+
 	private static String obtenerTipo(Symbol.Types tipo) {
         String _tipoDevuelto = "";
 
@@ -859,6 +866,7 @@ ArrayList<Attributes> PasoPar(CodeBlock block, ArrayList<Symbol> parametros) : {
 		parametrosLlamada.add(a);
 		if (parametros.get(0).parClass == Symbol.ParameterClass.REF) {
 			block.removeLastInst();
+			comprobarNoConstante(a);
 			block.addComment("Parametro por referencia");
 		} 
 		if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(0) instanceof SymbolArray) {
@@ -888,6 +896,7 @@ void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block, Array
 		parametrosLlamada.add(a);
 		if (parametros.get(cuenta).parClass == Symbol.ParameterClass.REF) {
 			block.removeLastInst();
+			comprobarNoConstante(a);
 			block.addComment("Parametro por referencia");
 		} 
 		if (parametros.get(cuenta).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
@@ -1440,19 +1449,17 @@ void ListaReadLn(CodeBlock block) : {
 }
 
 //----------------------   EXPRESION    ----------------------
-// TODO: Añadir un campo const que sea booleano y cuando varias sean constantes, 
-// se pueda hacer la operacion
 Attributes Expresion(CodeBlock block): {
 	Attributes a;
 	Attributes b;
 }
 {
-	a = Relacion(block) ( b = Mas_relation(block) {return comprobarTipos(a,b);} )?
+	a = Relacion(block) ( b = Mas_relation(a,block) {return comprobarTipos(a,b);} )?
 	{return a;} // Devolver el tipo si solo es 1
 }
 
 
-Attributes Mas_relation(CodeBlock block): {
+Attributes Mas_relation(Attributes b, CodeBlock block): {
 	Attributes a;
 	int op;
 }
@@ -1465,6 +1472,7 @@ Attributes Mas_relation(CodeBlock block): {
 		} else if (op == 2) {
 			block.addInst(OpCode.AND);
 		}
+		a.constante = a.constante && b.constante;
 	} 
 	)+
 	{return a;}
@@ -1491,17 +1499,27 @@ Attributes Relacion(CodeBlock block): {
 			if (op == 1) {
 				block.addInst(OpCode.EQ);
 			} else if (op == 2) {
+				comprobarInt(a);
+				comprobarInt(b);
 				block.addInst(OpCode.LT);
 			} else if (op == 3) {
+				comprobarInt(a);
+				comprobarInt(b);
 				block.addInst(OpCode.GT);
 			} else if (op == 4) {
+				comprobarInt(a);
+				comprobarInt(b);
 				block.addInst(OpCode.LTE);
 			} else if (op == 5) {
+				comprobarInt(a);
+				comprobarInt(b);
 				block.addInst(OpCode.GTE);
 			} else {
 				block.addInst(OpCode.NEQ);
 			}
-			comprobarTipos(a,b); return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,null);
+			a.constante = a.constante && b.constante;
+			comprobarTipos(a,b); 
+			return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,null, a.constante);
 		}
 	)?
 	{return a;}
@@ -1541,12 +1559,28 @@ Attributes Expresion_simple(CodeBlock block): {
 		{
 			comprobarInt(b);
 		    esEntero = true;
-			
-			// Aplicar la operacion
-			if (op == 1) {
-				block.addInst(OpCode.PLUS);
+			if (a.constante && b.constante) {
+				// Quitar las ultimas 4 operaciones (2 para cada factor y su comentario)
+				block.removeLastInst();
+				block.removeLastInst();
+				block.removeLastInst();
+				block.removeLastInst();
+				// Si son constantes, hacer la operacion
+				if (op == 1) {
+					a.valInt = a.valInt + b.valInt;
+				} else if (op == 2) {
+					a.valInt = a.valInt - b.valInt;
+				} 
+				block.addComment("Operacion constante resuelta en tiempo de compilacion (valor = " + a.valInt + ")");
+				block.addInst(OpCode.STC, a.valInt);
 			} else {
-				block.addInst(OpCode.SBT);
+				a.constante = false;
+				// Aplicar la operacion
+				if (op == 1) {
+					block.addInst(OpCode.PLUS);
+				} else {
+					block.addInst(OpCode.SBT);
+				}
 			}
 		}
 	)*
@@ -1579,15 +1613,33 @@ Attributes Termino(CodeBlock block): {
 		{
 			comprobarInt(b);
 			esEntero = true;
-			
-			if (op == 1) {
-				block.addInst(OpCode.TMS);
-			} else if (op == 2) {
-				block.addInst(OpCode.DIV);
+			if (a.constante && b.constante) {
+				// Quitar las ultimas 4 operaciones (2 para cada factor y su comentario)
+				block.removeLastInst();
+				block.removeLastInst();
+				block.removeLastInst();
+				block.removeLastInst();
+				// Si son constantes, hacer la operacion
+				if (op == 1) {
+					a.valInt = a.valInt * b.valInt;
+				} else if (op == 2) {
+					a.valInt = a.valInt/ b.valInt;
+				} else {
+					a.valInt = a.valInt % b.valInt;
+				}
+				block.addComment("Operacion constante resuelta en tiempo de compilacion (valor = " + a.valInt + ")");
+				block.addInst(OpCode.STC, a.valInt);
 			} else {
-				block.addInst(OpCode.MOD);
+				a.constante = false;
+				// Aplicar la operacion
+				if (op == 1) {
+					block.addInst(OpCode.TMS);
+				} else if (op == 2) {
+					block.addInst(OpCode.DIV);
+				} else {
+					block.addInst(OpCode.MOD);
+				}
 			}
-
 		}
 	)*
 	{
@@ -1611,7 +1663,27 @@ Attributes Factor(CodeBlock block): {
 }
 {
 	a = Primario(block) {return a;} |	
-	< tNOT > a = Primario(block) {comprobarBool(a); block.addInst(OpCode.NGB);}
+	< tNOT > a = Primario(block) 
+	{
+		comprobarBool(a); 
+		if (a.constante) {
+			// Como es constante podemos negar el valor directamente
+			// Quitamos el valor que hubiese en la pila y metemos el negado
+			block.removeLastInst();
+			block.removeLastInst(); // Para quitar el comentario
+			block.addComment("Varibale constante negada");
+			if (a.valBool) {
+				a.valBool = false;
+				block.addInst(OpCode.STC,0);
+			} else {
+				a.valBool = true;
+				block.addInst(OpCode.STC,1);
+			}
+		} else {
+			a.constante = false;
+			block.addInst(OpCode.NGB);
+		}
+	}
 	{return a;}
 }
 
@@ -1693,7 +1765,7 @@ Attributes Primario(CodeBlock block): {
 	|	t = < tENTRECOMILLAS > 
 	{
 		// Calcular el ascii del caracter
-		return new Attributes(a,Symbol.ParameterClass.NONE,t.image, true);
+		return new Attributes(Symbol.Types.STRING,Symbol.ParameterClass.NONE,t.image, true);
 	}
 	|	t = < tENTRECOMILLASSIMPLES > 
 	{

@@ -1,0 +1,132 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Funcion suma (label: L1)
+L1:
+; --Asignación de parametros
+  SRF  0  6
+  ASGI
+  SRF  0  5
+  ASGI
+  SRF  0  4
+  ASGI
+  SRF  0  3
+  ASGI
+; --@(c)
+  SRF  0  5
+  DRF
+; --Operacion constante resuelta en tiempo de compilacion (valor = 75)
+  STC 75
+  ASG
+; --@(ka)
+  SRF  0  7
+; --Val(a)
+  SRF  0  3
+  DRF
+  ASG
+; --@(a)
+  SRF  0  3
+; --Constante entera igual a 3
+  STC  3
+  ASG
+; --@(a)
+  SRF  0  3
+; --Val(a)
+  SRF  0  3
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+; --Parametro por referencia
+; --Val(c)
+  SRF  0  5
+  DRF
+; --Parametro por referencia
+; --Val(d)
+  SRF  0  6
+  DRF
+  OSF  8  1 L1
+  ASG
+; --Val(ka)
+  SRF  0  7
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  DRF
+  PLUS
+  CSF
+  CSF
+MAIN:
+; --@(hola)
+  SRF  0  7
+; --Constante entera igual a 3
+  STC  3
+  ASG
+; --@(adios)
+  SRF  0  8
+; --Constante entera igual a 10
+  STC 10
+  ASG
+; --@(j)
+  SRF  0  4
+; --Constante entera igual a 1
+  STC  1
+  ASG
+; --@(k)
+  SRF  0  5
+; --Constante entera igual a 2
+  STC  2
+  ASG
+; --@(z)
+  SRF  0  6
+; --Val(j)
+  SRF  0  4
+  DRF
+; --Val(k)
+  SRF  0  5
+; --Parametro por referencia
+; --Val(hola)
+  SRF  0  7
+; --Parametro por referencia
+; --Val(adios)
+  SRF  0  8
+  DRF
+  OSF  9  0 L1
+  ASG
+; --Val(z)
+  SRF  0  6
+  DRF
+  WRT  1
+; --Val(j)
+  SRF  0  4
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+; --Val(k)
+  SRF  0  5
+  DRF
+  WRT  1
+; --Val(hola)
+  SRF  0  7
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+FIN:
+  LVP
+

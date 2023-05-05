@@ -1,0 +1,73 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Procedimiento vaBien (label: L1)
+L1:
+; --Asignación de parametros
+  STC 72
+  WRT  0
+  STC 111
+  WRT  0
+  STC 108
+  WRT  0
+  STC 97
+  WRT  0
+  CSF
+; --Funcion suma (label: L2)
+L2:
+; --Asignación de parametros
+  SRF  0  3
+  ASGI
+; --@(saludos)
+  SRF  1  3
+; --Constante entera igual a 2
+  STC  2
+  ASG
+; --@(a)
+  SRF  0  3
+; --Constante entera igual a 4
+  STC  4
+  ASG
+  OSF  4  1 L1
+; --Val(saludos)
+  SRF  1  3
+  DRF
+; --Constante entera igual a 5
+  STC  5
+  PLUS
+  CSF
+  CSF
+MAIN:
+; --@(saludos)
+  SRF  0  3
+; --Constante entera igual a 3
+  STC  3
+  ASG
+; --@(j)
+  SRF  0  4
+; --Constante entera igual a 1
+  STC  1
+  ASG
+; --@(z)
+  SRF  0  5
+; --Val(j)
+  SRF  0  4
+  DRF
+  OSF  6  0 L2
+  ASG
+FIN:
+  LVP
+

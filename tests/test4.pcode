@@ -1,0 +1,60 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Procedimiento a (label: L1)
+L1:
+; --Asignación de parametros
+  SRF  0  3
+  ASGI
+; --Val(a)
+  SRF  0  3
+  DRF
+  DRF
+; --Escribir booleano
+; --Si era false, entonces saltar a L2
+  JMF L2
+  STC 116
+  WRT  0
+  STC 114
+  WRT  0
+  STC 117
+  WRT  0
+  STC 101
+  WRT  0
+  JMP L3
+L2:
+  STC 102
+  WRT  0
+  STC 97
+  WRT  0
+  STC 108
+  WRT  0
+  STC 115
+  WRT  0
+  STC 101
+  WRT  0
+L3:
+  CSF
+MAIN:
+; --Constante entera igual a 5
+  STC  5
+; --Constante entera igual a 3
+  STC  3
+; --Parametro por referencia
+  OSF  3  0 L1
+FIN:
+  LVP
+

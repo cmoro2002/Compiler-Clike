@@ -29,6 +29,7 @@ public class Attributes implements Cloneable {
         type = _type;
         parClass = _parClass;
         valInt = _valInt;
+        constante = false;
     }
 
     // Constructor para los booleanos
@@ -36,6 +37,7 @@ public class Attributes implements Cloneable {
         type = _type;
         parClass = _parClass;
         valBool = _valBool;
+        constante = false;
     }
 
     // Constructor para los carácteres
@@ -43,6 +45,7 @@ public class Attributes implements Cloneable {
         type = _type;
         parClass = _parClass;
         valChar = _valChar;
+        constante = false;
     }
 
     // Constructor para los strings
@@ -50,6 +53,7 @@ public class Attributes implements Cloneable {
         type = _type;
         parClass = _parClass;
         valString = _valString;
+        constante = false;
     }
 
     // Constructor para los enteros constantes
