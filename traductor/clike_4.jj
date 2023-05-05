@@ -15,8 +15,6 @@ options {
 PARSER_BEGIN(clike_4)
 
 // TODO:
-// 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
-// 	* Arreglar paso de constantes por referencia
 // 	* Hacer warnings
 package traductor;
 
@@ -871,13 +869,28 @@ ArrayList<Attributes> PasoPar(CodeBlock block, ArrayList<Symbol> parametros) : {
 		} 
 		if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(0) instanceof SymbolArray) {
 			SymbolArray array = (SymbolArray) parametros.get(0);
-			for (int i = 1; i <= array.maxInd; i++) {
-				int nivel = tabla.level - array.nivel;
-				if (nivel < 0) {
-					nivel = 0;
+			if (a.parClass == Symbol.ParameterClass.REF) {
+				block.addComment("Vector por valor que era referencia");
+				for (int i = 1; i <= array.maxInd; i++) {
+					int nivel = tabla.level - array.nivel;
+					if (nivel < 0) {
+						nivel = 0;
+					}
+					block.addInst(OpCode.SRF, nivel, a.posicionPila);
+					block.addInst(OpCode.DRF);
+					block.addInst(OpCode.STC, i);
+					block.addInst(OpCode.PLUS);
+					block.addInst(OpCode.DRF);
 				}
-				block.addInst(OpCode.SRF, nivel, a.posicionPila + i);
-				block.addInst(OpCode.DRF);
+			} else {
+				for (int i = 1; i <= array.maxInd; i++) {
+					int nivel = tabla.level - array.nivel;
+					if (nivel < 0) {
+						nivel = 0;
+					}
+					block.addInst(OpCode.SRF, nivel, a.posicionPila + i);
+					block.addInst(OpCode.DRF);
+				}
 			}
 		}
 	}
@@ -901,13 +914,28 @@ void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block, Array
 		} 
 		if (parametros.get(cuenta).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
 			SymbolArray array = (SymbolArray) parametros.get(cuenta);
-			for (int i = 1; i <= array.maxInd; i++) {
-				int nivel = tabla.level - array.nivel;
-				if (nivel < 0) {
-					nivel = 0;
+			if (a.parClass == Symbol.ParameterClass.REF) {
+				block.addComment("Vector por valor que era referencia");
+				for (int i = 1; i <= array.maxInd; i++) {
+					int nivel = tabla.level - array.nivel;
+					if (nivel < 0) {
+						nivel = 0;
+					}
+					block.addInst(OpCode.SRF, nivel, a.posicionPila);
+					block.addInst(OpCode.DRF);
+					block.addInst(OpCode.STC, i);
+					block.addInst(OpCode.PLUS);
+					block.addInst(OpCode.DRF);
 				}
-				block.addInst(OpCode.SRF, nivel, a.posicionPila + i);
-				block.addInst(OpCode.DRF);
+			} else {
+				for (int i = 1; i <= array.maxInd; i++) {
+					int nivel = tabla.level - array.nivel;
+					if (nivel < 0) {
+						nivel = 0;
+					}
+					block.addInst(OpCode.SRF, nivel, a.posicionPila + i);
+					block.addInst(OpCode.DRF);
+				}
 			}
 		}
 	})*
@@ -1499,20 +1527,40 @@ Attributes Relacion(CodeBlock block): {
 			if (op == 1) {
 				block.addInst(OpCode.EQ);
 			} else if (op == 2) {
-				comprobarInt(a);
-				comprobarInt(b);
+				if (a.type == Symbol.Types.INT) {
+					comprobarInt(a);
+					comprobarInt(b);
+				} else if (a.type == Symbol.Types.CHAR) {
+					comprobarChar(a);
+					comprobarChar(b);
+				}
 				block.addInst(OpCode.LT);
 			} else if (op == 3) {
-				comprobarInt(a);
-				comprobarInt(b);
+				if (a.type == Symbol.Types.INT) {
+					comprobarInt(a);
+					comprobarInt(b);
+				} else if (a.type == Symbol.Types.CHAR) {
+					comprobarChar(a);
+					comprobarChar(b);
+				}
 				block.addInst(OpCode.GT);
 			} else if (op == 4) {
-				comprobarInt(a);
-				comprobarInt(b);
+				if (a.type == Symbol.Types.INT) {
+					comprobarInt(a);
+					comprobarInt(b);
+				} else if (a.type == Symbol.Types.CHAR) {
+					comprobarChar(a);
+					comprobarChar(b);
+				}
 				block.addInst(OpCode.LTE);
 			} else if (op == 5) {
-				comprobarInt(a);
-				comprobarInt(b);
+				if (a.type == Symbol.Types.INT) {
+					comprobarInt(a);
+					comprobarInt(b);
+				} else if (a.type == Symbol.Types.CHAR) {
+					comprobarChar(a);
+					comprobarChar(b);
+				}
 				block.addInst(OpCode.GTE);
 			} else {
 				block.addInst(OpCode.NEQ);

@@ -509,43 +509,101 @@ L22:
   SRF  0  3
   DRF
   DRF
-  SRF  0  4
+; --Vector por valor que era referencia
+  SRF  0  3
   DRF
-  SRF  0  5
+  STC  1
+  PLUS
   DRF
-  SRF  0  6
+  SRF  0  3
   DRF
-  SRF  0  7
+  STC  2
+  PLUS
   DRF
-  SRF  0  8
+  SRF  0  3
   DRF
-  SRF  0  9
+  STC  3
+  PLUS
   DRF
-  SRF  0 10
+  SRF  0  3
   DRF
-  SRF  0 11
+  STC  4
+  PLUS
   DRF
-  SRF  0 12
+  SRF  0  3
   DRF
-  SRF  0 13
+  STC  5
+  PLUS
   DRF
-  SRF  0 14
+  SRF  0  3
   DRF
-  SRF  0 15
+  STC  6
+  PLUS
   DRF
-  SRF  0 16
+  SRF  0  3
   DRF
-  SRF  0 17
+  STC  7
+  PLUS
   DRF
-  SRF  0 18
+  SRF  0  3
   DRF
-  SRF  0 19
+  STC  8
+  PLUS
   DRF
-  SRF  0 20
+  SRF  0  3
   DRF
-  SRF  0 21
+  STC  9
+  PLUS
   DRF
-  SRF  0 22
+  SRF  0  3
+  DRF
+  STC 10
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 11
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 12
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 13
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 14
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 15
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 16
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 17
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 18
+  PLUS
+  DRF
+  SRF  0  3
+  DRF
+  STC 19
+  PLUS
   DRF
   OSF  7  1 L4
 ; --Estructura IF
