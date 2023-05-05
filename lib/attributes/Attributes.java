@@ -22,6 +22,7 @@ public class Attributes implements Cloneable {
     public String valString; // Siempre será constante
 
     public int posicionPila; // Sirve para subir la posicion de la pila
+    public boolean constante; // Para saber si es un parametro constante y poder operar con el
 
     // Constructor para los enteros
     public Attributes(Symbol.Types _type, Symbol.ParameterClass _parClass, int _valInt) {
@@ -49,6 +50,38 @@ public class Attributes implements Cloneable {
         type = _type;
         parClass = _parClass;
         valString = _valString;
+    }
+
+    // Constructor para los enteros constantes
+    public Attributes(Symbol.Types _type, Symbol.ParameterClass _parClass, int _valInt, boolean _constante) {
+        type = _type;
+        parClass = _parClass;
+        valInt = _valInt;
+        constante = _constante;
+    }
+
+    // Constructor para los booleanos constantes
+    public Attributes(Symbol.Types _type, Symbol.ParameterClass _parClass, boolean _valBool, boolean _constante) {
+        type = _type;
+        parClass = _parClass;
+        valBool = _valBool;
+        constante = _constante;
+    }
+
+    // Constructor para los carácteres constantes
+    public Attributes(Symbol.Types _type, Symbol.ParameterClass _parClass, char _valChar, boolean _constante) {
+        type = _type;
+        parClass = _parClass;
+        valChar = _valChar;
+        constante = _constante;
+    }
+
+    // Constructor para los strings constantes
+    public Attributes(Symbol.Types _type, Symbol.ParameterClass _parClass, String _valString, boolean _constante) {
+        type = _type;
+        parClass = _parClass;
+        valString = _valString;
+        constante = _constante;
     }
 
     public Attributes clone() {

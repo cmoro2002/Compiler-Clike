@@ -15,13 +15,9 @@ options {
 PARSER_BEGIN(clike_4)
 
 // TODO:
-//	* Crear diferentes bloques e ir juntandolos a medida que subimos el arbol
 // 	* Añadir a los attributes un campo que sea si es constante, para poder realizar operaciones con constantes
 // 	* Arreglar paso de constantes por referencia
-//	* Codigo: Variables globales
-// 		- Hay un STC en medio de la nada en criba_eratostenes
-//  * Añadir niveles
-
+// 	* Hacer warnings
 package traductor;
 
 import lib.symbolTable.Symbol;
@@ -224,15 +220,15 @@ public class clike_4 {
 		return _tipoDevuelto;
 	}
 
-	private static Attributes devolverAtributo(Symbol.Types a, Token t){
-		Attributes atributo;
-		if (a == Symbol.Types.STRING) {
-			atributo = new Attributes(a,Symbol.ParameterClass.NONE,t.image);
-		} else {
-			atributo = new Attributes(a,Symbol.ParameterClass.NONE,null);
-		}
-		return atributo;
-	}
+	// private static Attributes devolverAtributo(Symbol.Types a, Token t){
+	// 	Attributes atributo;
+	// 	if (a == Symbol.Types.STRING) {
+			
+	// 	} else {
+	// 		atributo = new Attributes(a,Symbol.ParameterClass.NONE,null, true);
+	// 	}
+	// 	return atributo;
+	// }
 
 	private static String generarLabel() {
 		return "L" + labelCounter++;
@@ -1680,31 +1676,30 @@ Attributes Primario(CodeBlock block): {
 		block.addComment("Constante entera igual a " + t.image);
 		int valor = Integer.parseInt(t.image);
 		block.addInst(OpCode.STC,valor); 
-		return new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,valor);
+		return new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,valor, true);
 	}
 	|	t = < tTRUE > 
 	{
 		block.addComment("Constante true");
 		block.addInst(OpCode.STC,1); 
-		return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,true);
+		return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,true, true);
 	}
 	|	t = < tFALSE > 
 	{
 		block.addComment("Constante false");
 		block.addInst(OpCode.STC,0); 
-		return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,false);
+		return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,false, true);
 	}
 	|	t = < tENTRECOMILLAS > 
 	{
 		// Calcular el ascii del caracter
-
-		return devolverAtributo(Symbol.Types.STRING,t);
+		return new Attributes(a,Symbol.ParameterClass.NONE,t.image, true);
 	}
 	|	t = < tENTRECOMILLASSIMPLES > 
 	{
 		block.addComment("Constante char");
 		block.addInst(OpCode.STC,(int)t.image.charAt(1)); 
-		return new Attributes(Symbol.Types.CHAR,Symbol.ParameterClass.NONE,t.image);
+		return new Attributes(Symbol.Types.CHAR,Symbol.ParameterClass.NONE,t.image, true);
 	}
 
 }
