@@ -333,7 +333,7 @@ L9:
   GT
   JMT ERROR
   PLUS
-; --Val(siguiente)
+; --ValArray(siguiente)
   SRF  0  4
 ; --Val(i)
   SRF  0 84
@@ -402,7 +402,7 @@ L11:
   JMP L14
 L13:
 ; --Caso False
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -411,7 +411,7 @@ L13:
   PLUS
   DRF
   NGB
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -422,7 +422,7 @@ L13:
   SBT
   PLUS
   DRF
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -435,7 +435,7 @@ L13:
   DRF
   NGB
   AND
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -447,7 +447,7 @@ L13:
   PLUS
   DRF
   NGB
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -491,7 +491,7 @@ L15:
   JMF L16
 ; --Caso True
 ; --Estructura IF
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -525,7 +525,7 @@ L16:
   JMF L18
 ; --Caso True
 ; --Estructura IF
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -559,7 +559,7 @@ L18:
   JMF L20
 ; --Caso True
 ; --Estructura IF
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -593,7 +593,7 @@ L20:
   JMF L22
 ; --Caso True
 ; --Estructura IF
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -618,7 +618,7 @@ L20:
 L23:
 L22:
 ; --Estructura IF
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -725,8 +725,6 @@ L27:
 ; --Parametro por referencia
 ; --Val(siguiente)
   SRF  0  5
-  DRF
-  SRF  1  5
   DRF
   SRF  1  6
   DRF
@@ -883,6 +881,8 @@ L27:
   SRF  1 82
   DRF
   SRF  1 83
+  DRF
+  SRF  1 84
   DRF
   OSF 85  1 L7
   CSF
@@ -1069,7 +1069,7 @@ L31:
   JMF L30
 ; --Bucle True
 ; --Estructura IF
-; --Val(colonia)
+; --ValArray(colonia)
   SRF  0  3
 ; --Val(i)
   SRF  0 83

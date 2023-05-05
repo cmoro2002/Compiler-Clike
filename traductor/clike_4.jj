@@ -865,7 +865,7 @@ ArrayList<Attributes> PasoPar(CodeBlock block, ArrayList<Symbol> parametros) : {
 		if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(0) instanceof SymbolArray) {
 			SymbolArray array = (SymbolArray) parametros.get(0);
 			for (int i = 1; i <= array.maxInd; i++) {
-				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, array.posicionPila + i);
+				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, a.posicionPila + i);
 				block.addInst(OpCode.DRF);
 			}
 		}
@@ -890,7 +890,7 @@ void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block, Array
 		if (parametros.get(cuenta).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
 			SymbolArray array = (SymbolArray) parametros.get(cuenta);
 			for (int i = 1; i <= array.maxInd; i++) {
-				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, array.posicionPila + i);
+				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, a.posicionPila + i);
 				block.addInst(OpCode.DRF);
 			}
 		}
@@ -1632,7 +1632,7 @@ Attributes Primario(CodeBlock block): {
 	|	LOOKAHEAD(2) t=< tID >
 	{
 		simbolo = tabla.getSymbol(t.image); 
-		block.addComment("Val(" + simbolo.name + ")");
+		block.addComment("ValArray(" + simbolo.name + ")");
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel,simbolo.posicionPila);
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
 			block.addInst(OpCode.DRF);
@@ -1647,7 +1647,7 @@ Attributes Primario(CodeBlock block): {
 		if (simbolo instanceof SymbolArray) {
 			a = ((SymbolArray)simbolo).baseType; 
 		}
-		return new Attributes(a,simbolo.parClass,atributo.valInt); 
+		return new Attributes(a,simbolo.parClass,atributo.valInt);
 	}
 	|	LOOKAHEAD(2) atributo = LlamaFunc(block) {return atributo;}
 	|	t = < tID > 
@@ -1661,6 +1661,7 @@ Attributes Primario(CodeBlock block): {
 			block.addInst(OpCode.DRF);
 		}
 		atributo = new Attributes(simbolo.type,simbolo.parClass,t.image); 
+		atributo.posicionPila = simbolo.posicionPila;
 		return atributo;
 	}
 	| 	t = < tDIGITO > 

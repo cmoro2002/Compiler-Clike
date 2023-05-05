@@ -128,7 +128,7 @@ L9:
 ; --Val(tablero)
   SRF  0  3
   ASGI
-; --Val(tablero)
+; --ValArray(tablero)
   SRF  0  3
   DRF
 ; --Val(fila)
@@ -156,7 +156,7 @@ L10:
 ; --Val(tablero)
   SRF  0  3
   ASGI
-; --Val(tablero)
+; --ValArray(tablero)
   SRF  0  3
   DRF
 ; --Val(fila)
@@ -239,7 +239,7 @@ L12:
   GT
   JMT ERROR
   PLUS
-; --Val(tablero)
+; --ValArray(tablero)
   SRF  0  3
   DRF
 ; --Val(fila)
@@ -285,7 +285,7 @@ L13:
   GT
   JMT ERROR
   PLUS
-; --Val(tablero)
+; --ValArray(tablero)
   SRF  0  3
   DRF
 ; --Val(fila)

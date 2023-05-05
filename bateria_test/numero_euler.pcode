@@ -74,7 +74,7 @@ L4:
 ; --Val(s)
   SRF  0  3
   ASGI
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Constante entera igual a 0
@@ -123,7 +123,7 @@ L6:
 L7:
 ; --Caso False
 L8:
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -179,7 +179,7 @@ L11:
 ; --Bucle True
 ; --@(n)
   SRF  0  6
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -187,7 +187,7 @@ L11:
   DRF
   PLUS
   DRF
-; --Val(r)
+; --ValArray(r)
   SRF  0  4
   DRF
 ; --Val(i)
@@ -238,7 +238,7 @@ L11:
   GT
   JMT ERROR
   PLUS
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -324,7 +324,7 @@ L16:
   JMF L15
 ; --Bucle True
 ; --Estructura IF
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -352,7 +352,7 @@ L16:
   GT
   JMT ERROR
   PLUS
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -379,7 +379,7 @@ L16:
   GT
   JMT ERROR
   PLUS
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -394,7 +394,7 @@ L16:
 ; --Constante entera igual a 10
   STC 10
   TMS
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -439,7 +439,7 @@ L17:
   GT
   JMT ERROR
   PLUS
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -450,7 +450,7 @@ L17:
 ; --Constante entera igual a 10
   STC 10
   TMS
-; --Val(s)
+; --ValArray(s)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -518,7 +518,7 @@ L21:
   GT
   JMT ERROR
   PLUS
-; --Val(r)
+; --ValArray(r)
   SRF  0  4
   DRF
 ; --Val(i)

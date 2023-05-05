@@ -133,7 +133,7 @@ L6:
   LT
   JMF L5
 ; --Bucle True
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
 ; --Val(i)
   SRF  0 23
@@ -246,7 +246,7 @@ L11:
   ASGI
 ; --@(p)
   SRF  0  7
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(izq)
@@ -282,7 +282,7 @@ L11:
   ASG
 ; --Estructura WHILE
 L13:
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(k)
@@ -330,7 +330,7 @@ L12:
   ASG
 ; --Estructura WHILE
 L15:
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(me)
@@ -372,7 +372,7 @@ L17:
   LT
   JMF L16
 ; --Bucle True
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(k)
@@ -380,7 +380,7 @@ L17:
   DRF
   PLUS
 ; --Parametro por referencia
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(me)
@@ -401,7 +401,7 @@ L17:
   ASG
 ; --Estructura WHILE
 L19:
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(k)
@@ -441,7 +441,7 @@ L18:
   ASG
 ; --Estructura WHILE
 L21:
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(me)
@@ -475,7 +475,7 @@ L20:
   JMP L17
 ; --Final del while
 L16:
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(izq)
@@ -483,7 +483,7 @@ L16:
   DRF
   PLUS
 ; --Parametro por referencia
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(me)
@@ -574,7 +574,7 @@ L22:
   EQ
   JMF L24
 ; --Caso True
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(izq)
@@ -582,7 +582,7 @@ L22:
   DRF
   PLUS
 ; --Parametro por referencia
-; --Val(t)
+; --ValArray(t)
   SRF  0  3
   DRF
 ; --Val(der)

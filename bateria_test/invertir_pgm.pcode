@@ -122,7 +122,7 @@ L6:
   LT
   JMF L5
 ; --Bucle True
-; --Val(imagen)
+; --ValArray(imagen)
   SRF  0  7
   DRF
 ; --Val(fils)
@@ -526,7 +526,7 @@ L18:
 ; --Val(prof)
   SRF  0  6
   DRF
-; --Val(imagen)
+; --ValArray(imagen)
   SRF  0  7
   DRF
 ; --Val(idx)

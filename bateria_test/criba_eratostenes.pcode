@@ -217,7 +217,7 @@ L6:
 L7:
 ; --Caso False
 ; --Estructura IF
-; --Val(v)
+; --ValArray(v)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -428,7 +428,7 @@ L16:
   JMF L15
 ; --Bucle True
 ; --Estructura IF
-; --Val(v)
+; --ValArray(v)
   SRF  0  3
   DRF
 ; --Val(i)

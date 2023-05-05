@@ -262,7 +262,7 @@ L10:
   LT
   JMF L9
 ; --Bucle True
-; --Val(arr)
+; --ValArray(arr)
   SRF  0  3
   DRF
 ; --Val(i)
@@ -328,7 +328,7 @@ L13:
 ; --Val(sum)
   SRF  0  9
   DRF
-; --Val(arr)
+; --ValArray(arr)
   SRF  0  3
 ; --Val(i)
   SRF  0  8
@@ -428,13 +428,13 @@ MAIN:
   GT
   JMT ERROR
   PLUS
-; --Val(arr)
+; --ValArray(arr)
   SRF  0  6
 ; --Constante entera igual a 0
   STC  0
   PLUS
   DRF
-; --Val(arr)
+; --ValArray(arr)
   SRF  0  6
 ; --Constante entera igual a 1
   STC  1
@@ -442,7 +442,7 @@ MAIN:
   DRF
   OSF 14  0 L3
   ASG
-; --Val(arr)
+; --ValArray(arr)
   SRF  0  6
 ; --Constante entera igual a 0
   STC  0
@@ -451,7 +451,7 @@ MAIN:
   WRT  1
   STC 32
   WRT  0
-; --Val(arr)
+; --ValArray(arr)
   SRF  0  6
 ; --Constante entera igual a 1
   STC  1
@@ -460,7 +460,7 @@ MAIN:
   WRT  1
   STC 32
   WRT  0
-; --Val(arr)
+; --ValArray(arr)
   SRF  0  6
 ; --Constante entera igual a 2
   STC  2
@@ -553,7 +553,7 @@ MAIN:
 ; --Constante char
   STC 98
   ASG
-; --Val(cad)
+; --ValArray(cad)
   SRF  0 11
 ; --Constante entera igual a 0
   STC  0
@@ -562,7 +562,7 @@ MAIN:
   WRT  0
   STC 32
   WRT  0
-; --Val(cad)
+; --ValArray(cad)
   SRF  0 11
 ; --Constante entera igual a 1
   STC  1
@@ -571,20 +571,20 @@ MAIN:
   WRT  0
   STC 10
   WRT  0
-; --Val(cad)
+; --ValArray(cad)
   SRF  0 11
 ; --Constante entera igual a 0
   STC  0
   PLUS
 ; --Parametro por referencia
-; --Val(cad)
+; --ValArray(cad)
   SRF  0 11
 ; --Constante entera igual a 1
   STC  1
   PLUS
 ; --Parametro por referencia
   OSF 14  0 L6
-; --Val(cad)
+; --ValArray(cad)
   SRF  0 11
 ; --Constante entera igual a 0
   STC  0
@@ -593,7 +593,7 @@ MAIN:
   WRT  0
   STC 32
   WRT  0
-; --Val(cad)
+; --ValArray(cad)
   SRF  0 11
 ; --Constante entera igual a 1
   STC  1
@@ -613,13 +613,13 @@ MAIN:
 ; --Val(arr)
   SRF  0  6
   DRF
-  SRF  0  4
-  DRF
-  SRF  0  5
-  DRF
-  SRF  0  6
-  DRF
   SRF  0  7
+  DRF
+  SRF  0  8
+  DRF
+  SRF  0  9
+  DRF
+  SRF  0 10
   DRF
   OSF 14  0 L11
   WRT  1

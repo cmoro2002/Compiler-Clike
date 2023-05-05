@@ -21,6 +21,8 @@ public class Attributes implements Cloneable {
     public char valChar;
     public String valString; // Siempre será constante
 
+    public int posicionPila; // Sirve para subir la posicion de la pila
+
     // Constructor para los enteros
     public Attributes(Symbol.Types _type, Symbol.ParameterClass _parClass, int _valInt) {
         type = _type;
