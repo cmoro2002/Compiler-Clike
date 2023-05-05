@@ -17,16 +17,13 @@ ERROR:
 ; --Funcion indice (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(j)
+; --El tamaño de parametros es 6
   SRF  0  6
   ASGI
-; --Val(i)
   SRF  0  5
   ASGI
-; --Val(cols)
   SRF  0  4
   ASGI
-; --Val(fils)
   SRF  0  3
   ASGI
 ; --Val(i)
@@ -47,19 +44,15 @@ L1:
 ; --Procedimiento guardar_imagen (label: L2)
 L2:
 ; --Asignación de parametros
-; --Val(imagen)
+; --El tamaño de parametros es 7
   SRF  0  7
   ASGI
-; --Val(prof)
   SRF  0  6
   ASGI
-; --Val(cols)
   SRF  0  5
   ASGI
-; --Val(fils)
   SRF  0  4
   ASGI
-; --Val(formato)
   SRF  0  3
   ASGI
 ; --Constante char
@@ -173,19 +166,15 @@ L3:
 ; --Funcion cargar_imagen (label: L7)
 L7:
 ; --Asignación de parametros
-; --Val(imagen)
+; --El tamaño de parametros es 7
   SRF  0  7
   ASGI
-; --Val(prof)
   SRF  0  6
   ASGI
-; --Val(cols)
   SRF  0  5
   ASGI
-; --Val(fils)
   SRF  0  4
   ASGI
-; --Val(formato)
   SRF  0  3
   ASGI
   SRF  0 10
@@ -449,19 +438,15 @@ L9:
 ; --Procedimiento invertir_imagen (label: L14)
 L14:
 ; --Asignación de parametros
-; --Val(imagen)
+; --El tamaño de parametros es 7
   SRF  0  7
   ASGI
-; --Val(prof)
   SRF  0  6
   ASGI
-; --Val(cols)
   SRF  0  5
   ASGI
-; --Val(fils)
   SRF  0  4
   ASGI
-; --Val(formato)
   SRF  0  3
   ASGI
 ; --@(i)

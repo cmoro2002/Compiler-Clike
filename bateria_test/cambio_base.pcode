@@ -17,10 +17,9 @@ ERROR:
 ; --Funcion b_dec (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(b)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(n)
   SRF  0  3
   ASGI
 ; --Estructura IF
@@ -78,10 +77,9 @@ L3:
 ; --Funcion dec_b (label: L4)
 L4:
 ; --Asignación de parametros
-; --Val(b)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(n)
   SRF  0  3
   ASGI
 ; --Estructura IF

@@ -17,7 +17,7 @@ ERROR:
 ; --Procedimiento dato (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(d)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(d)
@@ -159,10 +159,9 @@ L2:
 ; --Funcion mcd (label: L6)
 L6:
 ; --Asignación de parametros
-; --Val(b)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(a)
   SRF  0  3
   ASGI
 ; --@(j)

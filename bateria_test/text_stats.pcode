@@ -17,7 +17,7 @@ ERROR:
 ; --Funcion separator (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(c)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --Estructura IF
@@ -86,7 +86,7 @@ L3:
 ; --Funcion upcase (label: L6)
 L6:
 ; --Asignación de parametros
-; --Val(c)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --Estructura IF

@@ -19,7 +19,7 @@ ERROR:
 ; --Procedimiento inicializar (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(colonia)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -78,7 +78,7 @@ L2:
 ; --Procedimiento inicializar2 (label: L4)
 L4:
 ; --Asignación de parametros
-; --Val(colonia)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -142,7 +142,7 @@ L5:
 ; --Procedimiento asignar (label: L7)
 L7:
 ; --Asignación de parametros
-; --Val(siguiente)
+; --El tamaño de parametros es 83
   SRF  0 83
   ASGI
   SRF  0 82
@@ -303,7 +303,6 @@ L7:
   ASGI
   SRF  0  4
   ASGI
-; --Val(colonia)
   SRF  0  3
   ASGI
 ; --@(i)
@@ -360,10 +359,9 @@ L8:
 ; --Funcion vivira (label: L10)
 L10:
 ; --Asignación de parametros
-; --Val(i)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(colonia)
   SRF  0  3
   ASGI
 ; --Estructura IF
@@ -470,10 +468,9 @@ L12:
 ; --Funcion vivira2 (label: L15)
 L15:
 ; --Asignación de parametros
-; --Val(i)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(colonia)
   SRF  0  3
   ASGI
 ; --@(vivos)
@@ -668,7 +665,7 @@ L25:
 ; --Procedimiento siguientegeneracion (label: L26)
 L26:
 ; --Asignación de parametros
-; --Val(colonia)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -891,7 +888,7 @@ L27:
 ; --Procedimiento mostrarcolonia (label: L29)
 L29:
 ; --Asignación de parametros
-; --Val(colonia)
+; --El tamaño de parametros es 82
   SRF  0 82
   ASGI
   SRF  0 81

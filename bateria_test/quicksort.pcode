@@ -19,7 +19,7 @@ ERROR:
 ; --Procedimiento inicializar (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(t)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -76,7 +76,7 @@ L2:
 ; --Procedimiento mostrar (label: L4)
 L4:
 ; --Asignación de parametros
-; --Val(t)
+; --El tamaño de parametros es 22
   SRF  0 22
   ASGI
   SRF  0 21
@@ -162,10 +162,9 @@ L5:
 ; --Procedimiento intercambiar (label: L7)
 L7:
 ; --Asignación de parametros
-; --Val(j)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(i)
   SRF  0  3
   ASGI
 ; --@(k)
@@ -194,10 +193,9 @@ L7:
 ; --Procedimiento ordenar (label: L8)
 L8:
 ; --Asignación de parametros
-; --Val(j)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(i)
   SRF  0  3
   ASGI
 ; --Estructura IF
@@ -232,16 +230,13 @@ L10:
 ; --Procedimiento divide (label: L11)
 L11:
 ; --Asignación de parametros
-; --Val(me)
+; --El tamaño de parametros es 6
   SRF  0  6
   ASGI
-; --Val(der)
   SRF  0  5
   ASGI
-; --Val(izq)
   SRF  0  4
   ASGI
-; --Val(t)
   SRF  0  3
   ASGI
 ; --@(p)
@@ -499,13 +494,11 @@ L16:
 ; --Procedimiento quicksort (label: L22)
 L22:
 ; --Asignación de parametros
-; --Val(der)
+; --El tamaño de parametros es 5
   SRF  0  5
   ASGI
-; --Val(izq)
   SRF  0  4
   ASGI
-; --Val(t)
   SRF  0  3
   ASGI
 ; --Estructura IF

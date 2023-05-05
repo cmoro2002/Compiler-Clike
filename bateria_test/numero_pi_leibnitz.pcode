@@ -19,7 +19,7 @@ ERROR:
 ; --Procedimiento iniciar (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(s)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(i)
@@ -71,7 +71,7 @@ L2:
 ; --Procedimiento mostrar_numero (label: L4)
 L4:
 ; --Asignación de parametros
-; --Val(s)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --ValArray(s)
@@ -155,7 +155,7 @@ L5:
 ; --Procedimiento sumar (label: L9)
 L9:
 ; --Asignación de parametros
-; --Val(r)
+; --El tamaño de parametros es 104
   SRF  0 104
   ASGI
   SRF  0 103
@@ -358,7 +358,6 @@ L9:
   ASGI
   SRF  0  4
   ASGI
-; --Val(s)
   SRF  0  3
   ASGI
 ; --@(i)
@@ -511,7 +510,7 @@ L10:
 ; --Procedimiento restar (label: L16)
 L16:
 ; --Asignación de parametros
-; --Val(r)
+; --El tamaño de parametros es 104
   SRF  0 104
   ASGI
   SRF  0 103
@@ -714,7 +713,6 @@ L16:
   ASGI
   SRF  0  4
   ASGI
-; --Val(s)
   SRF  0  3
   ASGI
 ; --@(i)
@@ -868,13 +866,11 @@ L17:
 ; --Procedimiento dividir (label: L23)
 L23:
 ; --Asignación de parametros
-; --Val(n)
-  SRF  0  5
+; --El tamaño de parametros es 105
+  SRF  0 105
   ASGI
-; --Val(r)
-  SRF  0  4
+  SRF  0 104
   ASGI
-; --Val(s)
   SRF  0 103
   ASGI
   SRF  0 102

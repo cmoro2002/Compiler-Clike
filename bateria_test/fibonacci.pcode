@@ -17,7 +17,7 @@ ERROR:
 ; --Procedimiento dato (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(dato)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(dato)
@@ -186,6 +186,7 @@ L2:
 ; --Procedimiento cambiar_de_linea (label: L6)
 L6:
 ; --Asignación de parametros
+; --El tamaño de parametros es 2
 ; --Constante entera igual a 13
   STC 13
   WRT  0
@@ -196,10 +197,9 @@ L6:
 ; --Procedimiento fib (label: L7)
 L7:
 ; --Asignación de parametros
-; --Val(r)
+; --El tamaño de parametros es 4
   SRF  0  4
   ASGI
-; --Val(n)
   SRF  0  3
   ASGI
 ; --Estructura IF

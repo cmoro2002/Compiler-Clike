@@ -17,7 +17,7 @@ ERROR:
 ; --Funcion aMay (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(c)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --@(difAsciis)

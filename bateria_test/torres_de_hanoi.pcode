@@ -17,16 +17,13 @@ ERROR:
 ; --Procedimiento hanoi (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(spare)
+; --El tamaño de parametros es 6
   SRF  0  6
   ASGI
-; --Val(target)
   SRF  0  5
   ASGI
-; --Val(source)
   SRF  0  4
   ASGI
-; --Val(n)
   SRF  0  3
   ASGI
 ; --Estructura IF

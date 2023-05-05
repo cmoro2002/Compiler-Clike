@@ -17,7 +17,7 @@ ERROR:
 ; --Funcion fact (label: L1)
 L1:
 ; --Asignación de parametros
-; --Val(m)
+; --El tamaño de parametros es 3
   SRF  0  3
   ASGI
 ; --Estructura IF
