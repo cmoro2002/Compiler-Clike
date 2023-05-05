@@ -881,12 +881,13 @@ void PosiblesPar(ArrayList<Attributes> parametrosLlamada, CodeBlock block, Array
 {
 	(<tCOMA> a = Expresion(block) 
 	{
+		cuenta++;
 		parametrosLlamada.add(a);
-		if (parametros.get(++cuenta).parClass == Symbol.ParameterClass.REF) {
+		if (parametros.get(cuenta).parClass == Symbol.ParameterClass.REF) {
 			block.removeLastInst();
 			block.addComment("Parametro por referencia");
 		} 
-		if (parametros.get(0).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
+		if (parametros.get(cuenta).parClass == Symbol.ParameterClass.VAL && parametros.get(cuenta) instanceof SymbolArray) {
 			SymbolArray array = (SymbolArray) parametros.get(cuenta);
 			for (int i = 1; i <= array.maxInd; i++) {
 				block.addInst(OpCode.SRF, tabla.level - array.nivel + 1, array.posicionPila + i);

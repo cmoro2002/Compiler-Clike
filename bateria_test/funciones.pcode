@@ -1,0 +1,630 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Procedimiento sub_test (label: L1)
+L1:
+; --Asignación de parametros
+  STC 72
+  WRT  0
+  STC 101
+  WRT  0
+  STC 108
+  WRT  0
+  STC 108
+  WRT  0
+  STC 111
+  WRT  0
+  STC 32
+  WRT  0
+  STC 97
+  WRT  0
+  STC 103
+  WRT  0
+  STC 97
+  WRT  0
+  STC 105
+  WRT  0
+  STC 110
+  WRT  0
+  STC 10
+  WRT  0
+  CSF
+; --Procedimiento test (label: L2)
+L2:
+; --Asignación de parametros
+  STC 72
+  WRT  0
+  STC 101
+  WRT  0
+  STC 108
+  WRT  0
+  STC 108
+  WRT  0
+  STC 111
+  WRT  0
+  STC 10
+  WRT  0
+  OSF  3  1 L1
+  CSF
+; --Funcion sum (label: L3)
+L3:
+; --Asignación de parametros
+; --Val(b)
+  SRF  0  4
+  ASGI
+; --Val(a)
+  SRF  0  3
+  ASGI
+; --Val(a)
+  SRF  0  3
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  PLUS
+  CSF
+  CSF
+; --Procedimiento swap (label: L4)
+L4:
+; --Asignación de parametros
+; --Val(b)
+  SRF  0  4
+  ASGI
+; --Val(a)
+  SRF  0  3
+  ASGI
+; --@(c)
+  SRF  0  5
+; --Val(a)
+  SRF  0  3
+  DRF
+  DRF
+  ASG
+; --@(a)
+  SRF  0  3
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  DRF
+  ASG
+; --@(b)
+  SRF  0  4
+  DRF
+; --Val(c)
+  SRF  0  5
+  DRF
+  ASG
+  CSF
+; --Procedimiento swap_by_swap (label: L5)
+L5:
+; --Asignación de parametros
+; --Val(b)
+  SRF  0  4
+  ASGI
+; --Val(a)
+  SRF  0  3
+  ASGI
+; --Val(a)
+  SRF  0  3
+  DRF
+; --Parametro por referencia
+; --Val(b)
+  SRF  0  4
+  DRF
+; --Parametro por referencia
+  OSF  5  1 L4
+  CSF
+; --Procedimiento swap_char (label: L6)
+L6:
+; --Asignación de parametros
+; --Val(b)
+  SRF  0  4
+  ASGI
+; --Val(a)
+  SRF  0  3
+  ASGI
+; --@(c)
+  SRF  0  5
+; --Val(a)
+  SRF  0  3
+  DRF
+  DRF
+  ASG
+; --@(a)
+  SRF  0  3
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  DRF
+  ASG
+; --@(b)
+  SRF  0  4
+  DRF
+; --Val(c)
+  SRF  0  5
+  DRF
+  ASG
+  CSF
+; --Constante entera igual a 5
+  STC  5
+; --Procedimiento set_all_ref (label: L7)
+L7:
+; --Asignación de parametros
+; --Val(arr)
+  SRF  0  3
+  ASGI
+; --@(arr)
+  SRF  0  3
+  DRF
+; --Constante entera igual a 0
+  STC  0
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Constante entera igual a 1
+  STC  1
+  NGI
+  ASG
+; --@(arr)
+  SRF  0  3
+  DRF
+; --Constante entera igual a 1
+  STC  1
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Constante entera igual a 2
+  STC  2
+  NGI
+  ASG
+; --@(arr)
+  SRF  0  3
+  DRF
+; --Constante entera igual a 2
+  STC  2
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Constante entera igual a 3
+  STC  3
+  NGI
+  ASG
+; --@(arr)
+  SRF  0  3
+  DRF
+; --Constante entera igual a 3
+  STC  3
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Constante entera igual a 4
+  STC  4
+  NGI
+  ASG
+; --@(arr)
+  SRF  0  3
+  DRF
+; --Constante entera igual a 4
+  STC  4
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Constante entera igual a 5
+  STC  5
+  NGI
+  ASG
+  CSF
+; --Constante entera igual a 5
+  STC  5
+; --Procedimiento show_all_ref (label: L8)
+L8:
+; --Asignación de parametros
+; --Val(arr)
+  SRF  0  3
+  ASGI
+; --@(i)
+  SRF  0  4
+; --Constante entera igual a 0
+  STC  0
+  ASG
+; --Estructura WHILE
+L10:
+; --Val(i)
+  SRF  0  4
+  DRF
+; --Constante entera igual a 5
+  STC  5
+  LT
+  JMF L9
+; --Bucle True
+; --Val(arr)
+  SRF  0  3
+  DRF
+; --Val(i)
+  SRF  0  4
+  DRF
+  PLUS
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+; --@(i)
+  SRF  0  4
+; --Val(i)
+  SRF  0  4
+  DRF
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  ASG
+; --Salto al inicio del while
+  JMP L10
+; --Final del while
+L9:
+  CSF
+; --Constante entera igual a 5
+  STC  5
+; --Funcion sum_all (label: L11)
+L11:
+; --Asignación de parametros
+; --Val(arr)
+  SRF  0  7
+  ASGI
+  SRF  0  6
+  ASGI
+  SRF  0  5
+  ASGI
+  SRF  0  4
+  ASGI
+  SRF  0  3
+  ASGI
+; --@(i)
+  SRF  0  8
+; --Constante entera igual a 0
+  STC  0
+  ASG
+; --@(sum)
+  SRF  0  9
+; --Constante entera igual a 0
+  STC  0
+  ASG
+; --Estructura WHILE
+L13:
+; --Val(i)
+  SRF  0  8
+  DRF
+; --Constante entera igual a 5
+  STC  5
+  LT
+  JMF L12
+; --Bucle True
+; --@(sum)
+  SRF  0  9
+; --Val(sum)
+  SRF  0  9
+  DRF
+; --Val(arr)
+  SRF  0  3
+; --Val(i)
+  SRF  0  8
+  DRF
+  PLUS
+  DRF
+  PLUS
+  ASG
+; --@(i)
+  SRF  0  8
+; --Val(i)
+  SRF  0  8
+  DRF
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  ASG
+; --Salto al inicio del while
+  JMP L13
+; --Final del while
+L12:
+; --Val(sum)
+  SRF  0  9
+  DRF
+  CSF
+  CSF
+MAIN:
+  OSF 14  0 L2
+; --@(a)
+  SRF  0  3
+; --Constante entera igual a 2
+  STC  2
+  ASG
+; --@(b)
+  SRF  0  4
+; --Constante entera igual a 3
+  STC  3
+  ASG
+; --@(c)
+  SRF  0  5
+; --Val(a)
+  SRF  0  3
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  OSF 14  0 L3
+  ASG
+; --Val(a)
+  SRF  0  3
+  DRF
+  WRT  1
+  STC 32
+  WRT  0
+; --Val(b)
+  SRF  0  4
+  DRF
+  WRT  1
+  STC 32
+  WRT  0
+; --Val(c)
+  SRF  0  5
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+; --@(arr)
+  SRF  0  6
+; --Constante entera igual a 0
+  STC  0
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Constante entera igual a 10
+  STC 10
+  ASG
+; --@(arr)
+  SRF  0  6
+; --Constante entera igual a 1
+  STC  1
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Constante entera igual a 5
+  STC  5
+  ASG
+; --@(arr)
+  SRF  0  6
+; --Constante entera igual a 2
+  STC  2
+  DUP
+  STC  5
+  GT
+  JMT ERROR
+  PLUS
+; --Val(arr)
+  SRF  0  6
+; --Constante entera igual a 0
+  STC  0
+  PLUS
+  DRF
+; --Val(arr)
+  SRF  0  6
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  DRF
+  OSF 14  0 L3
+  ASG
+; --Val(arr)
+  SRF  0  6
+; --Constante entera igual a 0
+  STC  0
+  PLUS
+  DRF
+  WRT  1
+  STC 32
+  WRT  0
+; --Val(arr)
+  SRF  0  6
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  DRF
+  WRT  1
+  STC 32
+  WRT  0
+; --Val(arr)
+  SRF  0  6
+; --Constante entera igual a 2
+  STC  2
+  PLUS
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+; --@(a)
+  SRF  0  3
+; --Constante entera igual a 0
+  STC  0
+  ASG
+; --@(b)
+  SRF  0  4
+; --Constante entera igual a 1
+  STC  1
+  ASG
+; --Val(a)
+  SRF  0  3
+  DRF
+  WRT  1
+  STC 32
+  WRT  0
+; --Val(b)
+  SRF  0  4
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+; --Val(a)
+  SRF  0  3
+; --Parametro por referencia
+; --Val(b)
+  SRF  0  4
+; --Parametro por referencia
+  OSF 14  0 L4
+; --Val(a)
+  SRF  0  3
+  DRF
+  WRT  1
+  STC 32
+  WRT  0
+; --Val(b)
+  SRF  0  4
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+; --Val(a)
+  SRF  0  3
+; --Parametro por referencia
+; --Val(b)
+  SRF  0  4
+; --Parametro por referencia
+  OSF 14  0 L5
+; --Val(a)
+  SRF  0  3
+  DRF
+  WRT  1
+  STC 32
+  WRT  0
+; --Val(b)
+  SRF  0  4
+  DRF
+  WRT  1
+  STC 10
+  WRT  0
+; --@(cad)
+  SRF  0 11
+; --Constante entera igual a 0
+  STC  0
+  DUP
+  STC  2
+  GT
+  JMT ERROR
+  PLUS
+; --Constante char
+  STC 97
+  ASG
+; --@(cad)
+  SRF  0 11
+; --Constante entera igual a 1
+  STC  1
+  DUP
+  STC  2
+  GT
+  JMT ERROR
+  PLUS
+; --Constante char
+  STC 98
+  ASG
+; --Val(cad)
+  SRF  0 11
+; --Constante entera igual a 0
+  STC  0
+  PLUS
+  DRF
+  WRT  0
+  STC 32
+  WRT  0
+; --Val(cad)
+  SRF  0 11
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  DRF
+  WRT  0
+  STC 10
+  WRT  0
+; --Val(cad)
+  SRF  0 11
+; --Constante entera igual a 0
+  STC  0
+  PLUS
+; --Parametro por referencia
+; --Val(cad)
+  SRF  0 11
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+; --Parametro por referencia
+  OSF 14  0 L6
+; --Val(cad)
+  SRF  0 11
+; --Constante entera igual a 0
+  STC  0
+  PLUS
+  DRF
+  WRT  0
+  STC 32
+  WRT  0
+; --Val(cad)
+  SRF  0 11
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  DRF
+  WRT  0
+  STC 10
+  WRT  0
+; --Val(arr)
+  SRF  0  6
+; --Parametro por referencia
+  OSF 14  0 L7
+; --Val(arr)
+  SRF  0  6
+; --Parametro por referencia
+  OSF 14  0 L8
+; --Val(arr)
+  SRF  0  6
+  DRF
+  SRF  0  4
+  DRF
+  SRF  0  5
+  DRF
+  SRF  0  6
+  DRF
+  SRF  0  7
+  DRF
+  OSF 14  0 L11
+  WRT  1
+  STC 10
+  WRT  0
+FIN:
+  LVP
+

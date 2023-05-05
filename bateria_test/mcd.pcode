@@ -1,0 +1,432 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Procedimiento dato (label: L1)
+L1:
+; --Asignación de parametros
+; --Val(d)
+  SRF  0  3
+  ASGI
+; --@(d)
+  SRF  0  3
+  DRF
+; --Constante entera igual a 0
+  STC  0
+  ASG
+; --Estructura WHILE
+L3:
+; --Val(d)
+  SRF  0  3
+  DRF
+  DRF
+; --Constante entera igual a 0
+  STC  0
+  LTE
+  JMF L2
+; --Bucle True
+  STC 69
+  WRT  0
+  STC 115
+  WRT  0
+  STC 99
+  WRT  0
+  STC 114
+  WRT  0
+  STC 105
+  WRT  0
+  STC 98
+  WRT  0
+  STC 101
+  WRT  0
+  STC 32
+  WRT  0
+  STC 117
+  WRT  0
+  STC 110
+  WRT  0
+  STC 32
+  WRT  0
+  STC 110
+  WRT  0
+  STC 117
+  WRT  0
+  STC 109
+  WRT  0
+  STC 101
+  WRT  0
+  STC 114
+  WRT  0
+  STC 111
+  WRT  0
+  STC 32
+  WRT  0
+  STC 40
+  WRT  0
+  STC 62
+  WRT  0
+  STC 48
+  WRT  0
+  STC 41
+  WRT  0
+  STC 58
+  WRT  0
+  STC 32
+  WRT  0
+  SRF  0  3
+  DRF
+  RD  1
+; --Estructura IF
+; --Val(d)
+  SRF  0  3
+  DRF
+  DRF
+; --Constante entera igual a 0
+  STC  0
+  LTE
+  JMF L4
+; --Caso True
+  STC 69
+  WRT  0
+  STC 108
+  WRT  0
+  STC 32
+  WRT  0
+  STC 110
+  WRT  0
+  STC 117
+  WRT  0
+  STC 109
+  WRT  0
+  STC 101
+  WRT  0
+  STC 114
+  WRT  0
+  STC 111
+  WRT  0
+  STC 32
+  WRT  0
+  STC 100
+  WRT  0
+  STC 101
+  WRT  0
+  STC 98
+  WRT  0
+  STC 101
+  WRT  0
+  STC 32
+  WRT  0
+  STC 115
+  WRT  0
+  STC 101
+  WRT  0
+  STC 114
+  WRT  0
+  STC 32
+  WRT  0
+  STC 62
+  WRT  0
+  STC 32
+  WRT  0
+  STC 48
+  WRT  0
+  STC 46
+  WRT  0
+  STC 10
+  WRT  0
+; --Salto al final del if
+  JMP L5
+L4:
+; --Caso False
+L5:
+; --Salto al inicio del while
+  JMP L3
+; --Final del while
+L2:
+  CSF
+; --Funcion mcd (label: L6)
+L6:
+; --Asignación de parametros
+; --Val(b)
+  SRF  0  4
+  ASGI
+; --Val(a)
+  SRF  0  3
+  ASGI
+; --@(j)
+  SRF  0  6
+; --Val(a)
+  SRF  0  3
+  DRF
+  ASG
+; --@(k)
+  SRF  0  7
+; --Val(b)
+  SRF  0  4
+  DRF
+  ASG
+; --@(i)
+  SRF  0  5
+; --Val(a)
+  SRF  0  3
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  MOD
+  ASG
+; --Estructura WHILE
+L8:
+; --Val(i)
+  SRF  0  5
+  DRF
+; --Constante entera igual a 0
+  STC  0
+  NEQ
+  JMF L7
+; --Bucle True
+; --@(j)
+  SRF  0  6
+; --Val(k)
+  SRF  0  7
+  DRF
+  ASG
+; --@(k)
+  SRF  0  7
+; --Val(i)
+  SRF  0  5
+  DRF
+  ASG
+; --@(i)
+  SRF  0  5
+; --Val(j)
+  SRF  0  6
+  DRF
+; --Val(k)
+  SRF  0  7
+  DRF
+  MOD
+  ASG
+; --Salto al inicio del while
+  JMP L8
+; --Final del while
+L7:
+; --Val(k)
+  SRF  0  7
+  DRF
+  CSF
+  CSF
+MAIN:
+  STC 69
+  WRT  0
+  STC 115
+  WRT  0
+  STC 116
+  WRT  0
+  STC 101
+  WRT  0
+  STC 32
+  WRT  0
+  STC 112
+  WRT  0
+  STC 114
+  WRT  0
+  STC 111
+  WRT  0
+  STC 103
+  WRT  0
+  STC 114
+  WRT  0
+  STC 97
+  WRT  0
+  STC 109
+  WRT  0
+  STC 97
+  WRT  0
+  STC 32
+  WRT  0
+  STC 112
+  WRT  0
+  STC 105
+  WRT  0
+  STC 100
+  WRT  0
+  STC 101
+  WRT  0
+  STC 32
+  WRT  0
+  STC 100
+  WRT  0
+  STC 111
+  WRT  0
+  STC 115
+  WRT  0
+  STC 32
+  WRT  0
+  STC 110
+  WRT  0
+  STC 250
+  WRT  0
+  STC 109
+  WRT  0
+  STC 101
+  WRT  0
+  STC 114
+  WRT  0
+  STC 111
+  WRT  0
+  STC 115
+  WRT  0
+  STC 32
+  WRT  0
+  STC 112
+  WRT  0
+  STC 111
+  WRT  0
+  STC 115
+  WRT  0
+  STC 105
+  WRT  0
+  STC 116
+  WRT  0
+  STC 105
+  WRT  0
+  STC 118
+  WRT  0
+  STC 111
+  WRT  0
+  STC 115
+  WRT  0
+  STC 32
+  WRT  0
+  STC 121
+  WRT  0
+  STC 32
+  WRT  0
+  STC 99
+  WRT  0
+  STC 97
+  WRT  0
+  STC 108
+  WRT  0
+  STC 99
+  WRT  0
+  STC 117
+  WRT  0
+  STC 108
+  WRT  0
+  STC 97
+  WRT  0
+  STC 32
+  WRT  0
+  STC 115
+  WRT  0
+  STC 117
+  WRT  0
+  STC 32
+  WRT  0
+  STC 109
+  WRT  0
+  STC 225
+  WRT  0
+  STC 120
+  WRT  0
+  STC 105
+  WRT  0
+  STC 109
+  WRT  0
+  STC 111
+  WRT  0
+  STC 32
+  WRT  0
+  STC 99
+  WRT  0
+  STC 111
+  WRT  0
+  STC 109
+  WRT  0
+  STC 250
+  WRT  0
+  STC 110
+  WRT  0
+  STC 32
+  WRT  0
+  STC 100
+  WRT  0
+  STC 105
+  WRT  0
+  STC 118
+  WRT  0
+  STC 105
+  WRT  0
+  STC 115
+  WRT  0
+  STC 111
+  WRT  0
+  STC 114
+  WRT  0
+  STC 46
+  WRT  0
+  STC 10
+  WRT  0
+; --Val(i)
+  SRF  0  3
+; --Parametro por referencia
+  OSF  5  0 L1
+; --Val(j)
+  SRF  0  4
+; --Parametro por referencia
+  OSF  5  0 L1
+  STC 10
+  WRT  0
+  STC 109
+  WRT  0
+  STC 99
+  WRT  0
+  STC 100
+  WRT  0
+  STC 40
+  WRT  0
+; --Val(i)
+  SRF  0  3
+  DRF
+  WRT  1
+  STC 44
+  WRT  0
+; --Val(j)
+  SRF  0  4
+  DRF
+  WRT  1
+  STC 41
+  WRT  0
+  STC 32
+  WRT  0
+  STC 61
+  WRT  0
+  STC 32
+  WRT  0
+; --Val(i)
+  SRF  0  3
+  DRF
+; --Val(j)
+  SRF  0  4
+  DRF
+  OSF  5  0 L6
+  WRT  1
+  STC 10
+  WRT  0
+FIN:
+  LVP
+

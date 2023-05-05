@@ -1,0 +1,106 @@
+  ENP MAIN
+; --Escribir ERROR
+ERROR:
+  STC 69
+  WRT  0
+  STC 82
+  WRT  0
+  STC 82
+  WRT  0
+  STC 79
+  WRT  0
+  STC 82
+  WRT  0
+  STC 10
+  WRT  0
+  JMP FIN
+; --Funcion mcd (label: L1)
+L1:
+; --Asignación de parametros
+; --Val(b)
+  SRF  0  4
+  ASGI
+; --Val(a)
+  SRF  0  3
+  ASGI
+; --@(j)
+  SRF  0  6
+; --Val(a)
+  SRF  0  3
+  DRF
+  ASG
+; --@(k)
+  SRF  0  7
+; --Val(b)
+  SRF  0  4
+  DRF
+  ASG
+; --@(i)
+  SRF  0  5
+; --Val(a)
+  SRF  0  3
+  DRF
+; --Val(b)
+  SRF  0  4
+  DRF
+  MOD
+  ASG
+; --Estructura WHILE
+L3:
+; --Val(i)
+  SRF  0  5
+  DRF
+; --Constante entera igual a 0
+  STC  0
+  NEQ
+  JMF L2
+; --Bucle True
+; --@(j)
+  SRF  0  6
+; --Val(k)
+  SRF  0  7
+  DRF
+  ASG
+; --@(k)
+  SRF  0  7
+; --Val(i)
+  SRF  0  5
+  DRF
+  ASG
+; --@(i)
+  SRF  0  5
+; --Val(j)
+  SRF  0  6
+  DRF
+; --Val(k)
+  SRF  0  7
+  DRF
+  MOD
+  ASG
+; --Salto al inicio del while
+  JMP L3
+; --Final del while
+L2:
+; --Val(k)
+  SRF  0  7
+  DRF
+  CSF
+  CSF
+MAIN:
+  SRF  0  3
+  RD  1
+  SRF  0  4
+  RD  1
+; --Val(i)
+  SRF  0  3
+  DRF
+; --Val(j)
+  SRF  0  4
+  DRF
+  OSF  5  0 L1
+  WRT  1
+  STC 10
+  WRT  0
+FIN:
+  LVP
+
