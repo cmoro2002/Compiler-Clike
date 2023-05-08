@@ -159,9 +159,7 @@ MAIN:
   WRT  0
   STC 58
   WRT  0
-  STC 92
-  WRT  0
-  STC 110
+  STC 10
   WRT  0
   STC 49
   WRT  0
@@ -237,6 +235,8 @@ MAIN:
   WRT  0
   STC 110
   WRT  0
+  STC 10
+  WRT  0
   STC 50
   WRT  0
   STC 32
@@ -305,6 +305,8 @@ MAIN:
   WRT  0
   STC 110
   WRT  0
+  STC 10
+  WRT  0
   STC 73
   WRT  0
   STC 110
@@ -349,6 +351,8 @@ MAIN:
   WRT  0
   STC 32
   WRT  0
+  STC 10
+  WRT  0
   SRF  0  6
   RD  1
 ; --Estructura IF
@@ -365,9 +369,9 @@ MAIN:
 ; --Val(salario_bruto)
   SRF  0  3
   DRF
-; --Constante entera igual a 2
-  STC  2
-  TMS
+; --Constante entera igual a 8
+  STC  8
+  DIV
   ASG
 ; --Salto al final del if
   JMP L2
@@ -391,7 +395,6 @@ L1:
   JMP L4
 L3:
 ; --Caso False
-L4:
 ; --Estructura IF
 ; --Val(salario_bruto)
   SRF  0  3
@@ -406,9 +409,9 @@ L4:
 ; --Val(salario_bruto)
   SRF  0  3
   DRF
-; --Constante entera igual a 1
-  STC  1
-  TMS
+; --Constante entera igual a 4
+  STC  4
+  DIV
   ASG
 ; --Salto al final del if
   JMP L6
@@ -421,9 +424,10 @@ L5:
   DRF
 ; --Constante entera igual a 2
   STC  2
-  TMS
+  DIV
   ASG
 L6:
+L4:
 L2:
 ; --@(salario_neto)
   SRF  0  4

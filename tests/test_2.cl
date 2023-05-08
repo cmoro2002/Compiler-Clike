@@ -1,13 +1,14 @@
 // Ahorcado.cl
 // Juego del ahorcado
 
-void mostrarPalabra(char palabra[], int letrasCorrectas[]) {
+void mostrarPalabra(char palabra[10], int letrasCorrectas[10]) {
     int i;
     print_ln();
     print_ln();
+    i = 0;
 
-    while (i < strlen(palabra)) {
-        if (letrasCorrectas[i]) {
+    while (i < 10) {
+        if (letrasCorrectas[i] == 1) {
             print(palabra[i]);
         } else {
             print("- ");
@@ -16,8 +17,15 @@ void mostrarPalabra(char palabra[], int letrasCorrectas[]) {
     }
 }
 
-int main() {
-    char palabra[TAM];
+void main() {
+    char palabra[10];
+    int letrasCorrectas[10];
+    int intentos;
+    int i;
+    char letra;
+    int taman;
+    bool acierto;
+    bool acertado;
     // Dar valor al vector palabra uno a uno con las letras de "hipopotamo";
     palabra[0] = 'h';
     palabra[1] = 'i';
@@ -30,7 +38,7 @@ int main() {
     palabra[8] = 'm';
     palabra[9] = 'o';
 
-    int letrasCorrectas[TAM];
+
     letrasCorrectas[0] = 0;
     letrasCorrectas[1] = 0;
     letrasCorrectas[2] = 0;
@@ -42,10 +50,7 @@ int main() {
     letrasCorrectas[8] = 0;
     letrasCorrectas[9] = 0;
 
-    int intentos;
-    intentos = 7;
-    int i;
-    char letra;
+    intentos = 15;
 
     while (intentos > 0) {
         // mostrarAhorcado(intentos);
@@ -55,15 +60,13 @@ int main() {
         print("Introduce una letra: ");
         read(letra);
         
-        int acierto;
-        acierto = 0;
+        acierto = false;
         i = 0;
-        int taman;
         taman = 0;
-        while (taman < TAM) {
+        while (taman < 10) {
             if (palabra[i] == letra) {
                 letrasCorrectas[i] = 1;
-                acierto = 1;
+                acierto = true;
             }
             i = i + 1;
             taman = taman + 1;
@@ -73,16 +76,13 @@ int main() {
             intentos = intentos - 1;
         }
 
-        int acertado;
-        acertado = 1;
+        acertado = true;
         i = 0;
-        int taman;
         taman = 0;
-        while (taman < TAM) {
+        while (taman < 10) {
             if (letrasCorrectas[i] == 0) {
-                acertado = 0;
+                acertado = false;
             }
-            int i;
             i = i + 1;
             taman = taman + 1;
         }
@@ -90,6 +90,6 @@ int main() {
         if (acertado) {
             mostrarPalabra(palabra, letrasCorrectas);
             print_ln("¡Felicidades! ¡Has adivinado la palabra!");
-            return 0;
         }
     }
+}

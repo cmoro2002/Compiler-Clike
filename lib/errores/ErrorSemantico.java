@@ -53,6 +53,14 @@ public class ErrorSemantico {
 		System.err.println(sep);
 	}
 
+	public static void deteccion(ArraySizeException e, Token t) {
+		contadorErrores++;
+		System.err.println(sep);
+		System.err.println("ERROR SEMÁNTICO (" + t.beginLine + "," + t.beginColumn + "): " +
+				"Símbolo: '" + t.image + "'. Error al acceder a una componente fuera del vector");
+		System.err.println(sep);
+	}
+
 	public static void warning(String mensaje, Token t) {
 		contadorWarnings++;
 		System.err.println(sep);

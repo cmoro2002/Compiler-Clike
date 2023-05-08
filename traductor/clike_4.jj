@@ -14,10 +14,6 @@ options {
 
 PARSER_BEGIN(clike_4)
 
-// TODO:
-// 	* Hacer que las funciones tengan seguro un return;
-// 	* Hacer warnings
-
 package traductor;
 
 import lib.symbolTable.Symbol;
@@ -40,6 +36,7 @@ import java.io.FileWriter;
 public class clike_4 {
 	private static final int SALTO_LINEA = 10;
 	private static int contadorReturns = 0;
+	private static Token tokenActual;
 	private static String[] pals = {"int2char","char2int","print","print_ln","read","read_ln",
 			"main","int","bool","void","char","if","while","else","return","true","false"};
 	private static SymbolTable tabla = new SymbolTable(pals);
@@ -538,6 +535,7 @@ void Func(CodeBlock bloqueGeneral) : {
 		tabla.insertBlock(); 
 		for (Symbol parametro : parametros) {
 			try {
+				parametro.inicializado = true;
 				tabla.insertSymbol(parametro);
 			} catch (AlreadyDefinedSymbolException e) {
 				errSem.deteccion(e, t);
@@ -562,7 +560,7 @@ void Func(CodeBlock bloqueGeneral) : {
 		List<Symbol> simbolos = tabla.getSimbolos();
 		// Recorrer todos los simbolos comprobando si el atributo 'utilizado' es false
 		for (Symbol simbolo : simbolos) {
-			if (!simbolo.utilizado) {
+			if (!simbolo.utilizado && simbolo.nivel > 0) {
 				errSem.warning("El simbolo " + simbolo.name + " no se utiliza en la funcion " + t.image);
 			}
 		}
@@ -602,6 +600,7 @@ void Proced(CodeBlock bloqueGeneral) : {
 		tabla.insertBlock(); 
 		for (Symbol parametro : parametros) {
 			try {
+				parametro.inicializado = true;
 				tabla.insertSymbol(parametro);
 			} catch (AlreadyDefinedSymbolException e) {
 				errSem.deteccion(e, t);
@@ -638,7 +637,7 @@ void Proced(CodeBlock bloqueGeneral) : {
 		List<Symbol> simbolos = tabla.getSimbolos();
 		// Recorrer todos los simbolos comprobando si el atributo 'utilizado' es false
 		for (Symbol simbolo : simbolos) {
-			if (!simbolo.utilizado) {
+			if (!simbolo.utilizado && simbolo.nivel > 0) {
 				errSem.warning("El simbolo " + simbolo.name + " no se utiliza en el procedimiento " + t.image );
 			}
 		}
@@ -678,6 +677,10 @@ void Param(ArrayList<Symbol> parametros, CodeBlock block) : {
 	( <tREF>  {clase = Symbol.ParameterClass.REF;} )?
 	id = <tID> 
 	(
+		{
+			tokenActual = id;
+		}
+
 		atributo = vector(block) 
 		{
 			esVector = true;
@@ -718,7 +721,7 @@ Attributes vector(CodeBlock block) : {
 	{
 		comprobarInt(at);
 		if (at.valInt < 0) {
-			throw new ArraySizeException();
+			errSem.deteccion(new ArraySizeException(), tokenActual);
 		}
 		return new Attributes(Symbol.Types.UNDEFINED,Symbol.ParameterClass.NONE,at.valInt);
 	}
@@ -734,7 +737,7 @@ Attributes vector_const(CodeBlock block) : {
 	{
 		comprobarInt(at);
 		if (at.valInt < 0) {
-			throw new ArraySizeException();
+			errSem.deteccion(new ArraySizeException(), tokenActual);
 		}
 		return new Attributes(Symbol.Types.UNDEFINED,Symbol.ParameterClass.NONE,at.valInt);
 	}
@@ -760,6 +763,9 @@ void ListaParam(ArrayList<Symbol> parametros, CodeBlock block) : {
 	(<tREF> {clase = Symbol.ParameterClass.REF;} )? 
 	id = <tID> 
 	(
+		{
+			tokenActual = id;
+		}
 		atributo = vector(block) 
 		{
 			esVector = true;
@@ -833,6 +839,7 @@ Attributes LlamaFunc(CodeBlock block) : {
 		} else if (simbolo instanceof SymbolProcedure) {
 			throw new ProcedureReturn(t.image);
 		}
+		simbolo.utilizado = true;
 	}
 	<tLPARENTESIS> parametrosLlamada = PasoPar(block, parametros) <tRPARENTESIS> 
 	{
@@ -864,6 +871,7 @@ void LlamaProced(CodeBlock block) : {
 		} else {
 			throw new FunctionCall();
 		}
+		simbolo.utilizado = true;
 	}
 	<tLPARENTESIS> parametrosLlamada = PasoPar(block, parametros) <tRPARENTESIS> 
 	{
@@ -1094,6 +1102,7 @@ void Asig(CodeBlock block) : {
 {
 	LOOKAHEAD(2) t=<tID> 
 	{
+		tokenActual = t;
 		simbolo = tabla.getSymbol(t.image); 
 		simbolo.inicializado = true;
 		block.addComment("@(" + simbolo.name + ")"); 
@@ -1110,6 +1119,7 @@ void Asig(CodeBlock block) : {
 	|
 	LOOKAHEAD(2) t = <tID> 	
 	{ 
+		tokenActual = t;
 		simbolo = tabla.getSymbol(t.image); 
 		block.addComment("@(" + simbolo.name + ")"); 
 		block.addInst(OpCode.SRF,tabla.level - simbolo.nivel,simbolo.posicionPila);
@@ -1389,7 +1399,7 @@ void ReadN(CodeBlock block) : {
 	Symbol.Types a = null;
 }
 {
-	<tREAD> <tLPARENTESIS> t=<tID> (vector(block) {esVector = true;})? 
+	<tREAD> <tLPARENTESIS> t=<tID> {tokenActual = t;} (vector(block) {esVector = true;})? 
 	{
 		simbolo = tabla.getSymbol(t.image);
 		simbolo.utilizado = true;
@@ -1430,7 +1440,11 @@ void ListaRead(CodeBlock block) : {
 	Symbol.Types a = null;
 }
 {
-	(<tCOMA> t=<tID> (vector(block) {esVector = true;})? ListaRead(block) {simbolo = tabla.getSymbol(t.image); comprobarTipoValido(simbolo);}
+	(<tCOMA> t=<tID> 
+	{
+		tokenActual = t;
+	}
+	(vector(block) {esVector = true;})? ListaRead(block) {simbolo = tabla.getSymbol(t.image); comprobarTipoValido(simbolo);}
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		simbolo.utilizado = true;
@@ -1474,7 +1488,11 @@ void ListaReadLn(CodeBlock block) : {
 	Symbol.Types a = null;
 }
 {
-	(t = <tID> (vector(block) {esVector = true;})? 
+	(t = <tID> 
+	{
+		tokenActual = t;
+	}
+	(vector(block) {esVector = true;})? 
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		simbolo.utilizado = true;
@@ -1789,7 +1807,7 @@ Attributes Primario(CodeBlock block): {
 	|	LOOKAHEAD(2) t=< tID >
 	{
 		simbolo = tabla.getSymbol(t.image); 
-		if (!simbolo.inicializado) {
+		if (!simbolo.inicializado && simbolo.nivel > 0) {
 			// Generar un warning para informar que se esta utilizando una variable no inicializada
 			errSem.warning("La variable no ha sido inicializada",t);
 		}
@@ -1816,7 +1834,7 @@ Attributes Primario(CodeBlock block): {
 	{ 
 		// Caso de una variable
 		simbolo = tabla.getSymbol(t.image); 
-		if (!simbolo.inicializado) {
+		if (!simbolo.inicializado && simbolo.nivel > 0) {
 			// Generar un warning para informar que se esta utilizando una variable no inicializada
 			errSem.warning("La variable no ha sido inicializada",t);
 		}
