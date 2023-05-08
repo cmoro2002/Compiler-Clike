@@ -1,0 +1,43 @@
+; --Funcion pseudoaleatorio (label: L4)
+L4:
+; --Asignación de parametros
+  SRF  0  4
+  ASGI
+  SRF  0  3
+  ASGI
+; --@(llamadas)
+  SRF  0  5
+; --Constante entera igual a 0
+  STC  0
+  ASG
+; --@(llamadas)
+  SRF  0  5
+; --Val(llamadas)
+  SRF  0  5
+  DRF
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  ASG
+; --Val(min)
+  SRF  0  3
+  DRF
+; --Val(llamadas)
+  SRF  0  5
+  DRF
+  OSF  6  1 L1
+; --Val(max)
+  SRF  0  4
+  DRF
+; --Val(min)
+  SRF  0  3
+  DRF
+  SBT
+; --Constante entera igual a 1
+  STC  1
+  PLUS
+  MOD
+  PLUS
+  CSF
+  CSF
+

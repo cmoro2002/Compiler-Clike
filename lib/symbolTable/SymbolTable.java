@@ -137,6 +137,19 @@ public class SymbolTable {
         return offset;
     }
 
+    // Funcion que devuelve una lista con los simbolos del nivel actual de la tabla
+    // de simbolos
+    public List<Symbol> getSimbolos() {
+        HashMap<String, Symbol> currentBlock = st.get(st.size() - 1);
+        List<Symbol> simbolos = new ArrayList<Symbol>();
+        for (Map.Entry entry : currentBlock.entrySet()) {
+            // Obtener el simbolo de la entrada
+            Symbol symbol = (Symbol) entry.getValue();
+            simbolos.add(symbol);
+        }
+        return simbolos;
+    }
+
     // Si no está, excepción. Si está, devuelve su referencia
     public Symbol getSymbol(String name) throws SymbolNotFoundException {
         Symbol result = findSymbol(name);

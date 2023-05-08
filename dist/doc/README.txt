@@ -1,6 +1,6 @@
 Compilador clike.jar (V1.0)
 ------------------------------
-Análisis léxico y sintáctico
+Generación de codigo
 ------------------------------
 Autores:
     - César Moro Latorre 815078
@@ -21,7 +21,7 @@ Características generales:
 4) No se pueden intercalar instrucciones con declaraciones dentro de una func/proc: primero las declaraciones de variables, luego las instrucciones
 
 Características de implementación:
-1) Se permite la definición y asignación de variables globales.
+1) Se permite la definición de variables globales.
 2) No se permite la instrucción 'return' en un procedimiento ni en la funcion main.
 3) En una función puede aparecer o no la instrucción 'return'. 
 4) No se permite la definición de matrices, solo de vectores simples.

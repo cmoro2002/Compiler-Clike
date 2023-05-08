@@ -15,7 +15,9 @@ options {
 PARSER_BEGIN(clike_4)
 
 // TODO:
+// 	* Hacer que las funciones tengan seguro un return;
 // 	* Hacer warnings
+
 package traductor;
 
 import lib.symbolTable.Symbol;
@@ -27,7 +29,7 @@ import lib.symbolTable.SymbolFunction;
 import lib.symbolTable.SymbolInt;
 import lib.symbolTable.SymbolProcedure;
 import lib.attributes.Attributes;
-import java.util.ArrayList; 
+import java.util.*; 
 import lib.symbolTable.exceptions.*;
 import lib.errores.ErrorSemantico;
 import lib.tools.codeGeneration.*;
@@ -37,6 +39,7 @@ import java.io.FileWriter;
 
 public class clike_4 {
 	private static final int SALTO_LINEA = 10;
+	private static int contadorReturns = 0;
 	private static String[] pals = {"int2char","char2int","print","print_ln","read","read_ln",
 			"main","int","bool","void","char","if","while","else","return","true","false"};
 	private static SymbolTable tabla = new SymbolTable(pals);
@@ -63,8 +66,6 @@ public class clike_4 {
 			}
 			//Programa es el símbolo inicial de la gramática
 			parser.Programa();
-			//...
-			System.out.println("***** Análisis terminado con éxito *****");
 		}
 		catch (java.io.FileNotFoundException e) {
 			System.err.println ("Fichero " + args[0] + " no encontrado.");
@@ -451,13 +452,22 @@ void Programa() : {
 	{
 		block.addLabel("FIN");
 		block.addInst(OpCode.LVP);
-		escribirBloque(block);
+		// Obtener el contador de errores, y si es mayor que 0 no generar el fichero
+		if (errSem.getContadorErrores() > 0) {
+			System.out.println("Se han encontrado " + errSem.getContadorErrores() + " errores semánticos.");
+			System.out.println("No se ha generado el fichero " + nombreFichero);
+		} else {
+			// Generar el fichero
+			escribirBloque(block);
+			int warnings = errSem.getContadorWarnings();
+			System.out.println("Compilación finalizada con (" + warnings + ") warnings. Se ha generado el fichero " + nombreFichero);
+		}
 		//tabla.removeBlock();
 	}
 }
 
 void FuncYDeclaracion(CodeBlock block) : {}
-{
+{ 
 
 	LOOKAHEAD(3) Def(block) |
 	Funcs(block)
@@ -478,6 +488,16 @@ void Main(CodeBlock block) : {}
 	(Def(block))*
 	(CodigoSinDSinRet(block))*
 	<tRLLAVE>
+	{
+		// Comprobar si hay variables sin utilizar
+		List<Symbol> simbolos = tabla.getSimbolos();
+		// Recorrer todos los simbolos comprobando si el atributo 'utilizado' es false
+		for (Symbol simbolo : simbolos) {
+			if (!simbolo.utilizado) {
+				errSem.warning("El simbolo " + simbolo.name + " no se utiliza en el main");
+			}
+		}
+	}
 	
 }
 
@@ -510,8 +530,6 @@ void Func(CodeBlock bloqueGeneral) : {
 		block.addLabel(label);
 		// Añadir la definición de la función a la tabla e insertar nuevo bloque
 		sFunc = new SymbolFunction(t.image,parametros,tipo, label);
-		// sFunc.nivel = functionCounter++;
-		System.out.println(tabla.toString());
 		try {
 			tabla.insertSymbol(sFunc);
 		} catch (AlreadyDefinedSymbolException e) {
@@ -530,19 +548,6 @@ void Func(CodeBlock bloqueGeneral) : {
 		int tam = tabla.getFunctionSize();
 		//block.addComment("El tamaño de parametros es " + tam);
 		for (int i = tam; i >= 3; i--) {
-			// Obtener el simbolo del parametro
-			// Symbol parametro = parametros.get(i);
-			// block.addComment("Val(" + parametro.name + ")");
-			// if (parametro instanceof SymbolArray) {
-			// 	SymbolArray array = (SymbolArray) parametro;
-			// 	if (parametro.parClass == Symbol.ParameterClass.VAL) {
-			// 		// Para cada uno de los componentes leer su valor
-			// 		for (int j = array.maxInd; j > 0; j--) {
-			// 			block.addInst(OpCode.SRF, 0, j + i + 3);
-			// 			block.addInst(OpCode.ASGI);
-			// 		}
-			// 	}
-			// }
 			block.addInst(OpCode.SRF, 0, i);
 			block.addInst(OpCode.ASGI);
 		}
@@ -552,7 +557,21 @@ void Func(CodeBlock bloqueGeneral) : {
 	(Def(block))*
 	(CodigoSinD(tipo,block))*
 	<tRLLAVE>
-	{ tabla.removeBlock(); 
+	{ 
+		// Comprobar si hay variables sin utilizar
+		List<Symbol> simbolos = tabla.getSimbolos();
+		// Recorrer todos los simbolos comprobando si el atributo 'utilizado' es false
+		for (Symbol simbolo : simbolos) {
+			if (!simbolo.utilizado) {
+				errSem.warning("El simbolo " + simbolo.name + " no se utiliza en la funcion " + t.image);
+			}
+		}
+		// Comprobar si hay al menos un return
+		if (contadorReturns <= 0) {
+			errSem.deteccion("La funcion " + t.image + " no tiene return", t);
+		}
+		contadorReturns = 0;
+		tabla.removeBlock(); 
 		block.addInst(OpCode.CSF);
 		bloqueGeneral.addBlock(block);
 		escribirBloque(block);
@@ -575,8 +594,6 @@ void Proced(CodeBlock bloqueGeneral) : {
 		block.addLabel(label);
 		// Añadir la definición de la función a la tabla e insertar nuevo bloque
 		sProc = new SymbolProcedure(t.image,parametros, label);
-		sProc.nivel = functionCounter++;
-		System.out.println(tabla.toString());
 		try {
 			tabla.insertSymbol(sProc);
 		} catch (AlreadyDefinedSymbolException e) {
@@ -616,7 +633,16 @@ void Proced(CodeBlock bloqueGeneral) : {
 	(Def(block))*
 	(CodigoSinDSinRet(block))*
 	<tRLLAVE>
-	{ tabla.removeBlock(); 
+	{ 	
+		// Comprobar si hay variables sin utilizar
+		List<Symbol> simbolos = tabla.getSimbolos();
+		// Recorrer todos los simbolos comprobando si el atributo 'utilizado' es false
+		for (Symbol simbolo : simbolos) {
+			if (!simbolo.utilizado) {
+				errSem.warning("El simbolo " + simbolo.name + " no se utiliza en el procedimiento " + t.image );
+			}
+		}
+		tabla.removeBlock(); 
 		block.addInst(OpCode.CSF);
 		bloqueGeneral.addBlock(block);
 	}
@@ -630,6 +656,7 @@ void ReturnValor(Symbol.Types tipo, CodeBlock block) : {
 	{
 		comprobarTipoReturn(a,tipo);
 		block.addInst(OpCode.CSF);
+		contadorReturns++;
 	}
 }
 
@@ -771,7 +798,7 @@ void CodigoSinD(Symbol.Types tipo, CodeBlock block) : {}
 	If(tipo, block) |
 	Print(block) |
 	Read(block) |
-	LOOKAHEAD(2) LlamaFuncYProced(block) <tPCOMA> |
+	LOOKAHEAD(2) LlamaProced(block) <tPCOMA> |
 	ReturnValor(tipo, block)
 }
 
@@ -783,7 +810,7 @@ void CodigoSinDSinRet(CodeBlock block) : {}
 	IfSinRet(block) |
 	Print(block) |
 	Read(block) |
-	LOOKAHEAD(2) LlamaFuncYProced(block) <tPCOMA>
+	LOOKAHEAD(2) LlamaProced(block) <tPCOMA>
 }
 
 //----------------------   LLAMADAS FUNCION    ----------------------
@@ -821,7 +848,7 @@ Attributes LlamaFunc(CodeBlock block) : {
 	}
 }
 
-void LlamaFuncYProced(CodeBlock block) : {
+void LlamaProced(CodeBlock block) : {
 	Token t = new Token();
 	Symbol simbolo = null;
 	ArrayList<Symbol> parametros = null;
@@ -832,10 +859,10 @@ void LlamaFuncYProced(CodeBlock block) : {
 	t = <tID> 
 	{
 		simbolo = tabla.getSymbol(t.image);
-		if (simbolo instanceof SymbolFunction) {
-			parametros = ((SymbolFunction)simbolo).parList;
-		} else if (simbolo instanceof SymbolProcedure) {
+		if (simbolo instanceof SymbolProcedure) {
 			parametros = ((SymbolProcedure)simbolo).parList;
+		} else {
+			throw new FunctionCall();
 		}
 	}
 	<tLPARENTESIS> parametrosLlamada = PasoPar(block, parametros) <tRPARENTESIS> 
@@ -997,7 +1024,6 @@ void Def(CodeBlock block) : {
 			}
 		}
 		(Vars(tipo, block))* <tPCOMA>
-		{System.out.println(tabla.toString());}
 	)
 }
 
@@ -1069,6 +1095,7 @@ void Asig(CodeBlock block) : {
 	LOOKAHEAD(2) t=<tID> 
 	{
 		simbolo = tabla.getSymbol(t.image); 
+		simbolo.inicializado = true;
 		block.addComment("@(" + simbolo.name + ")"); 
 		block.addInst(OpCode.SRF,tabla.level - simbolo.nivel,simbolo.posicionPila);
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
@@ -1364,7 +1391,8 @@ void ReadN(CodeBlock block) : {
 {
 	<tREAD> <tLPARENTESIS> t=<tID> (vector(block) {esVector = true;})? 
 	{
-		simbolo = tabla.getSymbol(t.image); 
+		simbolo = tabla.getSymbol(t.image);
+		simbolo.utilizado = true;
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
 		// Si es por referencia, hacer un DRF
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
@@ -1405,6 +1433,7 @@ void ListaRead(CodeBlock block) : {
 	(<tCOMA> t=<tID> (vector(block) {esVector = true;})? ListaRead(block) {simbolo = tabla.getSymbol(t.image); comprobarTipoValido(simbolo);}
 	{
 		simbolo = tabla.getSymbol(t.image); 
+		simbolo.utilizado = true;
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
 		// Si es por referencia, hacer un DRF
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
@@ -1448,6 +1477,7 @@ void ListaReadLn(CodeBlock block) : {
 	(t = <tID> (vector(block) {esVector = true;})? 
 	{
 		simbolo = tabla.getSymbol(t.image); 
+		simbolo.utilizado = true;
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
 		// Si es por referencia, hacer un DRF
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
@@ -1759,6 +1789,11 @@ Attributes Primario(CodeBlock block): {
 	|	LOOKAHEAD(2) t=< tID >
 	{
 		simbolo = tabla.getSymbol(t.image); 
+		if (!simbolo.inicializado) {
+			// Generar un warning para informar que se esta utilizando una variable no inicializada
+			errSem.warning("La variable no ha sido inicializada",t);
+		}
+		simbolo.utilizado = true;
 		block.addComment("ValArray(" + simbolo.name + ")");
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel,simbolo.posicionPila);
 		if (simbolo.parClass == Symbol.ParameterClass.REF) {
@@ -1781,6 +1816,11 @@ Attributes Primario(CodeBlock block): {
 	{ 
 		// Caso de una variable
 		simbolo = tabla.getSymbol(t.image); 
+		if (!simbolo.inicializado) {
+			// Generar un warning para informar que se esta utilizando una variable no inicializada
+			errSem.warning("La variable no ha sido inicializada",t);
+		}
+		simbolo.utilizado = true;
 		block.addComment("Val(" + simbolo.name + ")");
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel,simbolo.posicionPila);
 		block.addInst(OpCode.DRF);

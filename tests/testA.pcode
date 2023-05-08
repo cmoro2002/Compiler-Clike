@@ -1,0 +1,10 @@
+; --Funcion suma (label: L1)
+L1:
+; --Asignación de parametros
+; --@(b)
+  SRF  0  3
+; --Constante entera igual a 5
+  STC  5
+  ASG
+  CSF
+

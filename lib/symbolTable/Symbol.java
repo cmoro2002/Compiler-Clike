@@ -32,6 +32,11 @@ abstract public class Symbol implements Cloneable {
 
     public int posicionPila;
 
+    // Atributos para el control de variables no inicializadas y no utilizadas
+    // (warnings)
+    public boolean inicializado = false; // indica si la variable ha sido inicializada
+    public boolean utilizado = false; // indica si la variable ha sido utilizada
+
     public Symbol(String _name, Types _type) {
         this(_name, -1, _type, ParameterClass.NONE, false);
     }

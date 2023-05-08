@@ -61,7 +61,18 @@ public class ErrorSemantico {
 		System.err.println(sep);
 	}
 
+	public static void warning(String mensaje) {
+		contadorWarnings++;
+		System.err.println(sep);
+		System.err.println("WARNING: " + mensaje);
+		System.err.println(sep);
+	}
+
 	public static int getContadorErrores() {
 		return contadorErrores;
+	}
+
+	public static int getContadorWarnings() {
+		return contadorWarnings;
 	}
 }
