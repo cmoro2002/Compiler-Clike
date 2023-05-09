@@ -675,7 +675,7 @@ void Param(ArrayList<Symbol> parametros, CodeBlock block) : {
 			tokenActual = id;
 		}
 
-		atributo = vector(block) 
+		atributo = vector(block, tipo) 
 		{
 			esVector = true;
 			vec = new SymbolArray(id.image, atributo.valInt, tipo, clase);
@@ -707,7 +707,7 @@ void Param(ArrayList<Symbol> parametros, CodeBlock block) : {
 }
 
 // Parametros que son vectores
-Attributes vector(CodeBlock block) : {
+Attributes vector(CodeBlock block, Symbol.Types tipo) : {
 	Attributes at;
 }
 {	
@@ -717,12 +717,12 @@ Attributes vector(CodeBlock block) : {
 		if (at.valInt < 0) {
 			errSem.deteccion(new ArraySizeException(), tokenActual);
 		}
-		return new Attributes(Symbol.Types.UNDEFINED,Symbol.ParameterClass.NONE,at.valInt);
+		return new Attributes(tipo,Symbol.ParameterClass.NONE,at.valInt);
 	}
 }
 
 // Parametros que son vectores
-Attributes vector_const(CodeBlock block) : {
+Attributes vector_const(CodeBlock block, Symbol.Types tipo) : {
 	Attributes at;
 	
 }
@@ -733,7 +733,7 @@ Attributes vector_const(CodeBlock block) : {
 		if (at.valInt < 0) {
 			errSem.deteccion(new ArraySizeException(), tokenActual);
 		}
-		return new Attributes(Symbol.Types.UNDEFINED,Symbol.ParameterClass.NONE,at.valInt);
+		return new Attributes(tipo,Symbol.ParameterClass.NONE,at.valInt);
 	}
 }
 
@@ -760,7 +760,7 @@ void ListaParam(ArrayList<Symbol> parametros, CodeBlock block) : {
 		{
 			tokenActual = id;
 		}
-		atributo = vector(block) 
+		atributo = vector(block, tipo) 
 		{
 			esVector = true;
 			vec = new SymbolArray(id.image, atributo.valInt, tipo, clase);
@@ -980,7 +980,7 @@ void Def(CodeBlock block) : {
 	(
 		t = <tID>  
 	(
-		atributo = vector_const(block) 
+		atributo = vector_const(block, tipo) 
 		{
 			esVector = true;
 			SymbolArray s = new SymbolArray(t.image, atributo.valInt, tipo, Symbol.ParameterClass.NONE);
@@ -1034,7 +1034,8 @@ void Vars(Symbol.Types tipo, CodeBlock block) : {
 {
 	<tCOMA> t=<tID> 
 	(
-		atributo = vector_const(block) 
+
+		atributo = vector_const(block, tipo) 
 		{
 			esVector = true;
 			SymbolArray s = new SymbolArray(t.image, atributo.valInt, tipo, Symbol.ParameterClass.NONE);
@@ -1117,11 +1118,20 @@ void Asig(CodeBlock block) : {
 			block.addInst(OpCode.DRF);
 		}
 	} 
-	vector(block) 
+	vector(block, simbolo.type) 
 	{
-		simbolo = tabla.getSymbol(t.image);
-		array = (SymbolArray)simbolo;
-		int tamanyo = array.maxInd + 1;
+		int tamanyo = 0;
+		if (simbolo instanceof SymbolArray) {
+			tipo = ((SymbolArray)simbolo).baseType;
+			block.addInst(OpCode.ASG);
+			array = (SymbolArray)simbolo;
+			tamanyo = array.maxInd + 1;
+		} else {
+			String _tipoVar = obtenerTipo(simbolo.type);
+       		String _tipoDevuelto = "Array";
+			errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
+		}
+		
 		block.addInst(OpCode.DUP);
 		block.addInst(OpCode.STC, tamanyo); 
 		block.addInst(OpCode.GT);
@@ -1131,6 +1141,7 @@ void Asig(CodeBlock block) : {
 	<tIGUAL> a=Expresion(block) <tPCOMA>
 	{
 		simbolo = tabla.getSymbol(t.image);
+		tipo = simbolo.type;
 		if (simbolo instanceof SymbolArray) {
 			tipo = ((SymbolArray)simbolo).baseType;
 			block.addInst(OpCode.ASG);
@@ -1389,9 +1400,8 @@ void ReadN(CodeBlock block) : {
 	Symbol.Types a = null;
 }
 {
-	<tREAD> <tLPARENTESIS> t=<tID> {tokenActual = t;} (vector(block) {esVector = true;})? 
+	<tREAD> <tLPARENTESIS> t=<tID> {tokenActual = t; simbolo = tabla.getSymbol(t.image);} (vector(block, simbolo.type) {esVector = true;})? 
 	{
-		simbolo = tabla.getSymbol(t.image);
 		simbolo.utilizado = true;
 		block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
 		// Si es por referencia, hacer un DRF
@@ -1404,6 +1414,10 @@ void ReadN(CodeBlock block) : {
 				a = ((SymbolArray)simbolo).baseType; 
 				comprobarTipoValido(a);
 				block.addInst(OpCode.PLUS);
+			}  else {
+				String _tipoVar = obtenerTipo(simbolo.type);
+				String _tipoDevuelto = "Array";
+				errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
 			}
 		} else {
 			comprobarTipoValido(simbolo);
@@ -1433,8 +1447,9 @@ void ListaRead(CodeBlock block) : {
 	(<tCOMA> t=<tID> 
 	{
 		tokenActual = t;
+		simbolo = tabla.getSymbol(t.image); 
 	}
-	(vector(block) {esVector = true;})? ListaRead(block) {simbolo = tabla.getSymbol(t.image); comprobarTipoValido(simbolo);}
+	(vector(block, simbolo.type) {esVector = true;})? ListaRead(block) {simbolo = tabla.getSymbol(t.image); comprobarTipoValido(simbolo);}
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		simbolo.utilizado = true;
@@ -1448,6 +1463,10 @@ void ListaRead(CodeBlock block) : {
 				// Ver de que tipo es el vector
 				a = ((SymbolArray)simbolo).baseType; 
 				comprobarTipoValido(a);
+			} else {
+				String _tipoVar = obtenerTipo(simbolo.type);
+				String _tipoDevuelto = "Array";
+				errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
 			}
 		} else {
 			comprobarTipoValido(simbolo);
@@ -1481,8 +1500,9 @@ void ListaReadLn(CodeBlock block) : {
 	(t = <tID> 
 	{
 		tokenActual = t;
+		simbolo = tabla.getSymbol(t.image); 
 	}
-	(vector(block) {esVector = true;})? 
+	(vector(block, simbolo.type) {esVector = true;})? 
 	{
 		simbolo = tabla.getSymbol(t.image); 
 		simbolo.utilizado = true;
@@ -1497,6 +1517,10 @@ void ListaReadLn(CodeBlock block) : {
 				a = ((SymbolArray)simbolo).baseType; 
 				comprobarTipoValido(a);
 				block.addInst(OpCode.PLUS);
+			}  else {
+				String _tipoVar = obtenerTipo(simbolo.type);
+				String _tipoDevuelto = "Array";
+				errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
 			}
 		} else {
 			comprobarTipoValido(simbolo);
@@ -1821,6 +1845,11 @@ Attributes Primario(CodeBlock block): {
 		simbolo = tabla.getSymbol(t.image);
 		if (simbolo instanceof SymbolArray) {
 			a = ((SymbolArray)simbolo).baseType; 
+		}  else {
+			String _tipoVar = obtenerTipo(simbolo.type);
+       		String _tipoDevuelto = "Array";
+			errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
+			a = Symbol.Types.ARRAY;
 		}
 		atributo = new Attributes(a,simbolo.parClass,atributo.valInt);
 		atributo.token = t;

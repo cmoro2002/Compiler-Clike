@@ -738,7 +738,7 @@ clase = Symbol.ParameterClass.REF;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case tLCORCHETE:{
 tokenActual = id;
-      atributo = vector(block);
+      atributo = vector(block, tipo);
 esVector = true;
                         vec = new SymbolArray(id.image, atributo.valInt, tipo, clase);
                         parametros.add(vec);    // Añadir parametro a la lista
@@ -784,7 +784,7 @@ if (!esVector) {
 }
 
 // Parametros que son vectores
-  static final public Attributes vector(CodeBlock block) throws ParseException {Attributes at;
+  static final public Attributes vector(CodeBlock block, Symbol.Types tipo) throws ParseException {Attributes at;
     jj_consume_token(tLCORCHETE);
     at = Expresion(block);
     jj_consume_token(tRCORCHETE);
@@ -792,12 +792,12 @@ comprobarInt(at);
                 if (at.valInt < 0) {
                         errSem.deteccion(new ArraySizeException(), tokenActual);
                 }
-                {if ("" != null) return new Attributes(Symbol.Types.UNDEFINED,Symbol.ParameterClass.NONE,at.valInt);}
+                {if ("" != null) return new Attributes(tipo,Symbol.ParameterClass.NONE,at.valInt);}
     throw new Error("Missing return statement in function");
 }
 
 // Parametros que son vectores
-  static final public Attributes vector_const(CodeBlock block) throws ParseException {Attributes at;
+  static final public Attributes vector_const(CodeBlock block, Symbol.Types tipo) throws ParseException {Attributes at;
     jj_consume_token(tLCORCHETE);
     at = Expresion_simple_const(block);
     jj_consume_token(tRCORCHETE);
@@ -805,7 +805,7 @@ comprobarInt(at);
                 if (at.valInt < 0) {
                         errSem.deteccion(new ArraySizeException(), tokenActual);
                 }
-                {if ("" != null) return new Attributes(Symbol.Types.UNDEFINED,Symbol.ParameterClass.NONE,at.valInt);}
+                {if ("" != null) return new Attributes(tipo,Symbol.ParameterClass.NONE,at.valInt);}
     throw new Error("Missing return statement in function");
 }
 
@@ -836,7 +836,7 @@ clase = Symbol.ParameterClass.REF;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case tLCORCHETE:{
 tokenActual = id;
-      atributo = vector(block);
+      atributo = vector(block, tipo);
 esVector = true;
                         vec = new SymbolArray(id.image, atributo.valInt, tipo, clase);
                         parametros.add(vec);    // Añadir parametro a la lista
@@ -1126,7 +1126,7 @@ cuenta++;
     t = jj_consume_token(tID);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case tLCORCHETE:{
-      atributo = vector_const(block);
+      atributo = vector_const(block, tipo);
 esVector = true;
                         SymbolArray s = new SymbolArray(t.image, atributo.valInt, tipo, Symbol.ParameterClass.NONE);
                         try {
@@ -1192,7 +1192,7 @@ if (!esVector) {
     t = jj_consume_token(tID);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case tLCORCHETE:{
-      atributo = vector_const(block);
+      atributo = vector_const(block, tipo);
 esVector = true;
                         SymbolArray s = new SymbolArray(t.image, atributo.valInt, tipo, Symbol.ParameterClass.NONE);
                         try {
@@ -1268,10 +1268,19 @@ tokenActual = t;
                 if (simbolo.parClass == Symbol.ParameterClass.REF) {
                         block.addInst(OpCode.DRF);
                 }
-      vector(block);
-simbolo = tabla.getSymbol(t.image);
-                array = (SymbolArray)simbolo;
-                int tamanyo = array.maxInd + 1;
+      vector(block, simbolo.type);
+int tamanyo = 0;
+                if (simbolo instanceof SymbolArray) {
+                        tipo = ((SymbolArray)simbolo).baseType;
+                        block.addInst(OpCode.ASG);
+                        array = (SymbolArray)simbolo;
+                        tamanyo = array.maxInd + 1;
+                } else {
+                        String _tipoVar = obtenerTipo(simbolo.type);
+                String _tipoDevuelto = "Array";
+                        errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
+                }
+
                 block.addInst(OpCode.DUP);
                 block.addInst(OpCode.STC, tamanyo);
                 block.addInst(OpCode.GT);
@@ -1281,6 +1290,7 @@ simbolo = tabla.getSymbol(t.image);
       a = Expresion(block);
       jj_consume_token(tPCOMA);
 simbolo = tabla.getSymbol(t.image);
+                tipo = simbolo.type;
                 if (simbolo instanceof SymbolArray) {
                         tipo = ((SymbolArray)simbolo).baseType;
                         block.addInst(OpCode.ASG);
@@ -1703,10 +1713,10 @@ block.addInst(OpCode.STC, 10);
     jj_consume_token(tREAD);
     jj_consume_token(tLPARENTESIS);
     t = jj_consume_token(tID);
-tokenActual = t;
+tokenActual = t; simbolo = tabla.getSymbol(t.image);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case tLCORCHETE:{
-      vector(block);
+      vector(block, simbolo.type);
 esVector = true;
       break;
       }
@@ -1714,8 +1724,7 @@ esVector = true;
       jj_la1[37] = jj_gen;
       ;
     }
-simbolo = tabla.getSymbol(t.image);
-                simbolo.utilizado = true;
+simbolo.utilizado = true;
                 block.addInst(OpCode.SRF, tabla.level - simbolo.nivel, simbolo.posicionPila);
                 // Si es por referencia, hacer un DRF
                 if (simbolo.parClass == Symbol.ParameterClass.REF) {
@@ -1727,6 +1736,10 @@ simbolo = tabla.getSymbol(t.image);
                                 a = ((SymbolArray)simbolo).baseType;
                                 comprobarTipoValido(a);
                                 block.addInst(OpCode.PLUS);
+                        }  else {
+                                String _tipoVar = obtenerTipo(simbolo.type);
+                                String _tipoDevuelto = "Array";
+                                errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
                         }
                 } else {
                         comprobarTipoValido(simbolo);
@@ -1754,9 +1767,10 @@ simbolo = tabla.getSymbol(t.image);
       jj_consume_token(tCOMA);
       t = jj_consume_token(tID);
 tokenActual = t;
+                simbolo = tabla.getSymbol(t.image);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case tLCORCHETE:{
-        vector(block);
+        vector(block, simbolo.type);
 esVector = true;
         break;
         }
@@ -1778,6 +1792,10 @@ simbolo = tabla.getSymbol(t.image);
                                 // Ver de que tipo es el vector
                                 a = ((SymbolArray)simbolo).baseType;
                                 comprobarTipoValido(a);
+                        } else {
+                                String _tipoVar = obtenerTipo(simbolo.type);
+                                String _tipoDevuelto = "Array";
+                                errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
                         }
                 } else {
                         comprobarTipoValido(simbolo);
@@ -1816,9 +1834,10 @@ simbolo = tabla.getSymbol(t.image);
     case tID:{
       t = jj_consume_token(tID);
 tokenActual = t;
+                simbolo = tabla.getSymbol(t.image);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case tLCORCHETE:{
-        vector(block);
+        vector(block, simbolo.type);
 esVector = true;
         break;
         }
@@ -1839,6 +1858,10 @@ simbolo = tabla.getSymbol(t.image);
                                 a = ((SymbolArray)simbolo).baseType;
                                 comprobarTipoValido(a);
                                 block.addInst(OpCode.PLUS);
+                        }  else {
+                                String _tipoVar = obtenerTipo(simbolo.type);
+                                String _tipoDevuelto = "Array";
+                                errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
                         }
                 } else {
                         comprobarTipoValido(simbolo);
@@ -2310,6 +2333,11 @@ comprobarInt(atributo);
                 simbolo = tabla.getSymbol(t.image);
                 if (simbolo instanceof SymbolArray) {
                         a = ((SymbolArray)simbolo).baseType;
+                }  else {
+                        String _tipoVar = obtenerTipo(simbolo.type);
+                String _tipoDevuelto = "Array";
+                        errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
+                        a = Symbol.Types.ARRAY;
                 }
                 atributo = new Attributes(a,simbolo.parClass,atributo.valInt);
                 atributo.token = t;
@@ -2630,18 +2658,6 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Primario_1880_17_64()
- {
-    if (jj_scan_token(tENTRECOMILLASSIMPLES)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Primario_1785_17_57()
- {
-    if (jj_scan_token(tINT2CHAR)) return true;
-    return false;
-  }
-
   static private boolean jj_3R_FuncYDeclaracion_463_9_24()
  {
     Token xsp;
@@ -2665,88 +2681,15 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Primario_1784_17_56()
+  static private boolean jj_3R_Primario_1879_17_60()
  {
-    if (jj_scan_token(tLPARENTESIS)) return true;
+    if (jj_scan_token(tDIGITO)) return true;
     return false;
   }
 
-  static private boolean jj_3R_Primario_1784_17_53()
+  static private boolean jj_3R_Termino_const_1979_9_32()
  {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_Primario_1784_17_56()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1785_17_57()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1793_17_58()) {
-    jj_scanpos = xsp;
-    if (jj_3_10()) {
-    jj_scanpos = xsp;
-    if (jj_3_11()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1830_17_59()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1850_17_60()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1859_17_61()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1867_17_62()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1875_17_63()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Primario_1880_17_64()) return true;
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_Termino_1695_9_30()
- {
-    if (jj_3R_Factor_1751_9_39()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Primario_1875_17_63()
- {
-    if (jj_scan_token(tENTRECOMILLAS)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Primario_1867_17_62()
- {
-    if (jj_scan_token(tFALSE)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Op_MAS_MENOS_1685_9_38()
- {
-    if (jj_scan_token(tMENOS)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Op_MAS_MENOS_1684_9_29()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_Op_MAS_MENOS_1684_9_37()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Op_MAS_MENOS_1685_9_38()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_Op_MAS_MENOS_1684_9_37()
- {
-    if (jj_scan_token(tMAS)) return true;
+    if (jj_3R_Primario_const_2017_17_40()) return true;
     return false;
   }
 
@@ -2757,9 +2700,9 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_vector_const_730_9_45()
+  static private boolean jj_3R_Factor_1776_9_48()
  {
-    if (jj_scan_token(tLCORCHETE)) return true;
+    if (jj_scan_token(tNOT)) return true;
     return false;
   }
 
@@ -2770,9 +2713,32 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Primario_1859_17_61()
+  static private boolean jj_3R_Factor_1775_9_47()
  {
-    if (jj_scan_token(tTRUE)) return true;
+    if (jj_3R_Primario_1808_17_53()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_vector_const_730_9_45()
+ {
+    if (jj_scan_token(tLCORCHETE)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_Factor_1775_9_39()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_Factor_1775_9_47()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Factor_1776_9_48()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_Primario_1859_17_59()
+ {
+    if (jj_scan_token(tID)) return true;
     return false;
   }
 
@@ -2782,9 +2748,23 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Primario_1850_17_60()
+  static private boolean jj_3_11()
  {
-    if (jj_scan_token(tDIGITO)) return true;
+    if (jj_3R_LlamaFunc_827_9_31()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_9()
+ {
+    if (jj_3R_Op_MAS_MENOS_1708_9_29()) return true;
+    if (jj_3R_Termino_1719_9_30()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_12()
+ {
+    if (jj_3R_Op_MAS_MENOS_1708_9_29()) return true;
+    if (jj_3R_Termino_const_1979_9_32()) return true;
     return false;
   }
 
@@ -2794,25 +2774,13 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Termino_const_1950_9_32()
- {
-    if (jj_3R_Primario_const_1988_17_40()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_vector_714_9_28()
  {
     if (jj_scan_token(tLCORCHETE)) return true;
     return false;
   }
 
-  static private boolean jj_3_5()
- {
-    if (jj_3R_Asig_1093_9_26()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Asig_1093_9_26()
+  static private boolean jj_3R_Asig_1094_9_26()
  {
     Token xsp;
     xsp = jj_scanpos;
@@ -2830,15 +2798,9 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Factor_1752_9_48()
+  static private boolean jj_3_5()
  {
-    if (jj_scan_token(tNOT)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Factor_1751_9_47()
- {
-    if (jj_3R_Primario_1784_17_53()) return true;
+    if (jj_3R_Asig_1094_9_26()) return true;
     return false;
   }
 
@@ -2854,17 +2816,6 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Factor_1751_9_39()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_Factor_1751_9_47()) {
-    jj_scanpos = xsp;
-    if (jj_3R_Factor_1752_9_48()) return true;
-    }
-    return false;
-  }
-
   static private boolean jj_3R_Func_514_9_54()
  {
     if (jj_3R_TipoVal_500_5_34()) return true;
@@ -2875,26 +2826,30 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
 
   static private boolean jj_3_3()
  {
-    if (jj_3R_Asig_1093_9_26()) return true;
+    if (jj_3R_Asig_1094_9_26()) return true;
     return false;
   }
 
-  static private boolean jj_3_9()
+  static private boolean jj_3R_Primario_const_2018_17_50()
  {
-    if (jj_3R_Op_MAS_MENOS_1684_9_29()) return true;
-    if (jj_3R_Termino_1695_9_30()) return true;
+    if (jj_scan_token(tDIGITO)) return true;
     return false;
   }
 
-  static private boolean jj_3R_Primario_1830_17_59()
+  static private boolean jj_3R_Primario_const_2017_17_49()
  {
-    if (jj_scan_token(tID)) return true;
+    if (jj_scan_token(tLPARENTESIS)) return true;
     return false;
   }
 
-  static private boolean jj_3_11()
+  static private boolean jj_3R_Primario_const_2017_17_40()
  {
-    if (jj_3R_LlamaFunc_827_9_31()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_Primario_const_2017_17_49()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_const_2018_17_50()) return true;
+    }
     return false;
   }
 
@@ -2913,10 +2868,10 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3_12()
+  static private boolean jj_3_10()
  {
-    if (jj_3R_Op_MAS_MENOS_1684_9_29()) return true;
-    if (jj_3R_Termino_const_1950_9_32()) return true;
+    if (jj_scan_token(tID)) return true;
+    if (jj_scan_token(tLCORCHETE)) return true;
     return false;
   }
 
@@ -2952,6 +2907,36 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
+  static private boolean jj_3R_Primario_1817_17_58()
+ {
+    if (jj_scan_token(tCHAR2INT)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_Primario_1909_17_64()
+ {
+    if (jj_scan_token(tENTRECOMILLASSIMPLES)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_Primario_1904_17_63()
+ {
+    if (jj_scan_token(tENTRECOMILLAS)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_Primario_1809_17_57()
+ {
+    if (jj_scan_token(tINT2CHAR)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_Primario_1808_17_56()
+ {
+    if (jj_scan_token(tLPARENTESIS)) return true;
+    return false;
+  }
+
   static private boolean jj_3R_Proced_581_9_55()
  {
     if (jj_scan_token(tVOID)) return true;
@@ -2960,10 +2945,53 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3_10()
+  static private boolean jj_3R_Primario_1808_17_53()
  {
-    if (jj_scan_token(tID)) return true;
-    if (jj_scan_token(tLCORCHETE)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_Primario_1808_17_56()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1809_17_57()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1817_17_58()) {
+    jj_scanpos = xsp;
+    if (jj_3_10()) {
+    jj_scanpos = xsp;
+    if (jj_3_11()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1859_17_59()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1879_17_60()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1888_17_61()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1896_17_62()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1904_17_63()) {
+    jj_scanpos = xsp;
+    if (jj_3R_Primario_1909_17_64()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_Termino_1719_9_30()
+ {
+    if (jj_3R_Factor_1775_9_39()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_Primario_1896_17_62()
+ {
+    if (jj_scan_token(tFALSE)) return true;
     return false;
   }
 
@@ -2974,32 +3002,32 @@ atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.pa
     return false;
   }
 
-  static private boolean jj_3R_Primario_const_1989_17_50()
+  static private boolean jj_3R_Op_MAS_MENOS_1709_9_38()
  {
-    if (jj_scan_token(tDIGITO)) return true;
+    if (jj_scan_token(tMENOS)) return true;
     return false;
   }
 
-  static private boolean jj_3R_Primario_const_1988_17_49()
- {
-    if (jj_scan_token(tLPARENTESIS)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_Primario_const_1988_17_40()
+  static private boolean jj_3R_Op_MAS_MENOS_1708_9_29()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_Primario_const_1988_17_49()) {
+    if (jj_3R_Op_MAS_MENOS_1708_9_37()) {
     jj_scanpos = xsp;
-    if (jj_3R_Primario_const_1989_17_50()) return true;
+    if (jj_3R_Op_MAS_MENOS_1709_9_38()) return true;
     }
     return false;
   }
 
-  static private boolean jj_3R_Primario_1793_17_58()
+  static private boolean jj_3R_Op_MAS_MENOS_1708_9_37()
  {
-    if (jj_scan_token(tCHAR2INT)) return true;
+    if (jj_scan_token(tMAS)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_Primario_1888_17_61()
+ {
+    if (jj_scan_token(tTRUE)) return true;
     return false;
   }
 
