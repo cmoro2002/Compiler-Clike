@@ -10,10 +10,13 @@
 package lib.attributes;
 
 import lib.symbolTable.*;
+import traductor.Token;
 
 public class Attributes implements Cloneable {
     public Symbol.Types type;
     public Symbol.ParameterClass parClass;
+
+    public Token token; // Para guardar el token y mostrar los warnings
 
     // Para guardar los valores de las constantes
     public int valInt;

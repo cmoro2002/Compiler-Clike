@@ -87,10 +87,9 @@ public class clike_4 {
 	// Comprueba que ambos atributos sean del mismo tipo
 	public static Attributes comprobarTipos(Attributes a, Attributes b) {
 		if (a.type != b.type) {
-			throw new NotMachingTypes(a, b);
-		} else {
-			return a;
-		}
+			errSem.deteccion(new NotMachingTypes(a, b), a.token, b.token);
+		} 
+		return a;
 	}	
 
 	// Comprueba que ambos atributos sean del mismo tipo
@@ -98,11 +97,9 @@ public class clike_4 {
 		if (a.type != simbolo.type) {
 			String _tipoVar = obtenerTipo(simbolo.type);
        		String _tipoDevuelto = obtenerTipo(a.type);
-			String mensaje = "Los tipos son incompatibles: " + _tipoVar + ", " + _tipoDevuelto;
-			throw new IncompatibleTypes(mensaje);
-		} else {
-			return a;
+			errSem.deteccion(new IncompatibleTypes("Si has llegado a leer esto nos merecemos un 10 :)"),  a.token, _tipoVar, _tipoDevuelto);
 		}
+		return a;
 	}	
 
 	// Comprueba que ambos atributos sean del mismo tipo cuando uno es un vector
@@ -110,52 +107,52 @@ public class clike_4 {
 		if (a.type != tipo) {
 			String _tipoVar = obtenerTipo(tipo);
        		String _tipoDevuelto = obtenerTipo(a.type);
-			String mensaje = "Los tipos son incompatibles: " + _tipoVar + ", " + _tipoDevuelto;
-			throw new IncompatibleTypes(mensaje);
-		} else {
-			return a;
-		}
+			errSem.deteccion(new IncompatibleTypes("Si has llegado a leer esto nos merecemos un 10 :)"),  a.token, _tipoVar, _tipoDevuelto);
+		} 
+		return a;
 	}	
 
 	// Comprueba que el atributo a es boolean
 	public static void comprobarBool(Attributes a) {
 		if (a.type != Symbol.Types.BOOL) {
-			throw new NotBoolean(a);
+			errSem.deteccion(new NotBoolean(a), a.token);
 		}
 	}
 
 	// Comprueba que el atributo a es entero
 	public static void comprobarInt (Attributes a) {
 		if (a.type != Symbol.Types.INT) {
-			throw new NotInt(a);
+			errSem.deteccion(new NotInt(a), a.token);
 		}
 	}
 
 	// Comprueba que el atributo a es entero
 	public static void comprobarChar (Attributes a) {
 		if (a.type != Symbol.Types.CHAR) {
-			throw new NotChar(a);
+			errSem.deteccion(new NotChar(a), a.token);
 		}
 	}
 
-	// Comprueba que el atributo a es entero
+	// Comprueba que el atributo a es entero o char o bool
 	public static void comprobarTipoValido (Symbol simbolo) {
 		if (simbolo.type != Symbol.Types.CHAR && simbolo.type != Symbol.Types.INT && simbolo.type != Symbol.Types.BOOL) {
-			throw new NotTipoValido(simbolo);
+			//errSem.deteccion(NotTipoValido, a.token);
+			errSem.deteccion(new NotTipoValido(simbolo), tokenActual);
 		}
 	}
 
-	// Comprueba que el atributo a es entero
+	// Comprueba que el atributo a es entero o char o bool
 	public static void comprobarTipoValido (Symbol.Types simbolo) {
 		if (simbolo != Symbol.Types.CHAR && simbolo != Symbol.Types.INT && simbolo != Symbol.Types.BOOL) {
-			throw new NotTipoValido(simbolo);
+			//errSem.deteccion(NotTipoValido, a.token);
+			errSem.deteccion(new NotTipoValido(simbolo), tokenActual);
 		}
 	}
 
 	// Comprueba que el atributo a es entero
 	public static void comprobarTipoValidoString (Attributes a) {
 		if (a.type != Symbol.Types.CHAR && a.type != Symbol.Types.INT && a.type != Symbol.Types.BOOL && a.type != Symbol.Types.STRING) {
-			throw new NotTipoValido(a);
+			errSem.deteccion(new NotTipoValido(a), a.token, "String");
 		}
 	}
 
@@ -163,12 +160,9 @@ public class clike_4 {
 	public static void comprobarTipoReturn (Attributes a, Symbol.Types tipo) {
 		String _tipoVar = obtenerTipo(a.type);
         String _tipoDevuelto = obtenerTipo(tipo);
-				
-		String mensaje = "";
 
-		if (!_tipoVar.equals(_tipoDevuelto)) {
-			mensaje = "La función esperaba devolver el tipo " + _tipoVar + "y se ha devuelto el tipo " + _tipoDevuelto;
-			throw new IncompatibleTypes(mensaje);
+		if (!_tipoVar.equals(_tipoDevuelto)) { 
+			errSem.deteccion(new IncompatibleTypes("Si has llegado a leer esto nos merecemos un 10 :)"), a.token, _tipoDevuelto, _tipoVar);
 		}
 	}
 
@@ -177,22 +171,22 @@ public class clike_4 {
 		String _tipoVar = obtenerTipo(a.type);
         String _tipoDevuelto = obtenerTipo(tipo);
 				
-		String mensaje = "";
 		if (!_tipoVar.equals(_tipoDevuelto)) {
-			mensaje = "bbsita bebelin La función esperaba un parametro de tipo " + _tipoVar + "y se llamado con el tipo " + _tipoDevuelto;
-			throw new IncompatibleTypes(mensaje);
+			errSem.deteccion(new IncompatibleTypes("Si has llegado a leer esto nos merecemos un 10 :)"), a.token, _tipoVar, _tipoDevuelto);
 		}
 	}
 
-	public static void comprobarParametros(ArrayList<Symbol> lista1,ArrayList<Attributes> lista2) {
+	public static void comprobarParametros(ArrayList<Symbol> lista1,ArrayList<Attributes> lista2, Token token) {
 		String mensaje = "";
 		if (lista1.size() != lista2.size()) {
 			mensaje = "El número de parámetros no coincide";
-			throw new IncompatibleSizes(mensaje);
+			errSem.deteccion(new IncompatibleSizes(mensaje), token);
 		} else {
 			for (int i = 0; i < lista1.size(); i++) {
 				if (lista1.get(i).type != lista2.get(i).type) {
-					throw new IncompatibleTypes("Tipos no compatibles :)");
+					String _tipoVar = obtenerTipo(lista1.get(i).type);
+       				String _tipoDevuelto = obtenerTipo(lista2.get(i).type);
+					errSem.deteccion(new IncompatibleTypes("Si has llegado a leer esto nos merecemos un 10 :)"), lista2.get(i).token, _tipoVar, _tipoDevuelto);
 				}
 			}
 		}
@@ -201,7 +195,7 @@ public class clike_4 {
 	// Comprobar si el atributo dado es constante
 	public static void comprobarNoConstante(Attributes a) {
 		if (a.constante) {
-			throw new ConstantePorReferencia();
+			errSem.deteccion(new ConstantePorReferencia(), a.token);
 		}
 	}
 
@@ -836,14 +830,12 @@ Attributes LlamaFunc(CodeBlock block) : {
 		if (simbolo instanceof SymbolFunction) {
 			parametros = ((SymbolFunction)simbolo).parList;
 			tipo = ((SymbolFunction)simbolo).returnType;
-		} else if (simbolo instanceof SymbolProcedure) {
-			throw new ProcedureReturn(t.image);
 		}
 		simbolo.utilizado = true;
 	}
 	<tLPARENTESIS> parametrosLlamada = PasoPar(block, parametros) <tRPARENTESIS> 
 	{
-		comprobarParametros(parametros,parametrosLlamada);
+		comprobarParametros(parametros,parametrosLlamada, t);
 		int tamanyoOcupado = tabla.getFunctionSize();
 		if (simbolo instanceof SymbolFunction) {
 			etiqueta = ((SymbolFunction)simbolo).label;
@@ -868,14 +860,12 @@ void LlamaProced(CodeBlock block) : {
 		simbolo = tabla.getSymbol(t.image);
 		if (simbolo instanceof SymbolProcedure) {
 			parametros = ((SymbolProcedure)simbolo).parList;
-		} else {
-			throw new FunctionCall();
 		}
 		simbolo.utilizado = true;
 	}
 	<tLPARENTESIS> parametrosLlamada = PasoPar(block, parametros) <tRPARENTESIS> 
 	{
-		comprobarParametros(parametros,parametrosLlamada);
+		comprobarParametros(parametros,parametrosLlamada, t);
 		int tamanyoOcupado = tabla.getFunctionSize();
 		if (simbolo instanceof SymbolFunction) {
 			etiqueta = ((SymbolFunction)simbolo).label;
@@ -1785,6 +1775,7 @@ Attributes Factor(CodeBlock block): {
 
 Attributes Primario(CodeBlock block): {
 	Attributes atributo = null;
+	Attributes atributoNuevo = null;
 	Symbol.Types a = null;
 	Token t = new Token();
 	Symbol simbolo = null;
@@ -1795,13 +1786,17 @@ Attributes Primario(CodeBlock block): {
 	{
 		// Verificar que la expresion es un entero
 		comprobarInt(atributo);
-		return new Attributes(Symbol.Types.CHAR,Symbol.ParameterClass.NONE,null);
+		atributoNuevo = new Attributes(Symbol.Types.CHAR,Symbol.ParameterClass.NONE,null);
+		atributoNuevo.token = atributo.token;
+		return atributoNuevo;
 	}
 	|	< tCHAR2INT > < tLPARENTESIS > atributo = Expresion(block) < tRPARENTESIS > 
 	{
 		// Verificar que la expresion es un entero
 		comprobarChar(atributo);
-		return new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,null);
+		atributoNuevo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,null);
+		atributoNuevo.token = atributo.token;
+		return atributoNuevo;
 	}
 	//|	LOOKAHEAD(2) < tID > < tLPARENTESIS > (Expresion())+ < tRPARENTESIS >
 	|	LOOKAHEAD(2) t=< tID >
@@ -1818,7 +1813,7 @@ Attributes Primario(CodeBlock block): {
 			block.addInst(OpCode.DRF);
 		}
 	}
-	 < tLCORCHETE > atributo = Expresion(block) < tRCORCHETE >
+	< tLCORCHETE > atributo = Expresion(block) < tRCORCHETE >
 	{
 		comprobarInt(atributo);
 		block.addInst(OpCode.PLUS);
@@ -1827,7 +1822,9 @@ Attributes Primario(CodeBlock block): {
 		if (simbolo instanceof SymbolArray) {
 			a = ((SymbolArray)simbolo).baseType; 
 		}
-		return new Attributes(a,simbolo.parClass,atributo.valInt);
+		atributo = new Attributes(a,simbolo.parClass,atributo.valInt);
+		atributo.token = t;
+		return atributo;
 	}
 	|	LOOKAHEAD(2) atributo = LlamaFunc(block) {return atributo;}
 	|	t = < tID > 
@@ -1847,6 +1844,7 @@ Attributes Primario(CodeBlock block): {
 		}
 		atributo = new Attributes(simbolo.type,simbolo.parClass,t.image); 
 		atributo.posicionPila = simbolo.posicionPila;
+		atributo.token = t;
 		return atributo;
 	}
 	| 	t = < tDIGITO > 
@@ -1854,19 +1852,25 @@ Attributes Primario(CodeBlock block): {
 		block.addComment("Constante entera igual a " + t.image);
 		int valor = Integer.parseInt(t.image);
 		block.addInst(OpCode.STC,valor); 
-		return new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,valor, true);
+		atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,valor, true);
+		atributo.token = t;
+		return atributo;
 	}
 	|	t = < tTRUE > 
 	{
 		block.addComment("Constante true");
 		block.addInst(OpCode.STC,1); 
-		return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,true, true);
+		atributo = new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,true, true);
+		atributo.token = t;
+		return atributo;
 	}
 	|	t = < tFALSE > 
 	{
 		block.addComment("Constante false");
 		block.addInst(OpCode.STC,0); 
-		return new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,false, true);
+		atributo = new Attributes(Symbol.Types.BOOL,Symbol.ParameterClass.NONE,false, true);
+		atributo.token = t;
+		return atributo;
 	}
 	|	t = < tENTRECOMILLAS > 
 	{
@@ -1877,7 +1881,9 @@ Attributes Primario(CodeBlock block): {
 	{
 		block.addComment("Constante char");
 		block.addInst(OpCode.STC,(int)t.image.charAt(1)); 
-		return new Attributes(Symbol.Types.CHAR,Symbol.ParameterClass.NONE,t.image, true);
+		atributo =  new Attributes(Symbol.Types.CHAR,Symbol.ParameterClass.NONE,t.image, true);
+		atributo.token = t;
+		return atributo;	
 	}
 
 }
@@ -1980,5 +1986,11 @@ Attributes Primario_const(CodeBlock block): {
 }
 {
 		< tLPARENTESIS > atributo = Expresion_simple_const(block) < tRPARENTESIS > {return atributo;}
-	| 	t = < tDIGITO > {return new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.parseInt(t.image));}
+	| 	t = < tDIGITO > 
+	{
+	
+		atributo = new Attributes(Symbol.Types.INT,Symbol.ParameterClass.NONE,Integer.parseInt(t.image));
+		atributo.token = t;
+		return atributo;
+	}
 }
