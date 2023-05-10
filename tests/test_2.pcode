@@ -129,6 +129,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 0
   STC  0
+  ASG
   DUP
   STC 10
   GT
@@ -141,6 +142,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 1
   STC  1
+  ASG
   DUP
   STC 10
   GT
@@ -153,6 +155,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 2
   STC  2
+  ASG
   DUP
   STC 10
   GT
@@ -165,6 +168,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 3
   STC  3
+  ASG
   DUP
   STC 10
   GT
@@ -177,6 +181,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 4
   STC  4
+  ASG
   DUP
   STC 10
   GT
@@ -189,6 +194,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 5
   STC  5
+  ASG
   DUP
   STC 10
   GT
@@ -201,6 +207,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 6
   STC  6
+  ASG
   DUP
   STC 10
   GT
@@ -213,6 +220,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 7
   STC  7
+  ASG
   DUP
   STC 10
   GT
@@ -225,6 +233,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 8
   STC  8
+  ASG
   DUP
   STC 10
   GT
@@ -237,6 +246,7 @@ MAIN:
   SRF  0  3
 ; --Constante entera igual a 9
   STC  9
+  ASG
   DUP
   STC 10
   GT
@@ -249,6 +259,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 0
   STC  0
+  ASG
   DUP
   STC 10
   GT
@@ -261,6 +272,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 1
   STC  1
+  ASG
   DUP
   STC 10
   GT
@@ -273,6 +285,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 2
   STC  2
+  ASG
   DUP
   STC 10
   GT
@@ -285,6 +298,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 3
   STC  3
+  ASG
   DUP
   STC 10
   GT
@@ -297,6 +311,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 4
   STC  4
+  ASG
   DUP
   STC 10
   GT
@@ -309,6 +324,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 5
   STC  5
+  ASG
   DUP
   STC 10
   GT
@@ -321,6 +337,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 6
   STC  6
+  ASG
   DUP
   STC 10
   GT
@@ -333,6 +350,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 7
   STC  7
+  ASG
   DUP
   STC 10
   GT
@@ -345,6 +363,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 8
   STC  8
+  ASG
   DUP
   STC 10
   GT
@@ -357,6 +376,7 @@ MAIN:
   SRF  0 13
 ; --Constante entera igual a 9
   STC  9
+  ASG
   DUP
   STC 10
   GT
@@ -513,6 +533,7 @@ L9:
 ; --Val(i)
   SRF  0 24
   DRF
+  ASG
   DUP
   STC 10
   GT

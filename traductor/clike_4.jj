@@ -1121,9 +1121,9 @@ void Asig(CodeBlock block) : {
 	vector(block, simbolo.type) 
 	{
 		int tamanyo = 0;
+		simbolo = tabla.getSymbol(t.image); 
 		if (simbolo instanceof SymbolArray) {
 			tipo = ((SymbolArray)simbolo).baseType;
-			block.addInst(OpCode.ASG);
 			array = (SymbolArray)simbolo;
 			tamanyo = array.maxInd + 1;
 		} else {
@@ -1131,7 +1131,6 @@ void Asig(CodeBlock block) : {
        		String _tipoDevuelto = "Array";
 			errSem.deteccion(new IncompatibleTypes(""), t, _tipoDevuelto, _tipoVar);
 		}
-		
 		block.addInst(OpCode.DUP);
 		block.addInst(OpCode.STC, tamanyo); 
 		block.addInst(OpCode.GT);
@@ -1157,11 +1156,15 @@ void If(Symbol.Types tipo, CodeBlock block) : {
 	Attributes a = null;
 	Boolean hayElse = false;
 	String labelFin = "";
+	Token t;
 }
 {
 	{ block.addComment("Estructura IF");}
-	<tIF> <tLPARENTESIS> a = Expresion(block)
+	t = <tIF> <tLPARENTESIS> a = Expresion(block)
 	{
+		if (a.constante) {
+			errSem.warning("La condicion es constante", t);
+		}
 		String labelElse = generarLabel();
 		block.addInst(OpCode.JMF, labelElse);
 		block.addComment("Caso True");
@@ -1192,11 +1195,15 @@ void IfSinRet(CodeBlock block) : {
 	Attributes a = null;
 	String labelFin = "";
 	Boolean hayElse = false;
+	Token t;
 }
 {
 	{ block.addComment("Estructura IF");}
-	<tIF> <tLPARENTESIS> a=Expresion(block) 
+	t = <tIF> <tLPARENTESIS> a=Expresion(block) 
 	{
+		if (a.constante) {
+			errSem.warning("La condicion es constante", t);
+		}
 		String labelElse = generarLabel();
 		block.addInst(OpCode.JMF, labelElse);
 		block.addComment("Caso True");
@@ -1243,15 +1250,19 @@ void While(Symbol.Types tipo, CodeBlock block) : {
 	Attributes a = null;
 	String labelFin = generarLabel();
 	String labelInicio = generarLabel();
+	Token t;
 }
 {
-	<tWHILE> <tLPARENTESIS> 
+	t = <tWHILE> <tLPARENTESIS> 
 	{
 		block.addComment("Estructura WHILE");
 		block.addLabel(labelInicio);
 	}
 		a = Expresion(block)
 	{
+		if (a.constante) {
+			errSem.warning("Nunca se va a salir de este bucle", t);
+		}
 		block.addInst(OpCode.JMF, labelFin);
 		block.addComment("Bucle True");
 	}  
@@ -1269,15 +1280,19 @@ void WhileSinRet(CodeBlock block) : {
 	Attributes a = null;
 	String labelFin = generarLabel();
 	String labelInicio = generarLabel();
+	Token t;
 }
 {
-	<tWHILE> <tLPARENTESIS> 
+	t = <tWHILE> <tLPARENTESIS> 
 	{
 		block.addComment("Estructura WHILE");
 		block.addLabel(labelInicio);
 	}
 	a = Expresion(block) 
 	{
+		if (a.constante) {
+			errSem.warning("Nunca se va a salir de este bucle", t);
+		}
 		block.addInst(OpCode.JMF, labelFin);
 		block.addComment("Bucle True");
 	}  
